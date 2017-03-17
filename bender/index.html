@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Bender  &middot; clburlison</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="Automatically backup your OS X server settings using Bender." />
+
+<meta name="keywords" content="Bender,, OS, X,, Server,, Backup,, Automation, ">
+
+
+<meta property="og:title" content="Bender  &middot; clburlison ">
+<meta property="og:site_name" content="clburlison"/>
+<meta property="og:url" content="https://clburlison.com/bender/" />
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="Automatically backup your OS X server settings using Bender."/>
+<meta property="og:article:published_time" content="2014-07-11T00:00:00Z" />
+<meta property="og:article:modified_time" content="2014-07-11T00:00:00Z" />
+
+  
+    
+<meta property="og:article:tag" content="Bender,">
+    
+<meta property="og:article:tag" content="OS">
+    
+<meta property="og:article:tag" content="X,">
+    
+<meta property="og:article:tag" content="Server,">
+    
+<meta property="og:article:tag" content="Backup,">
+    
+<meta property="og:article:tag" content="Automation">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@clburlison" />
+<meta name="twitter:creator" content="@clburlison" />
+<meta name="twitter:title" content="Bender" />
+<meta name="twitter:description" content="Automatically backup your OS X server settings using Bender." />
+<meta name="twitter:url" content="https://clburlison.com/bender/" />
+<meta name="twitter:domain" content="https://clburlison.com/">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Bender",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2014-07-11",
+    "description": "Automatically backup your OS X server settings using Bender.",
+    "wordCount": 315
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://clburlison.com/bender/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://clburlison.com/touch-icon-144-precomposed.png">
+<link href="https://clburlison.com/favicon.png" rel="icon">
+
+<meta name="generator" content="Hugo 0.19" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://clburlison.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://clburlison.com/css/style.css">
+<link rel="stylesheet" href="https://clburlison.com/css/highlight/default.css">
+
+  
+  
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-49614309-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://clburlison.com/">
+  clburlison
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  A Mac sysadmin, documenting useful code, ideas, &amp; guides.
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+<a class="homelink" href="https://clburlison.com/">Home</a>
+
+
+  
+<a href="https://clburlison.com/about">About</a>
+
+<a href="https://clburlison.com/post" title="Show list of posts">Posts</a>
+
+<a href="https://clburlison.com/resources">Resources</a>
+
+<a href="https://clburlison.com/tags" title="Show list of tags">Tags</a>
+
+<a href="https://clburlison.com/talks">Talks</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:clburlison@gmail.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/clburlison">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+<a id="contact-link-linkedin" class="contact_link" href="https://www.linkedin.com/in/clburlison">
+  <span class="fa fa-linkedin-square"></span><span>linkedin</span></a>
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/clburlison">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Bender
+</h1>
+
+  <div class="metas">
+<time datetime="2014-07-11">Jul 11, 2014</time>
+
+
+  
+  &middot; Read in about 2 min
+  &middot; (315 Words)
+  <br>
+  
+<a class="label" href="https://clburlison.com/tags/osx">osx</a>
+
+<a class="label" href="https://clburlison.com/tags/backup">backup</a>
+
+
+
+</div>
+
+</header>
+
+  
+
+
+
+
+  <div class="container content">
+  <p>Many administrators use OS X Server. In my opinion the server OS has always lacked choices when it comes to backing up the server services data. Until I found Bender&hellip;</p>
+
+<p><img src="/images/2014-07-11/bendericon_display.png" alt="" /></p>
+
+<blockquote>
+<p>Bender is a utility written by Forget Computers to automate the backup of OS X Server settings to provide easy restoration of services should they become corrupt, and for importing server settings after a migration or server upgrade.</p>
+
+<p>Bender Home Page</p>
+</blockquote>
+
+<p>Sure you have TimeMachine but some of the postgresql databases have been known to not backup property with TimeMachine. Honestly, I had given up on a backup solution that just gets the data I need for OS X Server. While reading though the <a href="https://groups.google.com/d/msg/macenterprise/MxLssCqR72Y/J1qFuALErMwJ" target="_blank">macenterprise list</a> I found someone recommended Bender. Once I got to work I realized what a gem I had been missing out on. I have only used Bender on Mavericks (10.9) but it should work on Lion and up. It will daily backup the following:</p>
+
+<ol>
+<li>An Open Directory archive if the server is running as an Open Directory master.</li>
+<li>A single backup file of all the server settings found in either Server Admin or Server.</li>
+<li>A series of individual backup files of each server setting, so restoration or import of select settings is possible.</li>
+<li>And postgres database used by Profile Manager and Wiki services.</li>
+</ol>
+
+<p>The last one was the true winner for me. I had been researching what I needed to do to backup my wiki. Over the past few months the wiki service has become an invaluable documentation tool for me. After finding little to none in the way of Apple documentation/release notes I finally gave up. Bender in combination with TimeMachine makes for a much more complete backup solution for OS X Server.</p>
+
+<p>Hopefully you find it as invaluable as I did or at least a nice utility to have in your tool-belt.</p>
+
+<hr />
+
+<p>Articles: <a href="http://robotcloud.screenstepslive.com/s/2459/m/5322/l/94467-bender-automated-backup-of-os-x-server-settings" target="_blank">Bender Home Page</a>, <a href="https://groups.google.com/d/msg/macenterprise/MxLssCqR72Y/J1qFuALErMwJ" target="_blank">macenterprise list</a></p>
+
+</div>
+
+
+  <footer class="container">
+  <div class="container navigation no-print">
+  <h2>Navigation</h2>
+  
+  
+
+    
+    <a class="prev" href="https://clburlison.com/encrypted-dmgs/" title="Encrypted DMGs">
+      Previous
+    </a>
+    
+
+    
+    <a class="next" href="https://clburlison.com/show-helpdesk-info/" title="Show Help Desk Information">
+      Next
+    </a>
+    
+
+  
+
+
+</div>
+
+  <div class="container comments">
+  <h2>Comments</h2>
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+  powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>.
+
+
+</div>
+
+
+  
+<div class="container copyright">
+  
+  &copy; 2014 - 2017 Clayton Burlison
+
+
+</div>
+
+
+</div>
+
+</footer>
+
+    </main>
+    
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+<script src="https://clburlison.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+  </body>
+</html>
+

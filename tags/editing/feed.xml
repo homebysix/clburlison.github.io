@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Editing on clburlison</title>
+    <link>https://clburlison.com/tags/editing/feed/index.xml</link>
+    <description>Recent content in Editing on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/tags/editing/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Converting Audio With Media Encoder</title>
+      <link>https://clburlison.com/converting-audio-with-media-encoder/</link>
+      <pubDate>Wed, 23 Jul 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/converting-audio-with-media-encoder/</guid>
+      <description>&lt;p&gt;I received a unique request today from a co-worker of mine. In short, he asked me if I was able to convert an audio clip from a Tascam audio recorder to a lower quality format suitable for our phone distribution system. The real challenge&amp;hellip;was I going to be able to do this with the software currently installed?
+&lt;/p&gt;
+
+&lt;p&gt;Fortunately, I have access to the Adobe Create Suite (CS6) at work from which I will be using Media Encoder in this tutorial. The screenshots below are from a Mac but the steps should be pretty close on a Windows computer. The added benefit of this process is if you ever need to post-process audio that was recorded &lt;code&gt;clean&lt;/code&gt; and make it sound like it went through a phone this will produce a pretty decent &lt;code&gt;phone sound&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Goal:&lt;/strong&gt; Create a &lt;code&gt;.wma&lt;/code&gt; or &lt;code&gt;.wav&lt;/code&gt; format file with a low sample rate, low sample size, and mono channel audio.&lt;/p&gt;
+
+&lt;h1 id=&#34;process-to-convert-the-audio&#34;&gt;Process to convert the audio&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Open Adobe Media Encoder.&lt;br /&gt;
+&lt;img src=&#34;https://clburlison.com/images/2014-07-23/1_open.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Create the Phone Preset by clicking on the &lt;code&gt;+&lt;/code&gt; button in the Preset Browser window.&lt;br /&gt;
+&lt;img src=&#34;https://clburlison.com/images/2014-07-23/2_add_preset.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Add a preset name and change the format to Waveform Audio.&lt;br /&gt;
+&lt;img src=&#34;https://clburlison.com/images/2014-07-23/3_format.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Change the basic audio setting the values below. Click okay to save the preset.&lt;br /&gt;
+&lt;img src=&#34;https://clburlison.com/images/2014-07-23/4_settings.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Add your audio file to be converted by clicking the &lt;code&gt;+&lt;/code&gt; button in the Queue window.&lt;br /&gt;
+&lt;img src=&#34;https://clburlison.com/images/2014-07-23/5_adding_file_2_encode.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Drag your phone setting preset from the Preset Browser window on top of the audio file you want to convert. It should look like the picture below. (note the .wav file extension)&lt;br /&gt;
+&lt;img src=&#34;https://clburlison.com/images/2014-07-23/6_ready_2_encode.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Click the green encode button.&lt;br /&gt;
+&lt;img src=&#34;https://clburlison.com/images/2014-07-23/7_encode.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;before-after&#34;&gt;Before/After&lt;/h2&gt;
+
+&lt;div&gt;
+    &lt;a href=&#34;https://clburlison.com/images/2014-07-23/audio-test.mp3&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/speaker-30.jpg&#34; height=&#34;30&#34;&gt; Before&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+    &lt;a href=&#34;https://clburlison.com/images/2014-07-23/audio-test_1.wav&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/speaker-30.jpg&#34; height=&#34;30&#34;&gt;  After&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The result is a Linear PCM codec audio file with 16 bit/sample rate, 8 kilohertz (kHz) in a &lt;code&gt;.wav&lt;/code&gt; format.&lt;/p&gt;
+
+&lt;h1 id=&#34;update&#34;&gt;Update&lt;/h1&gt;
+
+&lt;p&gt;Although, this method does work and creates a windows audio file, it ended up not working for the original application that I needed. Needless to say there is no point removing this guide.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

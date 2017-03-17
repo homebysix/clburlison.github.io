@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Fix Munkireport Error Request Too Large  &middot; clburlison</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="munkireport, ">
+
+
+<meta property="og:title" content="Fix Munkireport Error Request Too Large  &middot; clburlison ">
+<meta property="og:site_name" content="clburlison"/>
+<meta property="og:url" content="https://clburlison.com/munkireport-error-fix/" />
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2015-01-21T00:00:00Z" />
+<meta property="og:article:modified_time" content="2015-01-21T00:00:00Z" />
+
+  
+    
+<meta property="og:article:tag" content="munkireport">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@clburlison" />
+<meta name="twitter:creator" content="@clburlison" />
+<meta name="twitter:title" content="Fix Munkireport Error Request Too Large" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://clburlison.com/munkireport-error-fix/" />
+<meta name="twitter:domain" content="https://clburlison.com/">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Fix Munkireport Error Request Too Large",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2015-01-21",
+    "description": "",
+    "wordCount": 470
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://clburlison.com/munkireport-error-fix/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://clburlison.com/touch-icon-144-precomposed.png">
+<link href="https://clburlison.com/favicon.png" rel="icon">
+
+<meta name="generator" content="Hugo 0.19" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://clburlison.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://clburlison.com/css/style.css">
+<link rel="stylesheet" href="https://clburlison.com/css/highlight/default.css">
+
+  
+  
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-49614309-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://clburlison.com/">
+  clburlison
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  A Mac sysadmin, documenting useful code, ideas, &amp; guides.
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+<a class="homelink" href="https://clburlison.com/">Home</a>
+
+
+  
+<a href="https://clburlison.com/about">About</a>
+
+<a href="https://clburlison.com/post" title="Show list of posts">Posts</a>
+
+<a href="https://clburlison.com/resources">Resources</a>
+
+<a href="https://clburlison.com/tags" title="Show list of tags">Tags</a>
+
+<a href="https://clburlison.com/talks">Talks</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:clburlison@gmail.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/clburlison">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+<a id="contact-link-linkedin" class="contact_link" href="https://www.linkedin.com/in/clburlison">
+  <span class="fa fa-linkedin-square"></span><span>linkedin</span></a>
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/clburlison">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Fix Munkireport Error Request Too Large
+</h1>
+
+  <div class="metas">
+<time datetime="2015-01-21">Jan 21, 2015</time>
+
+
+  
+  &middot; Read in about 3 min
+  &middot; (470 Words)
+  <br>
+  
+<a class="label" href="https://clburlison.com/tags/munkireport">munkireport</a>
+
+
+
+</div>
+
+</header>
+
+  
+
+<nav class="toc">
+<input id="ac-toc" name="accordion-toc" type="checkbox">
+<label for="ac-toc">Table of Contents</label>
+<div id="toc" class="toc__menu">
+<nav id="TableOfContents">
+<ul>
+<li><a href="#intro">Intro</a>
+<ul>
+<li><a href="#error-message">Error message</a></li>
+</ul></li>
+<li><a href="#the-fix">The Fix</a></li>
+<li><a href="#anything-else">Anything else?</a></li>
+</ul>
+</nav>
+</div>
+</input>
+</nav>
+
+
+
+  <div class="container content">
+  
+
+<h1 id="intro">Intro</h1>
+
+<p>I use <a href="https://github.com/munkireport/munkireport-php" target="_blank">Munkireport-php</a> as my main reporting system at my work but have recently ran into an error when uploading data from client machines. My setup is using nginx to serve the files.</p>
+
+<h2 id="error-message">Error message</h2>
+
+<p>The error message below is what was showing up from a manual munki run with verbose enabled, you can run the command with:</p>
+
+<pre><code class="language-bash">sudo /usr/local/munki/managedsoftwareupdate -v
+</code></pre>
+
+<pre><code class="language-bash">...
+Starting...
+    Running preinstall_script for munkireport...
+    BaseURL is http://munki01.example.com/report/
+    Retrieving munkireport scripts
+    Configuring munkireport
+    + Installing ard
+    + Installing bluetooth
+    + Installing directory_service
+    + Installing disk_report
+    + Installing displays_info
+    + Installing filevault_status
+    + Installing installhistory
+    + Installing inventory
+    + Installing localadmin
+    + Installing munkireport
+    + Installing network
+    + Installing power
+    + Installing warranty
+    Installation of MunkiReport v2.1.0 complete.
+    Running the preflight script for initialization
+Installing Munkireport Install and config (1 of 1)...
+    Running postinstall_script for munkireport...
+Finishing...
+    Performing postflight tasks...
+    postflight stderr: ERROR: Munkireport: http://munki01.example.com/report/index.php?/report/check_in
+ERROR: Munkireport: We failed to reach a server
+ERROR: Munkireport: Reason: Request Entity Too Large
+Done.
+</code></pre>
+
+<p>After some digging around, this error is an http Error 413 which is normally caused by:</p>
+
+<ul>
+<li>uploading a large file from a visitor or client machine to the web server</li>
+<li>too much POST data being sent by the client</li>
+</ul>
+
+<p>This can be easily fixed by modifying your nginx configuration to increasing the size allowed on upload. Which will allow the run to complete successfully.</p>
+
+<h1 id="the-fix">The Fix</h1>
+
+<p>We can fix this HTTP request issue at three different levels of the nginx config: the <strong>http</strong> block, the <strong>server</strong> block or the <strong>location</strong> block.</p>
+
+<p>Open your nginx configuration:</p>
+
+<pre><code class="language-bash">sudo nano /etc/nginx/nginx.conf
+</code></pre>
+
+<p>The following example increased the file size upload to 10 MB which solved the error for me. Your milage may vary and you might need to increase the max size if this doesn&rsquo;t solve your error.</p>
+
+<pre><code class="language-bash">http {
+	client_max_body_size 10M; # allows file uploads up to 10 megabytes
+	...
+}
+</code></pre>
+
+<p>After changing the server configuration run the following command to reload your Nginx service.</p>
+
+<pre><code class="language-bash">sudo service nginx restart
+</code></pre>
+
+<h1 id="anything-else">Anything else?</h1>
+
+<p>In addition to the change above, it might be necessary to modify PHP settings on your server. Open your PHP configuration file:</p>
+
+<pre><code class="language-bash">sudo nano /etc/php5/fpm/php.ini
+</code></pre>
+
+<p>Look for the following two values and increase if needed:</p>
+
+<ul>
+<li><strong>upload_max_filesize:</strong> Maximum allowed size for uploaded files (default: 2 megabytes). You need to increase this value if you expect files over 2 megabytes in size.</li>
+<li><strong>post_max_size:</strong> Maximum size of POST data that PHP will accept (default: 8 megabytes). Files are sent via POST data, so you need to increase this value if you are expecting files over 8 megabytes.</li>
+</ul>
+
+<p>If you make any changes your will need to reload Nginx (above) and PHP-FPM (below):</p>
+
+<pre><code class="language-bash">sudo restart php5-fpm
+</code></pre>
+
+<p><em>Note</em>: Modifying my PHP was not necessary for my setup but I will leave it here in case it helps you.</p>
+
+<hr />
+
+<p>Articles:<br />
+<a href="http://cnedelcu.blogspot.com/2013/09/nginx-error-413-request-entity-too-large.html" target="_blank">Nginx error 413</a>,<br />
+<a href="https://github.com/munkireport/munkireport-php/" target="_blank">Munkireport Wiki</a>,</p>
+
+</div>
+
+
+  <footer class="container">
+  <div class="container navigation no-print">
+  <h2>Navigation</h2>
+  
+  
+
+    
+    <a class="prev" href="https://clburlison.com/sign-packages-with-luggage/" title="Sign Packages with Luggage">
+      Previous
+    </a>
+    
+
+    
+    <a class="next" href="https://clburlison.com/jekyll-pull-requests/" title="Jekyll Pull Requests">
+      Next
+    </a>
+    
+
+  
+
+
+</div>
+
+  <div class="container comments">
+  <h2>Comments</h2>
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+  powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>.
+
+
+</div>
+
+
+  
+<div class="container copyright">
+  
+  &copy; 2014 - 2017 Clayton Burlison
+
+
+</div>
+
+
+</div>
+
+</footer>
+
+    </main>
+    
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+<script src="https://clburlison.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Github Two-factor Authentication with SourceTree  &middot; clburlison</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="Setting up Two-factor Authentication on Github while using SourceTree." />
+
+<meta name="keywords" content="github,, sourcetree,, git,, two-factor,, authentication,, ">
+
+
+<meta property="og:title" content="Github Two-factor Authentication with SourceTree  &middot; clburlison ">
+<meta property="og:site_name" content="clburlison"/>
+<meta property="og:url" content="https://clburlison.com/github-two-factor-authentication/" />
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="Setting up Two-factor Authentication on Github while using SourceTree."/>
+<meta property="og:article:published_time" content="2014-05-14T00:00:00Z" />
+<meta property="og:article:modified_time" content="2014-05-14T00:00:00Z" />
+
+  
+    
+<meta property="og:article:tag" content="github,">
+    
+<meta property="og:article:tag" content="sourcetree,">
+    
+<meta property="og:article:tag" content="git,">
+    
+<meta property="og:article:tag" content="two-factor,">
+    
+<meta property="og:article:tag" content="authentication,">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@clburlison" />
+<meta name="twitter:creator" content="@clburlison" />
+<meta name="twitter:title" content="Github Two-factor Authentication with SourceTree" />
+<meta name="twitter:description" content="Setting up Two-factor Authentication on Github while using SourceTree." />
+<meta name="twitter:url" content="https://clburlison.com/github-two-factor-authentication/" />
+<meta name="twitter:domain" content="https://clburlison.com/">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Github Two-factor Authentication with SourceTree",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2014-05-14",
+    "description": "Setting up Two-factor Authentication on Github while using SourceTree.",
+    "wordCount": 382
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://clburlison.com/github-two-factor-authentication/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://clburlison.com/touch-icon-144-precomposed.png">
+<link href="https://clburlison.com/favicon.png" rel="icon">
+
+<meta name="generator" content="Hugo 0.19" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://clburlison.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://clburlison.com/css/style.css">
+<link rel="stylesheet" href="https://clburlison.com/css/highlight/default.css">
+
+  
+  
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-49614309-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://clburlison.com/">
+  clburlison
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  A Mac sysadmin, documenting useful code, ideas, &amp; guides.
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+<a class="homelink" href="https://clburlison.com/">Home</a>
+
+
+  
+<a href="https://clburlison.com/about">About</a>
+
+<a href="https://clburlison.com/post" title="Show list of posts">Posts</a>
+
+<a href="https://clburlison.com/resources">Resources</a>
+
+<a href="https://clburlison.com/tags" title="Show list of tags">Tags</a>
+
+<a href="https://clburlison.com/talks">Talks</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:clburlison@gmail.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/clburlison">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+<a id="contact-link-linkedin" class="contact_link" href="https://www.linkedin.com/in/clburlison">
+  <span class="fa fa-linkedin-square"></span><span>linkedin</span></a>
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/clburlison">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Github Two-factor Authentication with SourceTree
+</h1>
+
+  <div class="metas">
+<time datetime="2014-05-14">May 14, 2014</time>
+
+
+  
+  &middot; Read in about 2 min
+  &middot; (382 Words)
+  <br>
+  
+<a class="label" href="https://clburlison.com/tags/git">git</a>
+
+
+
+</div>
+
+</header>
+
+  
+
+
+
+
+  <div class="container content">
+  
+
+<p>I finally got around to setting up two-factor authentication on my Github account. The process went quite smoothly, until I started to play around with  <a href="http://www.sourcetreeapp.com/" target="_blank">SourceTree</a> and I found out that I was unable to push commits to a git repo.</p>
+
+<hr />
+
+<h3 id="sourcetree-error">SourceTree error</h3>
+
+<p>The error message that I was receiving seemed pretty generic at the time. Besides I knew I was typing my Github password correctly, so that could not be the issue. In hindsight not realizing the two-factor authentication (2fa) was the problem immediately was pretty stupid. The solution to this error is to login with a One Time Password (OTP)  token <em>not</em> your normal Github password. If you do use the wrong password you will receive the follow error message.<br />
+![](/images/2014-05-14/login_error.png SourceTree error %}</p>
+
+<div class="alert alert-info">
+  <p><strong>Note:</strong> If you use the official <a href="https://mac.github.com">GitHub app</a> you will not run into a login error because their app uses the GitHub API for authentication.</p>
+
+</div>
+
+
+<p>Luckily Github has made creating a OTP quite easy once you know what you are looking for. It is recommended practice to use one token per application. This means if I ever need to reject a token it will only effect the one version of SourceTree on one device.</p>
+
+<p>Below are the steps needed to create your OTP token and re-add your Github account in SourceTree.</p>
+
+<h3 id="setting-up-the-otp">Setting up the OTP</h3>
+
+<p>To create the OTP, use the following <a href="https://github.com/settings/tokens" target="_blank">link</a>. Click on &ldquo;Generate New Token&rdquo;.<br />
+<img src="/images/2014-05-14/otp.png" alt="Creating an OTP" /></p>
+
+<p>Give your OTP a Token description. Make sure at least the &ldquo;repo&rdquo; and &ldquo;public_repo&rdquo; options are checked. Click &ldquo;Generate token&rdquo;.<br />
+<img src="/images/2014-05-14/new_token.png" alt="Token permissions" /></p>
+
+<h3 id="configuration-for-sourcetree">Configuration for SourceTree</h3>
+
+<p>If you already have SourceTree setup, you will need to edit your account password for GitHub. You can accomplish this by opening the Bookmarks window and clicking on the &ldquo;Hosted Repositories&rdquo; button.<br />
+<img src="/images/2014-05-14/bookmarks.png" alt="Bookmarks Window" /></p>
+
+<p>Now you need to click on &ldquo;Edit Accounts&hellip;&rdquo; so you can select your Github account and make modifications.<br />
+<img src="/images/2014-05-14/hosted_repositories.png" alt="Hosted Repositories" /></p>
+
+<p>Click on &ldquo;Set Password&rdquo;.<br />
+<img src="/images/2014-05-14/github_options.png" alt="Github Acct Options" /></p>
+
+<p>In the Authenticate window make sure and use your newly generated OTP token as your password. I recommend saving the password in your keychain.<br />
+<img src="/images/2014-05-14/authenticate.png" alt="Authenticate Window" /></p>
+
+<hr />
+
+<p>Articles: <a href="https://confluence.atlassian.com/display/SOURCETREEKB/Two-Factor+Authentication+%282FA%29+with+GitHub+in+SourceTree" target="_blank">atlassian KB</a>,
+<a href="http://ryansechrest.com/2013/12/sourcetree-github-must-specify-two-factor-authentication-otp-code/" target="_blank">Ryan Sechrest</a></p>
+
+<p>Updated: May 15th, 2014 - Add KB link from atlassian. Per <blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://twitter.com/clburlison">@clburlison</a> Thanks Clayton. I did a KB (<a href="https://t.co/Ql7mjXeXDy">https://t.co/Ql7mjXeXDy</a>) too. Yours has pictures though so easier to read. Could you link to the KB?</p>&mdash; Kieran Senior 🇬🇬 (@kieransenior) <a href="https://twitter.com/kieransenior/status/466879257864847360">May 15, 2014</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+</div>
+
+
+  <footer class="container">
+  <div class="container navigation no-print">
+  <h2>Navigation</h2>
+  
+  
+
+    
+    <a class="prev" href="https://clburlison.com/why-i-love-my-job/" title="Why I love my job?">
+      Previous
+    </a>
+    
+
+    
+    <a class="next" href="https://clburlison.com/creating-a-development-munki-repo/" title="Creating a development munki_repo">
+      Next
+    </a>
+    
+
+  
+
+
+</div>
+
+  <div class="container comments">
+  <h2>Comments</h2>
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+  powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>.
+
+
+</div>
+
+
+  
+<div class="container copyright">
+  
+  &copy; 2014 - 2017 Clayton Burlison
+
+
+</div>
+
+
+</div>
+
+</footer>
+
+    </main>
+    
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+<script src="https://clburlison.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+  </body>
+</html>
+

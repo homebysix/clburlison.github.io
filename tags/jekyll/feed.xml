@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jekyll on clburlison</title>
+    <link>https://clburlison.com/tags/jekyll/feed/index.xml</link>
+    <description>Recent content in Jekyll on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/tags/jekyll/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Jekyll Pull Requests</title>
+      <link>https://clburlison.com/jekyll-pull-requests/</link>
+      <pubDate>Thu, 22 Jan 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/jekyll-pull-requests/</guid>
+      <description>
+
+&lt;div class=&#34;alert alert-danger&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Outdated:&lt;/strong&gt; I am no longer using this process nor is the original author that I was linking to. He has an archive of his post &lt;a href=&#34;https://github.com/brunosan/brunosan.eu/blob/main/_posts/blog/2012-07-01-jekyll-pull-requests.md&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;p&gt;Github is awesome. Jekyll is awesome. Travis-ci is awesome. Prose.io is awesome. And now&amp;hellip;you can be awesome as well. Open Source is a fantastic but it is not without its drawbacks. One of the biggest drawbacks to using a static website like this site is the lack of an easy way to update posts. Sometimes I make a typo or want to add information to a already created post. Unfortunately, this would require me to use my laptop and only my laptop to modify the markdown files, build the website, and upload the new static files of the website to Github.&lt;/p&gt;
+
+&lt;p&gt;With some love and lots of error in trial, I was able to modify this site so that I can create changes from any web browser. Mostly thanks to &lt;a href=&#34;http://brunosan.eu/2012/07/01/jekyll-pull-requests/&#34; target=&#34;_blank&#34;&gt;Saepe&lt;/a&gt;. In fact &lt;strong&gt;anyone&lt;/strong&gt; can send an edit to a post, from there a Github pull request is created, I can review the request and if I agree with the change can directly add your change. That is what the&lt;/p&gt;
+
+&lt;p&gt;&lt;a id=&#34;pull-request-btn&#34; class=&#34;btn btn-danger&#34; href=&#34;&#34;&gt;Send edit request&lt;/a&gt;  button at the bottom of this page does.&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Now is a time to state that if you are uncomfortable with the Markdown language you might not understand all the syntax of these posts. Which might make editing the page difficult. If you feel uncomfortable feel free to add a comment below and I can make the change.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;h1 id=&#34;how-to-submit-a-change&#34;&gt;How to submit a change&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;When you see a post you want to edit, click on “Send edit request” button at the bottom of the page. &lt;a id=&#34;pull-request-btn&#34; class=&#34;btn btn-danger&#34; href=&#34;&#34;&gt;Send edit request&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;You need a free &lt;a href=&#34;https://github.com&#34; target=&#34;_blank&#34;&gt;Github&lt;/a&gt; account. If you are a developer you probably have one, so just login. If not, you can create one in a breeze.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-01-22/2-signin.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once logged in you will need to give Prose permission to use your Github credentials.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-01-22/3-prose-permission.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;After login you will land on a page like below. Edit the text. Then click &lt;em&gt;Save&lt;/em&gt; once your done.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-01-22/4-edit-page.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;You will see what you have changed, and you can add a commit message or leave the default message. Then click “Submit Change Request”.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-01-22/5-send-pull-request.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Done!&lt;/p&gt;
+
+&lt;h1 id=&#34;how-does-it-work&#34;&gt;How does it work?&lt;/h1&gt;
+
+&lt;p&gt;Honestly I am using Saepe&amp;rsquo;s method completely so I will direct you to &lt;a href=&#34;http://brunosan.eu/2012/07/01/jekyll-pull-requests/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:&lt;br /&gt;
+&lt;a href=&#34;https://github.com/clburlison/clburlison.github.io/issues/1&#34; target=&#34;_blank&#34;&gt;Issue #1&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://brunosan.eu/2012/07/01/jekyll-pull-requests/&#34; target=&#34;_blank&#34;&gt;Jekyll Pull Requests&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://blog.martinfenner.org/&#34; target=&#34;_blank&#34;&gt;Martin Fenner&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Moving to Plain Jekyll</title>
+      <link>https://clburlison.com/moving-to-plain-jekyll/</link>
+      <pubDate>Sat, 09 Aug 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/moving-to-plain-jekyll/</guid>
+      <description>&lt;p&gt;Moved the blog over from Octopress to a plain Jekyll setup. This allows me to have a bit more control while also removing some of the fluff that was installed by Octopress that I did not use. I am very glad to have found such a great theme created by Michael Rose. I will release another post once I have had a little more time to play around. As of this moment, it is about 10 times faster to generate the website on my laptop. The &lt;code&gt;--watch&lt;/code&gt; flag from raw jekyll much faster at recreating pages.&lt;/p&gt;
+
+&lt;p&gt;Still need to add tags and a few other plugins.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

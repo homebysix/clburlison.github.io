@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>python2 and tls  &middot; clburlison</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="osx, python, ">
+
+
+<meta property="og:title" content="python2 and tls  &middot; clburlison ">
+<meta property="og:site_name" content="clburlison"/>
+<meta property="og:url" content="https://clburlison.com/python2-and-tls/" />
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2017-03-10T00:00:00Z" />
+<meta property="og:article:modified_time" content="2017-03-10T00:00:00Z" />
+
+  
+    
+<meta property="og:article:tag" content="osx">
+    
+<meta property="og:article:tag" content="python">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@clburlison" />
+<meta name="twitter:creator" content="@clburlison" />
+<meta name="twitter:title" content="python2 and tls" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://clburlison.com/python2-and-tls/" />
+<meta name="twitter:domain" content="https://clburlison.com/">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "python2 and tls",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2017-03-10",
+    "description": "",
+    "wordCount": 951
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://clburlison.com/python2-and-tls/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://clburlison.com/touch-icon-144-precomposed.png">
+<link href="https://clburlison.com/favicon.png" rel="icon">
+
+<meta name="generator" content="Hugo 0.19" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://clburlison.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://clburlison.com/css/style.css">
+<link rel="stylesheet" href="https://clburlison.com/css/highlight/default.css">
+
+  
+  
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-49614309-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://clburlison.com/">
+  clburlison
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  A Mac sysadmin, documenting useful code, ideas, &amp; guides.
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+<a class="homelink" href="https://clburlison.com/">Home</a>
+
+
+  
+<a href="https://clburlison.com/about">About</a>
+
+<a href="https://clburlison.com/post" title="Show list of posts">Posts</a>
+
+<a href="https://clburlison.com/resources">Resources</a>
+
+<a href="https://clburlison.com/tags" title="Show list of tags">Tags</a>
+
+<a href="https://clburlison.com/talks">Talks</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:clburlison@gmail.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/clburlison">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+<a id="contact-link-linkedin" class="contact_link" href="https://www.linkedin.com/in/clburlison">
+  <span class="fa fa-linkedin-square"></span><span>linkedin</span></a>
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/clburlison">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>python2 and tls
+</h1>
+
+  <div class="metas">
+<time datetime="2017-03-10">Mar 10, 2017</time>
+
+
+  
+  &middot; Read in about 5 min
+  &middot; (951 Words)
+  <br>
+  
+<a class="label" href="https://clburlison.com/tags/osx">osx</a>
+
+<a class="label" href="https://clburlison.com/tags/python">python</a>
+
+
+
+</div>
+
+</header>
+
+  
+
+<nav class="toc">
+<input id="ac-toc" name="accordion-toc" type="checkbox">
+<label for="ac-toc">Table of Contents</label>
+<div id="toc" class="toc__menu">
+<nav id="TableOfContents">
+<ul>
+<li><a href="#background">Background</a></li>
+<li><a href="#fun-stuff">Fun stuff</a></li>
+<li><a href="#more-fun-stuff">More fun stuff</a></li>
+<li><a href="#even-more-fun-stuff">Even more fun stuff</a></li>
+<li><a href="#more-fun-to-come">More fun to come</a></li>
+<li><a href="#articles">Articles</a></li>
+</ul>
+</nav>
+</div>
+</input>
+</nav>
+
+
+
+  <div class="container content">
+  
+
+<p>For your Friday viewing pleasure I present the following cartoon.</p>
+
+
+<figure >
+    
+        <img src="https://imgs.xkcd.com/comics/nerd_sniping.png"  />
+    
+    
+    <figcaption>
+        <h4>Credit: https://xkcd.com/356/</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<h1 id="background">Background</h1>
+
+<p>In case you do not know <a href="http://stackoverflow.com/a/7406994" target="_blank">Apple deprecated the usage of OpenSSL</a> in favor of Common Crypto, back with the release of OS X Lion (10.7) in 2011. On Apple&rsquo;s latest operating system macOS Sierra (10.12) OpenSSL is currently at version &ldquo;0.9.8zh&rdquo; with very little indication that it will get updated. Now this is a specific build that Apple created and it does have a few back-ported fixes however this version doesn&rsquo;t support TLSv1.1 or TLSv1.2.</p>
+
+<p>If you do not keep up with the latest and greatest in the security world do not worry you are not alone. That is a full time job after all so it is hard for me to keep up with it myself. TLSv1.1 and TLSv1.2 are important because they offer better security. They specifically protect you against two nasty vulnerabilities, <a href="http://www.webopedia.com/TERM/S/ssl_beast.html" target="_blank">BEAST</a> and <a href="https://www.us-cert.gov/ncas/alerts/TA14-290A" target="_blank">POODLE</a> if you want more reading.</p>
+
+<h1 id="fun-stuff">Fun stuff</h1>
+
+<p>So <a href="https://michaellynn.github.io/about/" target="_blank">frogor</a> recently worked on a way to patch the ssl module that comes with the system python for macOS. You can see his proof of concept in the <a href="https://github.com/pudquick/tlsssl" target="_blank">tlsssl</a> git repo.</p>
+
+<p>The process for using it looks a little like (partly pseudo code):</p>
+
+<ul>
+<li>install homebrew</li>
+<li><code>brew install openssl</code></li>
+<li>git clone his repo</li>
+<li>download source files from the github/cpython repo</li>
+<li><code>python setup.py build</code> to compile the project</li>
+<li>Copy the two dylib files to the correct directory</li>
+<li>Copy the <code>_tlsssl.so</code> and <code>tlsssl.py</code> files to a path that python can import</li>
+</ul>
+
+<p>Followed with the following code to use it:</p>
+
+<pre><code class="language-python">import tlsssl as ssl
+import urllib2
+ctx = ssl.create_default_context()
+a = urllib2.urlopen('https://fancyssl.hboeck.de/', context=ctx)
+</code></pre>
+
+<p>And it works! Not too bad for a few minutes of work. However, <a href="https://github.com/Homebrew/legacy-homebrew/issues/20424" target="_blank">brew</a> is a <a href="https://github.com/Homebrew/legacy-homebrew/issues/47450" target="_blank">big</a> red <a href="https://github.com/Homebrew/legacy-homebrew/issues/45625" target="_blank">flag</a>. Thankfully the maintainers learned their lessons and <em>finally</em> resolved my main complaint with <a href="https://github.com/Homebrew/brew/releases/tag/1.0.0" target="_blank">Homebrew v1.0.0</a> specifically the following <a href="https://github.com/Homebrew/brew/releases/tag/1.0.0" target="_blank">commit</a>. Homebrew is great for developers and single user machines but once you are on a multiuser system another tool needs to be used.</p>
+
+<h1 id="more-fun-stuff">More fun stuff</h1>
+
+<p>For the above patch to work we need an updated version of OpenSSL that supports the updated protocols and we need the patched ssl module. We also would ideally like those files to be placed on the disk and what better than a native package to do so. Before we can get to that step, currently the OpenSSL Software Foundation is maintaining two branches of their code the 1.1.0 series and the 1.0.2 series as Long Term Support (LTS) version<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>. Since even the latest releases of the python project are still using the <a href="https://github.com/python/cpython/pull/459" target="_blank">1.0.2 series</a>, as of 6 days ago, along with many other projects I decided we would stick with that series as well.</p>
+
+<p>The <a href="https://github.com/google/macops" target="_blank">MacOps team</a> at Google has been vendoring their own versions of Python and OpenSSL for years, they even open sourced some of their <a href="https://github.com/google/macops/tree/master/packages" target="_blank">build scripts</a>. My only issue was the lack of customization. Too many variables being hard coded made it difficult to customize for my needs. So I set out to redo all of the build scripts with a new project <a href="https://github.com/clburlison/vendored" target="_blank">vendored</a>.</p>
+
+<p>Although the project isn&rsquo;t complete it has lots of functionality finished. It mainly allows you to create a single package for all the bits frogor did with some bonus built in.</p>
+
+<h1 id="even-more-fun-stuff">Even more fun stuff</h1>
+
+<p>This is great now I can sit and watch my computer build all these projects for 5-10 minutes.. Or you could skip that and go straight to the <a href="https://github.com/clburlison/vendored/releases" target="_blank">releases page</a>. Here you&rsquo;ll find pre-built releases that I&rsquo;ve created. These come with a few limitations, mainly you don&rsquo;t get to pick the install paths, package identifiers, or signing cert.</p>
+
+<p>Before we pick apart the output package let&rsquo;s look at the stock python settings. Run the following on your machine if you want to follow along:</p>
+
+<pre><code class="language-bash">git clone https://github.com/clburlison/vendored.git
+cd vendored/tests
+/usr/bin/python version_tester.py
+</code></pre>
+
+<p>The output will be:</p>
+
+<pre><code class="language-bash">Our python is located: /usr/bin/python
+Our python version: 2.7.10
+Our openssl is: OpenSSL 0.9.8zh 14 Jan 2016
+------------------------------------------------------------------
+SUCCESS: Connection was made using TLS 1.0
+</code></pre>
+
+<p>Note the version of OpenSSL and TLS version being used.</p>
+
+<p>Now lets go ahead and download the latest <code>vendored_tlsssl.pkg</code> file from the latest <a href="https://github.com/clburlison/vendored/releases/latest" target="_blank">releases page</a>. When you inspect it with <a href="http://www.mothersruin.com/software/SuspiciousPackage/" target="_blank">Suspicious Package</a> you note that it drops a few files on disk specifically in the <code>/Library/vendored</code> directory and a single file in <code>/Library/Python/2.7/site-packages</code> directory named <code>000vendored.pth</code>.</p>
+
+<p>If you deem the package safe go ahead and install it on your machine. Now lets run the same script again:</p>
+
+<pre><code class="language-bash">/usr/bin/python version_tester.py
+</code></pre>
+
+<p>with the output of:</p>
+
+<pre><code class="language-bash">Our python is located: /usr/bin/python
+Our python version: 2.7.10
+Our openssl is: OpenSSL 1.0.2k  26 Jan 2017
+------------------------------------------------------------------
+SUCCESS: Connection was made using TLS 1.2
+</code></pre>
+
+<p>We have a winner! The best part is because how we are adding the patched ssl module to our system python path it becomes very high priority in the list. Verify for yourself:</p>
+
+<pre><code class="language-bash">/usr/bin/python -m site
+</code></pre>
+
+<p>with the output of:</p>
+
+<pre><code class="language-bash">sys.path = [
+    '/Users/vagrant',
+    '/Library/vendored/tlsssl',
+    '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python27.zip',
+    '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7',
+    '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-darwin',
+    '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac',
+    '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac/lib-scriptpackages',
+    '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-tk',
+    '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-old',
+    '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload',
+    '/Library/Python/2.7/site-packages',
+    '/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python',
+    '/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/PyObjC',
+]
+</code></pre>
+
+<p>Notice that <code>/Library/vendored/tlsssl</code> comes before all of the <code>/System/Library</code> paths?</p>
+
+<p>That means using this patch is completely seamless. Just install the single 5.15 MB package and use python2 just like normal.</p>
+
+<pre><code class="language-python">import urllib2
+a = urllib2.urlopen('https://fancyssl.hboeck.de/')
+</code></pre>
+
+<p>and you are off to the races.</p>
+
+<h1 id="more-fun-to-come">More fun to come</h1>
+
+<p>At this time, vendored still has more work. Specifically on creating self contained Python2, Python3 and Ruby. It also needs some love on automating the build of all the tools. Right now <code>build.py</code> is completely unfinished. I also would like to automate the process of building the distribution style packages.</p>
+
+<h1 id="articles">Articles</h1>
+
+<ul>
+<li><a href="http://stackoverflow.com/a/7406994" target="_blank">Details on Apple&rsquo;s deprecation of OpenSSL</a></li>
+<li><a href="https://github.com/google/macops/tree/master/packages" target="_blank">Google MacOps Packaging</a></li>
+<li><a href="https://github.com/pudquick/tlsssl" target="_blank">frogor&rsquo;s tlsssl</a></li>
+<li><a href="https://github.com/Homebrew/brew/releases/tag/1.0.0" target="_blank">Homebrew v1.0 release notes</a></li>
+</ul>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1">OpenSSL supported code branches <a href="https://www.openssl.org/source/" target="_blank">https://www.openssl.org/source/</a>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+</div>
+
+
+  <footer class="container">
+  <div class="container navigation no-print">
+  <h2>Navigation</h2>
+  
+  
+
+    
+    <a class="prev" href="https://clburlison.com/xcode-dynamic-bundleversion/" title="Xcode Dynamic BundleVersion">
+      Previous
+    </a>
+    
+
+    
+
+  
+
+
+</div>
+
+  <div class="container comments">
+  <h2>Comments</h2>
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+  powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>.
+
+
+</div>
+
+
+  
+<div class="container copyright">
+  
+  &copy; 2014 - 2017 Clayton Burlison
+
+
+</div>
+
+
+</div>
+
+</footer>
+
+    </main>
+    
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+<script src="https://clburlison.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+  </body>
+</html>
+

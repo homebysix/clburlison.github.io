@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Imagr on clburlison</title>
+    <link>https://clburlison.com/tags/imagr/feed/index.xml</link>
+    <description>Recent content in Imagr on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/tags/imagr/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Imagr in production</title>
+      <link>https://clburlison.com/imagr-in-production/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/imagr-in-production/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;Many have written about Imagr but few have made the claim of dropping their old imaging solution completely. I made the claim in May after extensively testing Imagr with virtual machines however the real test was this week with 90 brand new Macs. That&amp;rsquo;s right the good ol&amp;rsquo; unboxing, labeling, tagging, and prepping. It is the end of the school year and the Audio Video Department was pretty much done with gear, so I made a time lapse of the entire process. Cue nine hours of footage in 60 seconds. It would have been faster had it not been for those pesky MacBook Airs.&lt;/p&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/5ixTdOXNCHo&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;h1 id=&#34;imagr-workflow&#34;&gt;Imagr Workflow&lt;/h1&gt;
+
+&lt;p&gt;These were brand new computers so they already had a perfectly good operating system from Apple. If you are a part of the Munki community you know a recommended approach is to thin image the computer. This means my Imagr workflow had two items to install for all 90 of these computers (or at least that is how it started):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;dict&amp;gt;
+  &amp;lt;key&amp;gt;name&amp;lt;/key&amp;gt;
+  &amp;lt;string&amp;gt;Puppet thin image&amp;lt;/string&amp;gt;
+  &amp;lt;key&amp;gt;restart_action&amp;lt;/key&amp;gt;
+  &amp;lt;string&amp;gt;restart&amp;lt;/string&amp;gt;
+  &amp;lt;key&amp;gt;description&amp;lt;/key&amp;gt;
+  &amp;lt;string&amp;gt;Thin image a computer.&amp;lt;/string&amp;gt;
+  &amp;lt;key&amp;gt;components&amp;lt;/key&amp;gt;
+  &amp;lt;array&amp;gt;
+    &amp;lt;dict&amp;gt;
+        &amp;lt;key&amp;gt;type&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;package&amp;lt;/string&amp;gt;
+        &amp;lt;key&amp;gt;url&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;http://imagrServer/puppet/puppet_run-20150408.pkg&amp;lt;/string&amp;gt;
+    &amp;lt;/dict&amp;gt;
+    &amp;lt;dict&amp;gt;
+        &amp;lt;key&amp;gt;type&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;package&amp;lt;/string&amp;gt;
+        &amp;lt;key&amp;gt;url&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;http://imagrServer/puppet/puppet_bootstrap-20150603.pkg&amp;lt;/string&amp;gt;
+    &amp;lt;/dict&amp;gt;
+  &amp;lt;/array&amp;gt;
+&amp;lt;/dict&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;These two packages together essentially make up a normal &lt;a href=&#34;https://github.com/rtrouton/rtrouton_scripts/tree/master/rtrouton_scripts/first_boot&#34; target=&#34;_blank&#34;&gt;Firstboot&lt;/a&gt; script that many might be familiar with. Not related to Imagr my bootstrap package installs a few Ruby Gems which sometimes would work and other times not so much. To resolve that issue I created a third package of Ruby Gems which allowed me to move along with my no-image setup.&lt;/p&gt;
+
+&lt;h1 id=&#34;issues&#34;&gt;Issues&lt;/h1&gt;
+
+&lt;p&gt;I prepped all 40 iMacs with only a small visual bug. When the computers would boot I would login to the Imagr applicaiton but the target disk would be blank. This only happened on a handful of computers and Imagr itself kept working. This issue has been logged on Github (&lt;a href=&#34;https://github.com/grahamgilbert/imagr/issues/84&#34; target=&#34;_blank&#34;&gt;#84&lt;/a&gt;) and I plan to do more troubleshooting next week. My first guess it that is has something to do with the Fusion drives but I want to see if I can reproduce the issue.&lt;/p&gt;
+
+&lt;p&gt;The MacBook Airs (MBA) came around and I was really halted. MBA&amp;rsquo;s don&amp;rsquo;t have true ethernet ports so I was using Apple&amp;rsquo;s Thunderbolt Adapters. They would work fine in the NetInstall environment but I would get to the Apple Setup Wizard and no network connectivity. If you click continue on the first setup screen connectivity would work. My initial solution was to install the following script by &lt;a href=&#34;https://github.com/golbiga/Scripts/blob/master/enable_external_network_adapter/enable_external_network_adapter.sh&#34; target=&#34;_blank&#34;&gt;Allen&lt;/a&gt; however when I did my copy/paste failed me. The followup (bandaid) was to install a dummy user account and remove the Setup Wizard. This would get the laptop to the login window were network connectivity started to work. Later that evening &lt;a href=&#34;https://twitter.com/chilcote&#34; target=&#34;_blank&#34;&gt;Joseph Chilcote&lt;/a&gt; reported a similar issue on twitter.&lt;/p&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Found the edgiest of edge cases with Imagr. First-boot doesn&amp;#39;t like it when you swap ethernet adapters.&lt;/p&gt;&amp;mdash; Joseph Chilcote (@chilcote) &lt;a href=&#34;https://twitter.com/chilcote/status/606233511968808960&#34;&gt;June 3, 2015&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;Then the following &lt;a href=&#34;https://github.com/grahamgilbert/imagr/pull/86&#34; target=&#34;_blank&#34;&gt;pull-request&lt;/a&gt; fixed the issue.&lt;/p&gt;
+
+&lt;p&gt;Take-away: It is really nice when you are able to see the code&amp;hellip;&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;On May 14th, I dropped DeployStudio. On June 3rd, I have officially disabled the DeployStudio server components and all DeployStudio NBIs. Imagr honestly takes less time to setup than DeployStudio however it is not an all-in-one GUI application that is going to do everything for you. Imagr works really well, even though the above process was detailing a no-image workflow the imaging component works. If you want to get started go check out the &lt;a href=&#34;https://github.com/grahamgilbert/imagr/wiki/Getting-Started&#34; target=&#34;_blank&#34;&gt;Imagr Wiki&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

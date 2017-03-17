@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on clburlison</title>
+    <link>https://clburlison.com/tags/python/feed/index.xml</link>
+    <description>Recent content in Python on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/tags/python/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>python2 and tls</title>
+      <link>https://clburlison.com/python2-and-tls/</link>
+      <pubDate>Fri, 10 Mar 2017 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/python2-and-tls/</guid>
+      <description>
+
+&lt;p&gt;For your Friday viewing pleasure I present the following cartoon.&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://imgs.xkcd.com/comics/nerd_sniping.png&#34;  /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Credit: https://xkcd.com/356/&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;h1 id=&#34;background&#34;&gt;Background&lt;/h1&gt;
+
+&lt;p&gt;In case you do not know &lt;a href=&#34;http://stackoverflow.com/a/7406994&#34; target=&#34;_blank&#34;&gt;Apple deprecated the usage of OpenSSL&lt;/a&gt; in favor of Common Crypto, back with the release of OS X Lion (10.7) in 2011. On Apple&amp;rsquo;s latest operating system macOS Sierra (10.12) OpenSSL is currently at version &amp;ldquo;0.9.8zh&amp;rdquo; with very little indication that it will get updated. Now this is a specific build that Apple created and it does have a few back-ported fixes however this version doesn&amp;rsquo;t support TLSv1.1 or TLSv1.2.&lt;/p&gt;
+
+&lt;p&gt;If you do not keep up with the latest and greatest in the security world do not worry you are not alone. That is a full time job after all so it is hard for me to keep up with it myself. TLSv1.1 and TLSv1.2 are important because they offer better security. They specifically protect you against two nasty vulnerabilities, &lt;a href=&#34;http://www.webopedia.com/TERM/S/ssl_beast.html&#34; target=&#34;_blank&#34;&gt;BEAST&lt;/a&gt; and &lt;a href=&#34;https://www.us-cert.gov/ncas/alerts/TA14-290A&#34; target=&#34;_blank&#34;&gt;POODLE&lt;/a&gt; if you want more reading.&lt;/p&gt;
+
+&lt;h1 id=&#34;fun-stuff&#34;&gt;Fun stuff&lt;/h1&gt;
+
+&lt;p&gt;So &lt;a href=&#34;https://michaellynn.github.io/about/&#34; target=&#34;_blank&#34;&gt;frogor&lt;/a&gt; recently worked on a way to patch the ssl module that comes with the system python for macOS. You can see his proof of concept in the &lt;a href=&#34;https://github.com/pudquick/tlsssl&#34; target=&#34;_blank&#34;&gt;tlsssl&lt;/a&gt; git repo.&lt;/p&gt;
+
+&lt;p&gt;The process for using it looks a little like (partly pseudo code):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;install homebrew&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;brew install openssl&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;git clone his repo&lt;/li&gt;
+&lt;li&gt;download source files from the github/cpython repo&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;python setup.py build&lt;/code&gt; to compile the project&lt;/li&gt;
+&lt;li&gt;Copy the two dylib files to the correct directory&lt;/li&gt;
+&lt;li&gt;Copy the &lt;code&gt;_tlsssl.so&lt;/code&gt; and &lt;code&gt;tlsssl.py&lt;/code&gt; files to a path that python can import&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Followed with the following code to use it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import tlsssl as ssl
+import urllib2
+ctx = ssl.create_default_context()
+a = urllib2.urlopen(&#39;https://fancyssl.hboeck.de/&#39;, context=ctx)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And it works! Not too bad for a few minutes of work. However, &lt;a href=&#34;https://github.com/Homebrew/legacy-homebrew/issues/20424&#34; target=&#34;_blank&#34;&gt;brew&lt;/a&gt; is a &lt;a href=&#34;https://github.com/Homebrew/legacy-homebrew/issues/47450&#34; target=&#34;_blank&#34;&gt;big&lt;/a&gt; red &lt;a href=&#34;https://github.com/Homebrew/legacy-homebrew/issues/45625&#34; target=&#34;_blank&#34;&gt;flag&lt;/a&gt;. Thankfully the maintainers learned their lessons and &lt;em&gt;finally&lt;/em&gt; resolved my main complaint with &lt;a href=&#34;https://github.com/Homebrew/brew/releases/tag/1.0.0&#34; target=&#34;_blank&#34;&gt;Homebrew v1.0.0&lt;/a&gt; specifically the following &lt;a href=&#34;https://github.com/Homebrew/brew/releases/tag/1.0.0&#34; target=&#34;_blank&#34;&gt;commit&lt;/a&gt;. Homebrew is great for developers and single user machines but once you are on a multiuser system another tool needs to be used.&lt;/p&gt;
+
+&lt;h1 id=&#34;more-fun-stuff&#34;&gt;More fun stuff&lt;/h1&gt;
+
+&lt;p&gt;For the above patch to work we need an updated version of OpenSSL that supports the updated protocols and we need the patched ssl module. We also would ideally like those files to be placed on the disk and what better than a native package to do so. Before we can get to that step, currently the OpenSSL Software Foundation is maintaining two branches of their code the 1.1.0 series and the 1.0.2 series as Long Term Support (LTS) version&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;. Since even the latest releases of the python project are still using the &lt;a href=&#34;https://github.com/python/cpython/pull/459&#34; target=&#34;_blank&#34;&gt;1.0.2 series&lt;/a&gt;, as of 6 days ago, along with many other projects I decided we would stick with that series as well.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&#34;https://github.com/google/macops&#34; target=&#34;_blank&#34;&gt;MacOps team&lt;/a&gt; at Google has been vendoring their own versions of Python and OpenSSL for years, they even open sourced some of their &lt;a href=&#34;https://github.com/google/macops/tree/master/packages&#34; target=&#34;_blank&#34;&gt;build scripts&lt;/a&gt;. My only issue was the lack of customization. Too many variables being hard coded made it difficult to customize for my needs. So I set out to redo all of the build scripts with a new project &lt;a href=&#34;https://github.com/clburlison/vendored&#34; target=&#34;_blank&#34;&gt;vendored&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Although the project isn&amp;rsquo;t complete it has lots of functionality finished. It mainly allows you to create a single package for all the bits frogor did with some bonus built in.&lt;/p&gt;
+
+&lt;h1 id=&#34;even-more-fun-stuff&#34;&gt;Even more fun stuff&lt;/h1&gt;
+
+&lt;p&gt;This is great now I can sit and watch my computer build all these projects for 5-10 minutes.. Or you could skip that and go straight to the &lt;a href=&#34;https://github.com/clburlison/vendored/releases&#34; target=&#34;_blank&#34;&gt;releases page&lt;/a&gt;. Here you&amp;rsquo;ll find pre-built releases that I&amp;rsquo;ve created. These come with a few limitations, mainly you don&amp;rsquo;t get to pick the install paths, package identifiers, or signing cert.&lt;/p&gt;
+
+&lt;p&gt;Before we pick apart the output package let&amp;rsquo;s look at the stock python settings. Run the following on your machine if you want to follow along:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone https://github.com/clburlison/vendored.git
+cd vendored/tests
+/usr/bin/python version_tester.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The output will be:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;Our python is located: /usr/bin/python
+Our python version: 2.7.10
+Our openssl is: OpenSSL 0.9.8zh 14 Jan 2016
+------------------------------------------------------------------
+SUCCESS: Connection was made using TLS 1.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note the version of OpenSSL and TLS version being used.&lt;/p&gt;
+
+&lt;p&gt;Now lets go ahead and download the latest &lt;code&gt;vendored_tlsssl.pkg&lt;/code&gt; file from the latest &lt;a href=&#34;https://github.com/clburlison/vendored/releases/latest&#34; target=&#34;_blank&#34;&gt;releases page&lt;/a&gt;. When you inspect it with &lt;a href=&#34;http://www.mothersruin.com/software/SuspiciousPackage/&#34; target=&#34;_blank&#34;&gt;Suspicious Package&lt;/a&gt; you note that it drops a few files on disk specifically in the &lt;code&gt;/Library/vendored&lt;/code&gt; directory and a single file in &lt;code&gt;/Library/Python/2.7/site-packages&lt;/code&gt; directory named &lt;code&gt;000vendored.pth&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you deem the package safe go ahead and install it on your machine. Now lets run the same script again:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;/usr/bin/python version_tester.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;with the output of:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;Our python is located: /usr/bin/python
+Our python version: 2.7.10
+Our openssl is: OpenSSL 1.0.2k  26 Jan 2017
+------------------------------------------------------------------
+SUCCESS: Connection was made using TLS 1.2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We have a winner! The best part is because how we are adding the patched ssl module to our system python path it becomes very high priority in the list. Verify for yourself:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;/usr/bin/python -m site
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;with the output of:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sys.path = [
+    &#39;/Users/vagrant&#39;,
+    &#39;/Library/vendored/tlsssl&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python27.zip&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-darwin&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac/lib-scriptpackages&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-tk&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-old&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload&#39;,
+    &#39;/Library/Python/2.7/site-packages&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/PyObjC&#39;,
+]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice that &lt;code&gt;/Library/vendored/tlsssl&lt;/code&gt; comes before all of the &lt;code&gt;/System/Library&lt;/code&gt; paths?&lt;/p&gt;
+
+&lt;p&gt;That means using this patch is completely seamless. Just install the single 5.15 MB package and use python2 just like normal.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import urllib2
+a = urllib2.urlopen(&#39;https://fancyssl.hboeck.de/&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and you are off to the races.&lt;/p&gt;
+
+&lt;h1 id=&#34;more-fun-to-come&#34;&gt;More fun to come&lt;/h1&gt;
+
+&lt;p&gt;At this time, vendored still has more work. Specifically on creating self contained Python2, Python3 and Ruby. It also needs some love on automating the build of all the tools. Right now &lt;code&gt;build.py&lt;/code&gt; is completely unfinished. I also would like to automate the process of building the distribution style packages.&lt;/p&gt;
+
+&lt;h1 id=&#34;articles&#34;&gt;Articles&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://stackoverflow.com/a/7406994&#34; target=&#34;_blank&#34;&gt;Details on Apple&amp;rsquo;s deprecation of OpenSSL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/google/macops/tree/master/packages&#34; target=&#34;_blank&#34;&gt;Google MacOps Packaging&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/pudquick/tlsssl&#34; target=&#34;_blank&#34;&gt;frogor&amp;rsquo;s tlsssl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/Homebrew/brew/releases/tag/1.0.0&#34; target=&#34;_blank&#34;&gt;Homebrew v1.0 release notes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;OpenSSL supported code branches &lt;a href=&#34;https://www.openssl.org/source/&#34; target=&#34;_blank&#34;&gt;https://www.openssl.org/source/&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Slack rsync</title>
+      <link>https://clburlison.com/slack-rsync/</link>
+      <pubDate>Mon, 16 Nov 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/slack-rsync/</guid>
+      <description>&lt;p&gt;With a little push from &lt;a href=&#34;https://github.com/groob&#34; target=&#34;_blank&#34;&gt;@groob&lt;/a&gt;, I have created a simple python script that runs a rsync command and sends a summary of the run to &lt;a href=&#34;https://slack.com/&#34; target=&#34;_blank&#34;&gt;Slack&lt;/a&gt;. Slack was not created to be a storage vault for server logs however it does great for short sms style messages. If you are using a log collection service like &lt;a href=&#34;https://www.elastic.co/products/logstash&#34; target=&#34;_blank&#34;&gt;logstash&lt;/a&gt; you could extend on this script to include the link to your uploaded log or if an error occurs you could automatically create a helpdesk ticket for you to investigate the issue.&lt;/p&gt;
+
+&lt;p&gt;My use case is simple, every day I sync my munki repo to a separate server (I also have backups don&amp;rsquo;t worry). I only need to know that the task completed successfully. I have little desire to see a verbose output of every single line of an rsync run. With the rsync &lt;code&gt;--stats&lt;/code&gt; flag you can see a summary of the run which is then sent to Slack. The green bar will change to red if an error has occurred, which allows anyone to know if an error has occurred at a glance.&lt;/p&gt;
+
+&lt;p&gt;Sample output:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-10-16/sample.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For this to work you will need to:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;setup &lt;a href=&#34;http://linuxconfig.org/passwordless-ssh&#34; target=&#34;_blank&#34;&gt;ssh passwordless login&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;create a Slack &amp;ldquo;Incoming Webhook&amp;rdquo;
+
+&lt;ul&gt;
+&lt;li&gt;visit &lt;a href=&#34;https://slack.com/services/new/incoming-webhook&#34; target=&#34;_blank&#34;&gt;https://slack.com/services/new/incoming-webhook&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;modify the &lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/slack/sync_slack/sync_slack.py&#34; target=&#34;_blank&#34;&gt;sync_slack.py&lt;/a&gt; as needed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To see the project README and get the script visit: &lt;a href=&#34;https://github.com/clburlison/scripts/tree/master/clburlison_scripts/slack/sync_slack&#34; target=&#34;_blank&#34;&gt;sync_slack&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Import Logic Pro X Audio Content</title>
+      <link>https://clburlison.com/import-logic-pro-x/</link>
+      <pubDate>Mon, 24 Aug 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/import-logic-pro-x/</guid>
+      <description>&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Updated for Logic 10.2.0 - September 18th, 2015&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This script has been updated to support Logic Pro 10.2.0. This release included many additional audio libraries for the added Alchemy Plugin. The updated script from Hannes will now download audio content to a &amp;ldquo;__Downloaded Items&amp;rdquo; directory and create hard links to Apple&amp;rsquo;s categories.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;p&gt;Today I needed to import 60 packages (37 GB) of audio content for Logic Pro X into my Munki repo. Hannes Juutilainen did most of the hard work with his &lt;a href=&#34;https://github.com/hjuutilainen/adminscripts/blob/master/download-logicprox-content.py&#34; target=&#34;_blank&#34;&gt;download-logicprox-content.py&lt;/a&gt; script which will download all the packages from Apple.&lt;/p&gt;
+
+&lt;p&gt;Then comes the tedious task of importing all 60 packages. I searched GitHub thinking someone else had already done this and found the following &lt;a href=&#34;https://github.com/portalpie/Logic-Pro-X-Additional-Content-Recipes&#34; target=&#34;_blank&#34;&gt;project&lt;/a&gt; by Morgan Daly which uses &lt;a href=&#34;https://github.com/autopkg/autopkg&#34; target=&#34;_blank&#34;&gt;AutoPkg&lt;/a&gt; in order to download and import the packages into Munki &amp;ndash; o_O. This works but is very much overkill as the audio content does not change frequently.&lt;/p&gt;
+
+&lt;p&gt;The previous script by Hannes will download the audio packages into many sub-directories like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;── Apple Loops
+│   ├── Chillwave
+│   │   └── MAContent10_AppleLoopsChillwave.pkg
+│   ├── Deep House
+│   │   └── MAContent10_AppleLoopsDeepHouse.pkg
+│   ├── Dubstep
+│   │   └── MAContent10_AppleLoopsDubstep.pkg
+│   ├── Electro House
+│   │   └── MAContent10_AppleLoopsElectroHouse.pkg
+│   ├── Hip Hop
+│   │   └── MAContent10_AppleLoopsHipHop.pkg
+│   ├── Modern R&amp;amp;B
+│   │   └── MAContent10_AppleLoopsModernRnB.pkg
+│   └── Tech House
+│       └── MAContent10_AppleLoopsTechHouse.pkg
+├── Bass
+│   └── MAContent10_InstrumentsBass.pkg
+...
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As such I needed to recursively search for the &lt;code&gt;.pkg&lt;/code&gt; extension and import those files into Munki. The result is the following python script: &lt;a href=&#34;https://github.com/clburlison/scripts/tree/master/clburlison_scripts/LogicProX&#34; target=&#34;_blank&#34;&gt;munkiimport_logic_audio.py&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&#34;notice--danger&#34;&gt;
+    &lt;b&gt;10.11 and Logic Audio Content -- November 17th, 2015&lt;/b&gt;
+  &lt;p&gt;Dave Weale found a nice little bug with this approach. &lt;br&gt;&lt;br&gt;&lt;u&gt;TL;DR:&lt;/u&gt; 10.11 has SIP enabled and Apple is writing Receipts for the audio content to &lt;code&gt;/System/Library/Receipts&lt;/code&gt;. When munki imports these packages we are using the package receipts to determine if the content has been installed. When removing the package content Munki is unable to remove the recipe as /System is SIP protected.
+    &lt;br&gt;&lt;br&gt;
+    More info: &lt;a href=&#34;https://groups.google.com/forum/#!topic/munki-discuss/TjeSl39zGVw&#34;&gt;Logic Pro X assets not installing after removal &amp; attempted reinstall&lt;/a&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

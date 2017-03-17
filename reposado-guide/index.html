@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Setup Reposado &#43; Margarita on Ubuntu 14.04  &middot; clburlison</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="reposado, ubuntu, ">
+
+
+<meta property="og:title" content="Setup Reposado &#43; Margarita on Ubuntu 14.04  &middot; clburlison ">
+<meta property="og:site_name" content="clburlison"/>
+<meta property="og:url" content="https://clburlison.com/reposado-guide/" />
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2014-10-02T00:00:00Z" />
+<meta property="og:article:modified_time" content="2014-10-02T00:00:00Z" />
+
+  
+    
+<meta property="og:article:tag" content="reposado">
+    
+<meta property="og:article:tag" content="ubuntu">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@clburlison" />
+<meta name="twitter:creator" content="@clburlison" />
+<meta name="twitter:title" content="Setup Reposado &#43; Margarita on Ubuntu 14.04" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://clburlison.com/reposado-guide/" />
+<meta name="twitter:domain" content="https://clburlison.com/">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Setup Reposado &#43; Margarita on Ubuntu 14.04",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2014-10-02",
+    "description": "",
+    "wordCount": 2235
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://clburlison.com/reposado-guide/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://clburlison.com/touch-icon-144-precomposed.png">
+<link href="https://clburlison.com/favicon.png" rel="icon">
+
+<meta name="generator" content="Hugo 0.19" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://clburlison.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://clburlison.com/css/style.css">
+<link rel="stylesheet" href="https://clburlison.com/css/highlight/default.css">
+
+  
+  
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-49614309-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://clburlison.com/">
+  clburlison
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  A Mac sysadmin, documenting useful code, ideas, &amp; guides.
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+<a class="homelink" href="https://clburlison.com/">Home</a>
+
+
+  
+<a href="https://clburlison.com/about">About</a>
+
+<a href="https://clburlison.com/post" title="Show list of posts">Posts</a>
+
+<a href="https://clburlison.com/resources">Resources</a>
+
+<a href="https://clburlison.com/tags" title="Show list of tags">Tags</a>
+
+<a href="https://clburlison.com/talks">Talks</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:clburlison@gmail.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/clburlison">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+<a id="contact-link-linkedin" class="contact_link" href="https://www.linkedin.com/in/clburlison">
+  <span class="fa fa-linkedin-square"></span><span>linkedin</span></a>
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/clburlison">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Setup Reposado &#43; Margarita on Ubuntu 14.04
+</h1>
+
+  <div class="metas">
+<time datetime="2014-10-02">Oct 02, 2014</time>
+
+
+  
+  &middot; Read in about 11 min
+  &middot; (2235 Words)
+  <br>
+  
+<a class="label" href="https://clburlison.com/tags/reposado">reposado</a>
+
+<a class="label" href="https://clburlison.com/tags/ubuntu">ubuntu</a>
+
+
+
+</div>
+
+</header>
+
+  
+
+<nav class="toc">
+<input id="ac-toc" name="accordion-toc" type="checkbox">
+<label for="ac-toc">Table of Contents</label>
+<div id="toc" class="toc__menu">
+<nav id="TableOfContents">
+<ul>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#the-software">The software</a></li>
+<li><a href="#the-install">The Install</a>
+<ul>
+<li><a href="#installing-required-software">Installing Required Software</a>
+<ul>
+<li><a href="#clone-the-code-and-setup-the-directories">Clone the code and setup the directories:</a></li>
+<li><a href="#configure-reposado">Configure Reposado:</a></li>
+<li><a href="#let-margarita-access-reposado-s-shared-resources">Let Margarita access Reposado’s shared resources:</a></li>
+</ul></li>
+<li><a href="#setting-up-apache">Setting up Apache</a>
+<ul>
+<li><a href="#creating-our-very-own-wsgi-script">Creating Our Very Own .wsgi Script</a></li>
+<li><a href="#configuring-apache">Configuring Apache</a></li>
+<li><a href="#rewrite-rules">Rewrite Rules</a></li>
+</ul></li>
+<li><a href="#done">Done.</a></li>
+</ul></li>
+<li><a href="#addendum-1-scheduling-repo-sync">Addendum 1: Scheduling repo_sync</a></li>
+<li><a href="#addendum-2-keeping-up-to-date">Addendum 2: Keeping Up To Date</a></li>
+<li><a href="#addendum-3-securing-margarita">Addendum 3: Securing Margarita</a></li>
+<li><a href="#addendum-4-using-nginx">Addendum 4: Using nginx</a></li>
+<li><a href="#credits">Credits</a></li>
+</ul>
+</nav>
+</div>
+</input>
+</nav>
+
+
+
+  <div class="container content">
+  
+
+<h1 id="intro">Intro</h1>
+
+<p>Why on earth are you creating another guide? Why not use Puppet or Docker? Well the short answer is I could not find anything that covered all the criteria that I needed. I might go back later and puppetize this or use docker but needed a working solution. Plus the first step to automating something is to document how to do it manually, so below is the process to get Reposado and Margarita with Authorization (optional) setup on a clean install of Ubuntu 14.04 using Apache. The only pre-requirement is having an administrator account on the Ubuntu box already setup.</p>
+
+<div class="alert alert-info">
+  <p><strong>Note:</strong> I have added <a href="./#addendum-4-using-nginx">Addendum 4</a> if you would like to serve files using nginx instead of apache. In my testing, it has been much faster at serving html requests. Also, a little easier to setup the redirect rules.</p>
+
+</div>
+
+
+<h1 id="the-software">The software</h1>
+
+<p>If you have not heard of <a href="https://github.com/wdas/reposado" target="_blank">reposado</a>. It is a set of tools that replicate the key functionality of Mac OS X Server&rsquo;s Software Update Service.</p>
+
+<blockquote>
+<ul>
+<li>It doesn’t need to run on a Mac.</li>
+<li>It can provide updates to any OS X version, whereas Apple’s Mac OS X server can only provide updates (not strictly true, but not easily!) to its current version or below e.g. your OS X 10.6 server can only provide to OS X 10.6 or below – it can’t cater for your OS X 10.7 or OS X 10.8 clients. Reposado doesn’t have this pitfall, it caters for all!<br />
+&ndash; <a href="http://jerome.co.za/" target="_blank">Jerome</a> <em>orginal article has been removed</em></li>
+</ul>
+</blockquote>
+
+<p>Plus, with reposado you can create multiple releases aka Production and Testing catalogs.</p>
+
+<p><a href="https://github.com/jessepeterson/margarita" target="_blank">Margarita</a> is an add-on to reposado that gives you a web GUI!</p>
+
+<blockquote>
+<p>Margarita is a web interface to reposado the Apple Software Update replication and catalog management tool. While the reposado command line administration tools work great for folks who are comfortable in that environment something a little more accesible might be desired.</p>
+
+<p>&ndash; jessepeterson</p>
+</blockquote>
+
+<hr />
+
+<h1 id="the-install">The Install</h1>
+
+<p>As a matter of good practice, we are going to make sure our Ubuntu server is fully patched before we start. Then we will install _mod<em>wsgi, git, apache tools, python setuptools, curl, pip, and apache2</em>. Since Margarita runs on <em>Flask</em>, we will need to install that as well.</p>
+
+<h2 id="installing-required-software">Installing Required Software</h2>
+
+<pre><code class="language-bash">
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get -y install apache2-utils libapache2-mod-wsgi git python-setuptools python curl python-pip apache2
+sudo easy_install flask
+
+</code></pre>
+
+<p>You can install Reposado and Margarita anywhere you would like, but I am going to use <em>/usr/local/asus</em> (which stands for Apple Software Update Server) just to keep things organized. The following commands will create the reposado, margarita, www and meta directories within <em>/usr/local/asus</em>. The <em>www</em> directory will be the location from which reposado’s catalogs and downloads will be served, and you can think of the <em>meta</em> directory as reposado’s work area. A link to the asus directory will also be created in your home directory for faster access.</p>
+
+<h3 id="clone-the-code-and-setup-the-directories">Clone the code and setup the directories:</h3>
+
+<pre><code class="language-bash">
+sudo mkdir /usr/local/asus
+ln -s /usr/local/asus/ ~/
+cd /usr/local/asus
+sudo chown $USER:$USER .
+git clone https://github.com/wdas/reposado.git
+git clone https://github.com/jessepeterson/margarita.git
+mkdir www meta
+
+</code></pre>
+
+<p>You will notice that I had you chown the directory so that you own it. This is not required, but it eliminates a bunch of extra ‘sudo’ calls for the rest of the steps.</p>
+
+<p>Next we will need to configure Reposado and let it sync, and I am going to do so without replication. If you want replication so your clients will download updates from your server instead of Apple’s, you will need to enter your host’s FQDN for the answer to the last prompt, e.g. [<a href="http://su.example.com](" target="_blank">http://su.example.com](</a>)</p>
+
+<h3 id="configure-reposado">Configure Reposado:</h3>
+
+<pre><code class="language-bash">
+./reposado/code/repoutil --configure
+Filesystem path to store replicated catalogs and updates [None]: /usr/local/asus/www
+Filesystem path to store Reposado metadata [None]: /usr/local/asus/meta
+Base URL for your local Software Update Service
+(Example: http://su.your.org -- leave empty if you are not replicating updates) [None]:
+
+
+./reposado/code/repo_sync # This will take a while
+
+</code></pre>
+
+<div class="alert alert-info">
+  <p><strong>Note:</strong> The repo_sync command will download Apple catalogs + updates (if enabled). Grab a coffee, this could be upwards of 170GB. Time obviously depends on connection speed.</p>
+
+</div>
+
+
+<p>You now have Reposado fully installed and configured! Now we need to serve those files over http so clients can do something with the downloads.</p>
+
+<p>Lets move on to setting up your Margarita front-end. We will start things off by borrowing from Jesse’s instructions, just to make sure things have been properly installed. Since Margarita and Reposado are both written in Python and share common tasks, it only makes sense that code is reused where possible; that is exactly what Jesse has done. So in order for Margarita to use Reposado’s code, it needs to be able to find it. We will need to create a few symbolic links to do this.</p>
+
+<h3 id="let-margarita-access-reposado-s-shared-resources">Let Margarita access Reposado’s shared resources:</h3>
+
+<pre><code class="language-bash">
+ln -s /usr/local/asus/reposado/code/reposadolib margarita/reposadolib
+ln -s /usr/local/asus/reposado/code/preferences.plist margarita/preferences.plist
+
+</code></pre>
+
+<p>At this point, Margarita should be completely installed and configured. To test, run the following command and then point your favorite browser to [<a href="http://example.com:8089](" target="_blank">http://example.com:8089](</a>) (do not worry, port 8089 is just for this test). If all goes well, Margarita should load but without showing any updates. To see the updates, uncheck the “Hide commonly listed updates” button at the top of the page. If you still do not see any updates, you have encountered a problem and should look at the output in your terminal window to start troubleshooting.</p>
+
+<p><strong>Testing Margarita:</strong></p>
+
+<pre><code class="language-bash">
+python margarita/margarita.py
+
+</code></pre>
+
+<h2 id="setting-up-apache">Setting up Apache</h2>
+
+<p>So far we have properly configured both Reposado and Margarita. Now all we want to do is make sure the web interface will automatically come back to life when the server is rebooted. We could write a custom service that uses Python to launch the margarita.py script as we have done in the above test, but we already have Apache running to serve the software updates, so why not use that to serve the Margarita web interface as well?</p>
+
+<h3 id="creating-our-very-own-wsgi-script">Creating Our Very Own .wsgi Script</h3>
+
+<p>A .wsgi script gives mod_wsgi the information it needs to launch the python web app, but Margarita does not come with one. Fortunately, these files are pretty easy to make. Using your favorite text editor (<em>cough</em> nano <em>cough</em>), create the file <em>/usr/local/asus/margarita/margarita.wsgi</em> with the following contents:</p>
+
+<p><code>sudo nano /usr/local/asus/margarita/margarita.wsgi</code></p>
+
+<pre><code class="language-bash">
+import sys
+EXTRA_DIR = &quot;/usr/local/asus/margarita&quot;
+if EXTRA_DIR not in sys.path:
+    sys.path.append(EXTRA_DIR)
+
+from margarita import app as application
+
+</code></pre>
+
+<h3 id="configuring-apache">Configuring Apache</h3>
+
+<p>Before we go about configuring Apache, we need to make sure it has the proper filesystem permissions.</p>
+
+<pre><code class="language-bash">sudo chown -R www-data:www-data /usr/local/asus
+sudo chmod -R g+r /usr/local/asus
+</code></pre>
+
+<p>I have apache sharing the reposado files via port 8088 (the Apple default) and margarita on port 8089 (default). You should be able to copy and paste the following snippets of my apache config files, and see everything working properly.</p>
+
+<p>Enable the mod_rewrite engine:<br />
+<code>sudo a2enmod rewrite</code></p>
+
+<p>Lets initialize apache with the following command:<br />
+ <code>sudo service apache2 restart</code></p>
+
+<p>Now we need to add ports 8088 and 8089 to apache&rsquo;s listening ports.<br />
+<code>sudo nano /etc/apache2/ports.conf</code></p>
+
+<pre><code class="language-html">
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+Listen 80
+Listen 8088
+Listen 8089
+
+&lt;IfModule ssl_module&gt;
+        Listen 443
+&lt;/IfModule&gt;
+
+&lt;IfModule mod_gnutls.c&gt;
+        Listen 443
+&lt;/IfModule&gt;
+
+</code></pre>
+
+<p>Once done your files should look like the above.</p>
+
+<p><strong>Now, lets get reposado and margarita configured with apache:</strong></p>
+
+<p><code>sudo nano /etc/apache2/sites-enabled/reposado.conf</code></p>
+
+<pre><code class="language-html">
+&lt;VirtualHost *:8088&gt;
+    ServerAdmin webmaster@localhost
+    DocumentRoot /usr/local/asus/www
+
+    Alias /content /usr/local/asus/www/content
+    &lt;Directory /&gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Require all granted
+    &lt;/Directory&gt;
+
+    # Logging
+    ErrorLog ${APACHE_LOG_DIR}/asus-error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/asus-access.log combined
+&lt;/VirtualHost&gt;
+
+</code></pre>
+
+<p><code>sudo nano /etc/apache2/sites-enabled/margarita.conf</code></p>
+
+<pre><code class="language-html">
+&lt;VirtualHost *:8089&gt;
+    ServerAdmin webmaster@localhost
+    DocumentRoot /usr/local/asus/www
+
+    # Base cofiguration
+    &lt;Directory /&gt;
+        Options FollowSymLinks
+        AllowOverride None
+    &lt;/Directory&gt;
+
+    # Margarita
+    Alias /static /usr/local/asus/margarita/static
+    WSGIDaemonProcess margarita home=/usr/local/asus/margarita user=www-data group=www-data threads=5
+    WSGIScriptAlias / /usr/local/asus/margarita/margarita.wsgi
+    &lt;Directory /&gt;
+        WSGIProcessGroup margarita
+        WSGIApplicationGroup %{GLOBAL}
+        Require all granted
+    &lt;/Directory&gt;
+
+    # Logging
+    ErrorLog ${APACHE_LOG_DIR}/asus-error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/asus-access.log combined
+&lt;/VirtualHost&gt;
+
+</code></pre>
+
+<h3 id="rewrite-rules">Rewrite Rules</h3>
+
+<p>To allow Apple Clients to use pretty configuration URLs like [<a href="http://su.example.com:8088](" target="_blank">http://su.example.com:8088](</a>) lets enable Rewrite Rules for the www directory.</p>
+
+<p><code>nano /usr/local/asus/www/.htaccess</code></p>
+
+<pre><code class="language-html">
+RewriteEngine On
+Options FollowSymLinks
+RewriteBase  /
+RewriteCond %{HTTP_USER_AGENT} Darwin/8
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/index$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/9
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/10
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-leopard-snowleopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/11
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/12
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/13
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/14
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/15
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/16
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+
+</code></pre>
+
+<p>Now we need to make sure the web service has permissions to the file we will re-run the following commands.</p>
+
+<pre><code class="language-bash">sudo chown -R www-data:www-data /usr/local/asus
+sudo chmod -R g+r /usr/local/asus
+</code></pre>
+
+<p>Lastly, restart apache for the changes to take place.<br />
+<code>sudo service apache2 restart</code></p>
+
+<h2 id="done">Done.</h2>
+
+<p>Well, that is the plan anyway. If you are still having trouble getting things working, here are a few resources to get you started down the troubleshooting path:</p>
+
+<ul>
+<li>[<a href="https://github.com/jessepeterson/margarita](" target="_blank">https://github.com/jessepeterson/margarita](</a>)</li>
+<li>[<a href="http://groups.google.com/group/reposado](" target="_blank">http://groups.google.com/group/reposado](</a>)</li>
+<li>[<a href="https://github.com/wdas/reposado/wiki/_pages](" target="_blank">https://github.com/wdas/reposado/wiki/_pages](</a>)</li>
+<li>[<a href="http://flask.pocoo.org/docs/deploying/mod_wsgi/](" target="_blank">http://flask.pocoo.org/docs/deploying/mod_wsgi/](</a>)</li>
+</ul>
+
+<hr />
+
+<h1 id="addendum-1-scheduling-repo-sync">Addendum 1: Scheduling repo_sync</h1>
+
+<p>Out of the box, reposado will not run the repo_sync command without your direct invocation. If you want your new SUS server to look for any new updates released by Apple on its own, leaving you to simply approve them, you can setup a simple cron job. Since it is probably sane for most environments to simply run this script once per day, fire up a sudo nano session and…</p>
+
+<p><code>sudo nano /etc/cron.daily/repo_sync</code></p>
+
+<pre><code class="language-bash">#!/bin/bash
+/usr/local/asus/reposado/code/repo_sync
+/bin/chgrp -R www-data /usr/local/asus/www
+/bin/chmod -R g+rX /usr/local/asus/www
+</code></pre>
+
+<p>…and of course, make sure the script is executable with</p>
+
+<p><code>sudo chmod +x /etc/cron.daily/repo_sync</code></p>
+
+<p>For more information on creating a cron job <a href="https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps" target="_blank">click here</a>.</p>
+
+<h1 id="addendum-2-keeping-up-to-date">Addendum 2: Keeping Up To Date</h1>
+
+<p>Every once in a while, Apple will throw a curveball at Reposado which requires a code modification. When that happens, you can easily upgrade both Reposado and Margarita via the git command.</p>
+
+<pre><code class="language-bash">cd /usr/local/asus/reposado
+git pull
+cd /usr/local/asus/margarita
+git pull
+sudo apachectl restart
+</code></pre>
+
+<h1 id="addendum-3-securing-margarita">Addendum 3: Securing Margarita</h1>
+
+<p>Margarita by default is open to everyone. To secure the site using basic http authentication make the following changes.</p>
+
+<p>First, lets create a basic authentication user with the following.</p>
+
+<pre><code class="language-bash">htpasswd -c /usr/local/asus/users admin
+# The following is output.enter a secure password!
+New password: **********
+Re-type new password: **********
+Adding password for user admin
+</code></pre>
+
+<p>For security reasons make it so root is the only user that can edit the file.</p>
+
+<pre><code class="language-bash">sudo chown root.nogroup /usr/local/asus/users
+sudo chmod 640 /usr/local/asus/users
+</code></pre>
+
+<p>Now modify the apache configuration file for Margarita. Add the following &ldquo;Authentication&rdquo; section in-between the &ldquo;Margarita&rdquo; and &ldquo;logging&rdquo; sections.<br />
+<code>sudo nano /etc/apache2/sites-enabled/margarita.conf</code></p>
+
+<pre><code class="language-bash">
+       &lt;---Require all granted
+    &lt;/Directory&gt;
+
+    # Authentication    
+    &lt;Location /&gt;
+      AuthType Basic
+      AuthName &quot;Authentication Required&quot;
+      AuthUserFile &quot;/usr/local/asus/users&quot;
+      Require valid-user
+    &lt;/Location&gt;
+
+    # Logging
+        ErrorLog ${APACHE_LOG_DIR}/asus-error.log
+        LogLevel warn
+---&gt;
+
+</code></pre>
+
+<p>Modify permissions, one last time.</p>
+
+<pre><code class="language-bash">sudo chown -R www-data:www-data /usr/local/asus
+sudo chmod -R g+r /usr/local/asus
+</code></pre>
+
+<p>Lastly, restart apache for the changes to take place.<br />
+<code>sudo service apache2 restart</code></p>
+
+<h1 id="addendum-4-using-nginx">Addendum 4: Using nginx</h1>
+
+<p>Nginx offers a few benefits over using apache, with the key benefit being lighter. This results in faster transfers from the web server to clients. With that said, Nginx does not offer as wide of a selection of modules as Apache. For that reason, I am currently running Margarita over apache while serving reposado (Apple client updates) via nginx.</p>
+
+<div class="alert alert-info">
+  <p><strong>Note:</strong> This section should be used in replace of using the <code>/etc/apache2/sites-enabled/reposado.conf</code> file not in addition. Bad things will happen if you try to share the reposado downloaded updates via both apache and nginx.</p>
+
+</div>
+
+
+<p>Firstly, we must install nginx on our server so we can use it.</p>
+
+<pre><code class="language-bash">sudo apt-get -y install nginx
+</code></pre>
+
+<p>Now we need to modify our apache ports file so nginx has access our desired ports. You can pick the port yourself just make sure and be consistent when you modify your <code>reposado.conf</code> file. Remove both port 80 &amp; 8088 from the file below.<br />
+<code>sudo nano /etc/apache2/ports.conf</code></p>
+
+<pre><code class="language-html">
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+#Listen 80
+#Listen 8088
+Listen 8089
+
+&lt;IfModule ssl_module&gt;
+        Listen 443
+&lt;/IfModule&gt;
+
+&lt;IfModule mod_gnutls.c&gt;
+        Listen 443
+&lt;/IfModule&gt;
+
+</code></pre>
+
+<p>Restart apache to free ports 80 and 8088 for nginx.<br />
+<code>sudo service apache2 restart</code></p>
+
+<p>We need to setup nginx with the following config file. Modify your listening port to your preference.</p>
+
+<p><code>sudo nano /etc/nginx/sites-enabled/reposado.conf</code></p>
+
+<pre><code class="language-bash">server {
+  listen 8088;
+  server_name reposado01;
+  root /usr/local/asus/www;
+  autoindex off;
+  ## 10.4.x - Tiger
+  if ( $http_user_agent ~ &quot;Darwin/8&quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/index$1.sucatalog last;
+  }
+  ## 10.5.x - Leopard
+  if ( $http_user_agent ~ &quot;Darwin/9&quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-leopard.merged-1$1.sucatalog last;
+  }
+  ## 10.6.x - Snow Leopard
+  if ( $http_user_agent ~ &quot;Darwin/10&quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-leopard-snowleopard.merged-1$1.sucatalog last;
+  }
+  ## 10.7.x - Lion
+  if ( $http_user_agent ~ &quot;Darwin/11&quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+  ## 10.8.x - Mountain Lion
+  if ( $http_user_agent ~ &quot;Darwin/12&quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+  ## 10.9.x - Mavericks
+  if ( $http_user_agent ~ &quot;Darwin/13&quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+  ## 10.10.x - Yosemite
+  if ( $http_user_agent ~ &quot;Darwin/14&quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+  ## 10.11.x - El Capitan
+  if ( $http_user_agent ~ &quot;Darwin/15&quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+
+  ## 10.12.x - Sierra
+  if ( $http_user_agent ~ &quot;Darwin/16&quot; ){
+    rewrite ^/index(.*)\.sucatalog$
+    /content/catalogs/others/index-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+}
+</code></pre>
+
+<p>Lastly, start the nginx service to start serving your files.<br />
+<code>sudo /etc/init.d/nginx start</code></p>
+
+<hr />
+
+<h1 id="credits">Credits</h1>
+
+<p>Need to truly thank both Joe Wollard &amp; Jerome for their excellent documentation. This page is strongly based off of their work.</p>
+
+<p>Thanks Owen Pragel for reporting <a href="https://github.com/clburlison/clburlison.github.io/issues/42" target="_blank">issue #42</a>.</p>
+
+<hr />
+
+<p>Links:<br />
+<a href="http://www.webreference.com/programming/apache_authentication/index.html" target="_blank">Apache authentication</a>,<br />
+<a href="http://www.iotopia.com/configure-reposado-on-an-ubuntu-oneric-server-so-deploy-studio-can-use-it/" target="_blank">Configure reposado with Rewrite Rules</a>,<br />
+<a href="https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps" target="_blank">Creating a Cron task</a>,<br />
+<a href="http://jerome.co.za/reposado-a-custom-apple-software-update-server/" target="_blank">Reposado - Apple Software Update Server</a>,<br />
+<a href="http://denisonmac.wordpress.com/2013/02/28/running-margarita-in-apache/" target="_blank">Running Margarita in apache</a>,<br />
+<a href="https://github.com/clburlison/clburlison.github.io/issues/42" target="_blank">Issue #42</a>,</p>
+
+</div>
+
+
+  <footer class="container">
+  <div class="container navigation no-print">
+  <h2>Navigation</h2>
+  
+  
+
+    
+    <a class="prev" href="https://clburlison.com/shellshock/" title="Shellshock">
+      Previous
+    </a>
+    
+
+    
+    <a class="next" href="https://clburlison.com/munkirepo-guide-part-1/" title="Setup a Munki repo on Ubuntu 14.04 - Part 1">
+      Next
+    </a>
+    
+
+  
+
+
+</div>
+
+  <div class="container comments">
+  <h2>Comments</h2>
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+  powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>.
+
+
+</div>
+
+
+  
+<div class="container copyright">
+  
+  &copy; 2014 - 2017 Clayton Burlison
+
+
+</div>
+
+
+</div>
+
+</footer>
+
+    </main>
+    
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+<script src="https://clburlison.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+  </body>
+</html>
+

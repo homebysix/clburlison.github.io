@@ -1,0 +1,1783 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Guides on clburlison</title>
+    <link>https://clburlison.com/categories/guides/feed/index.xml</link>
+    <description>Recent content in Guides on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/categories/guides/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Demystify Office 2016 for Mac</title>
+      <link>https://clburlison.com/demystify-office2016/</link>
+      <pubDate>Thu, 14 Jan 2016 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/demystify-office2016/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;Microsoft Office 2016 for Mac had a &lt;a href=&#34;https://macops.ca/whats-wrong-with-the-office-2016-volume-license-installer/&#34; target=&#34;_blank&#34;&gt;rough&lt;/a&gt; &lt;a href=&#34;https://macops.ca/the-office-for-mac-2016-volume-license-installer-two-months-later/&#34; target=&#34;_blank&#34;&gt;start&lt;/a&gt; &lt;a href=&#34;http://www.richard-purves.com/?p=79&#34; target=&#34;_blank&#34;&gt;for&lt;/a&gt; &lt;a href=&#34;https://derflounder.wordpress.com/2015/08/05/creating-an-office-2016-15-12-3-installer/&#34; target=&#34;_blank&#34;&gt;sure&lt;/a&gt;. With that being said things have gotten better and quite rapidly. This post will focus on where Office 2016 for Mac currently stands, commonly asked questions, best practices, and solutions for updates.&lt;/p&gt;
+
+&lt;p&gt;This post should serve as a overview of the changes to Office 2016 (O2016) for Mac from about November 2015 to Present (January 14th).&lt;/p&gt;
+
+&lt;p&gt;Before we can get too far into this post it needs to be noted that none of this would be possible without the hard work and support of the following individuals. Contact info is in the form of Twitter/Slack handle. William Smith (&lt;a href=&#34;https://twitter.com/meck&#34; target=&#34;_blank&#34;&gt;@meck&lt;/a&gt;/&lt;a href=&#34;https://macadmins.slack.com/team/talkingmoose&#34; target=&#34;_blank&#34;&gt;@talkingmoose&lt;/a&gt;) took it on himself to reach out to the Apple Platform Experience (APEX) Team at Microsoft and helped push them into our community Slack group. Paul Bowden (&lt;a href=&#34;https://twitter.com/mrexchange&#34; target=&#34;_blank&#34;&gt;@mrexchange&lt;/a&gt;/&lt;a href=&#34;https://macadmins.slack.com/team/pbowden&#34; target=&#34;_blank&#34;&gt;@pbowden&lt;/a&gt;) and Erik Schwiebert (&lt;a href=&#34;https://twitter.com/schwieb&#34; target=&#34;_blank&#34;&gt;@schwieb&lt;/a&gt;/&lt;a href=&#34;https://macadmins.slack.com/team/schwieb&#34; target=&#34;_blank&#34;&gt;@schwieb&lt;/a&gt;) are both Software Engineers at Microsoft inside the APEX team. They have been very responsive to feedback from the community.&lt;/p&gt;
+
+&lt;p&gt;And so you don&amp;rsquo;t think I&amp;rsquo;m making up facts I will be supplying quotes from Microsoft&amp;rsquo;s pbowden on almost everything. You will need to join our MacAdmins Slack group if you wish to view the source. Sign up page is &lt;a href=&#34;http://macadmins.org&#34; target=&#34;_blank&#34;&gt;http://macadmins.org&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Video Presentation:&lt;/strong&gt; Paul Bowden gave a presentation, 2016.01.20, at the University of Utah&amp;rsquo;s Mac Managers meeting which can be viewed &lt;a href=&#34;https://stream.lib.utah.edu/index.php?c=details&amp;amp;id=11705&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;. It covers many of the topics from this post in video form.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;office-packages&#34;&gt;Office Packages&lt;/h1&gt;
+
+&lt;p&gt;Five months into Office 2016 being out and there are &lt;s&gt;five&lt;/s&gt; six different kinds of installers/updaters. Plus a bonus serializer package. This table should help clarify what is available and the differences between each package.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;Name&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Type&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Comments&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Requires Live System&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;File Size★&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;SKU-less★★&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Installer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Contains all apps. Good for O365 installations. Can be used in combination with the VL Serializer to create a VL Installer without needing to visit Microsoft&amp;rsquo;s Volume Licensing Service Center (VLSC). &lt;a href=&#34;#method-1---office-365-installation&#34;&gt;Additional info&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~1.3 GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Volume License (VL)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Installer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Contains all apps. Available from VLSC only. Has Serializer package embed. &lt;a href=&#34;#method-2---volume-license-installation&#34;&gt;Additional info&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~1.3 GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Standalone&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Installer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Available from &lt;a href=&#34;http://macadmins.software&#34;&gt;http://macadmins.software&lt;/a&gt;. These install packages can be combined with the VL Serializer below to have a custom install solution of just &amp;ldquo;one&amp;rdquo; or a &amp;ldquo;handful&amp;rdquo; of O2016 apps★★★. These will also work with O365 installs. OneNote standalone not available (obtain from Mac App Store [MAS] if needed).&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;No&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~550 MB per app&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Standalone VL&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Installer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Available from VLSC only. These are standalone install packages that contain your VL serial. They can be used to have a custom install solution of just &amp;ldquo;one&amp;rdquo; or a &amp;ldquo;handful&amp;rdquo; of O2016 apps★★★.&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~1 GB per app&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Combo&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Update&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;These updates can take any previous Office 2016 installed app and make them current. These are per app upgrade packages, a difference from Office 2011&amp;rsquo;s combo update packages.&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~1 GB per app&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Delta&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Update&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;These were first publicly available with 15.18. These significantly reduce the file size that is required to update an Office app. Also per app upgrade packages. &lt;a href=&#34;#delta-updates&#34;&gt;Additional info&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~780 MB for suite&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;VL Serializer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Serializer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;This is a special package that was released with 15.17. The purpose of this package is to apply the Office serialization process to the SKU-less installations. &lt;a href=&#34;#vl-serializer&#34;&gt;more info&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~5 MB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;If &lt;strong&gt;Requires Live System&lt;/strong&gt;, is &amp;lsquo;yes&amp;rsquo; these installers must be ran on fully booted Mac. IE - You must see the loginwindow or be logged into the physical Mac that you are installing O2016 on. If this option is &amp;lsquo;no&amp;rsquo; you can bake these installers into a base image using tools like &lt;a href=&#34;https://github.com/MagerValp/AutoDMG&#34; target=&#34;_blank&#34;&gt;AutoDMG&lt;/a&gt;, &lt;a href=&#34;http://www.deploystudio.com/&#34; target=&#34;_blank&#34;&gt;DeployStudio&lt;/a&gt;, or Casper&amp;rsquo;s Image creation process.&lt;/p&gt;
+
+&lt;p&gt;★All file sizes should be considered estimates and subject to change&lt;br /&gt;
+★★This installer is often the most confusing as it is also commonly called: &lt;strong&gt;Full Suite&lt;/strong&gt;, &lt;strong&gt;O365&lt;/strong&gt;, or a &lt;strong&gt;Retail&lt;/strong&gt; installer. They are all the same.&lt;br /&gt;
+★★★This level of customization can also be achieved by using a &lt;a href=&#34;#i-dont-want-to-install-mau-is-that-supported&#34;&gt;choice xml&lt;/a&gt; with the SKU-less and VL installers.&lt;/p&gt;
+
+&lt;h1 id=&#34;how-do-i-install-o2016&#34;&gt;How do I install O2016?&lt;/h1&gt;
+
+&lt;p&gt;You should install the package that Microsoft is giving you. &lt;strong&gt;PERIOD&lt;/strong&gt;. End of story. Stop taking their package apart and &amp;ldquo;fixing things&amp;rdquo;. It is fine to poke your nose under the hood but there is absolutely no reason for you to be re-packaging anything Office 2016 related. This was a common practice with Office 2011 and at the start of Office 2016. All issues that were resolved with re-packaging have been fixed by Microsoft. Microsoft has listened and now it is your turn. STAHP.&lt;/p&gt;
+
+&lt;h2 id=&#34;method-1-office-365-installation&#34;&gt;Method 1 - Office 365 installation&lt;/h2&gt;
+
+&lt;p&gt;You can download a SKU-less installer from your VLSC dashboard or from &lt;a href=&#34;http://macadmins.software&#34; target=&#34;_blank&#34;&gt;http://macadmins.software&lt;/a&gt;. Both locations point to the same file as it a public release. This installer is deployed via Apple&amp;rsquo;s Installer Application (command line &amp;amp; GUI) and can be deployed via:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Apple Remote Desktop&lt;/li&gt;
+&lt;li&gt;Munki&lt;/li&gt;
+&lt;li&gt;Casper&lt;/li&gt;
+&lt;li&gt;While at the loginwindow&lt;/li&gt;
+&lt;li&gt;&lt;s&gt;And can be baked into an image&lt;/s&gt; There is currently a bug in the postflight script such that the correct target drive is not selected.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It all-around should be good to go!&lt;/p&gt;
+
+&lt;h2 id=&#34;method-2-volume-license-installation&#34;&gt;Method 2 - Volume License Installation&lt;/h2&gt;
+
+&lt;p&gt;If you are a Volume License (VL) customer your first step is to log into the VLSC and download the latest Office 2016 for Mac iso file. Inside of this file you will find the latest VL Installer package and the VL Serializer package. At this time, the VLSC has 15.17 however 15.18 has been released. Microsoft is working to sync the development and VLSC teams so that the latest update is available on the VLSC faster.&lt;/p&gt;
+
+&lt;p&gt;This installer is deployed via Apple&amp;rsquo;s Installer Application (command line &amp;amp; GUI) and can be deployed via:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Apple Remote Desktop&lt;/li&gt;
+&lt;li&gt;Munki&lt;/li&gt;
+&lt;li&gt;Casper&lt;/li&gt;
+&lt;li&gt;While at the loginwindow&lt;/li&gt;
+&lt;li&gt;And can &lt;strong&gt;NOT&lt;/strong&gt; be baked into an image. This is due to how the serialization process works.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Your options are to now deploy the VL installer package or you can now download the latest SKU-less installer package (&lt;a href=&#34;http://macadmins.software&#34; target=&#34;_blank&#34;&gt;http://macadmins.software&lt;/a&gt;) to deploy. When you use the second option you are able to deploy the SKU-less installer and then apply your VL Serializer package to create a supported install. This is a kind of &amp;ldquo;future proof&amp;rdquo; solution as you would not have to access the VLSC again to receive updates.&lt;/p&gt;
+
+&lt;p&gt;A &lt;strong&gt;third&lt;/strong&gt;, and slightly less preferred (personal opinion) option would be to download the Standalone Installer(s) from &lt;a href=&#34;http://macadmins.software&#34; target=&#34;_blank&#34;&gt;http://macadmins.software&lt;/a&gt;. After one or more Standalone installs have taken place you can run the VL Serializer in order to properly serialize your computers. This solution looks like it might be the most flexible upfront however, the same can be accomplished by using a &lt;a href=&#34;#i-dont-want-to-install-mau-is-that-supported&#34;&gt;choice xml&lt;/a&gt; (detail later in this post). Plus, after two standalone installers you would be much better off with the SKU-less installer package due to file size. With that said it is supported, I however do not believe it is the correct workflow for 99% of Mac Admins.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;VLSC won’t be updated with the 15.17 build until first week of January. While the portal team is working on getting faster at making new builds available, the underlying reason for releasing the VL Serializer separately is so that you can take the Office 365/Retail (aka SKU-less) installer from future builds (15.18, 15.19, etc), deploy it, run the Serializer, and you have a fully up to date VL install. &lt;u&gt;This is a fully supported mechanism for deployment&lt;/u&gt;.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1449897132003874&#34; target=&#34;_blank&#34;&gt;source link #1&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;munki&#34;&gt;Munki&lt;/h2&gt;
+
+&lt;p&gt;If you are a munki shop pick one of the methods above and run the following to import Office 2016 into your repo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+## VL Installer or SKU-less Installer
+
+$ munkiimport /path/to/Microsoft_Office_2016_Installer.pkg \
+--name=MSOffice2016 \
+--catalog=testing \
+--minimum_os_version=10.10 \
+--developer=Microsoft \
+--category=Productivity \
+--description=&amp;quot;Unmistakably Office, designed for Mac.
+
+The new versions of Word, Excel, PowerPoint, Outlook and OneNote provide the best of both worlds for Mac users - the familiar Office experience paired with the best of Mac.
+
+If you already use Office on a PC or iPad, you will find yourself right at home in Office 2016 for Mac. It works the way you expect, with the familiar ribbon interface and powerful task panes. Mac users will appreciate the modernized Office experience and the integration of Mac capabilities like Full Screen view and Multi-TouchTM gestures. With full Retina display support, your Office documents look sharper and more vibrant than ever.
+
+Office for Mac is cloud-connected, so you can quickly get to the documents you’ve recently used on other devices and pick up where you left off. New, built-in document sharing tools make it easy to invite teammates to work on a document together. When sharing documents, you won’t have to worry about losing content or formatting, as Office for Mac offers unparalleled compatibility with Office on PCs, tablets, phones and online.&amp;quot; \
+--blocking_application=&amp;quot;Microsoft Autoupdate&amp;quot; \
+--blocking_application=&amp;quot;Microsoft Outlook&amp;quot; \
+--blocking_application=&amp;quot;Microsoft Excel&amp;quot; \
+--blocking_application=&amp;quot;Microsoft PowerPoint&amp;quot; \
+--blocking_application=&amp;quot;Microsoft Word&amp;quot; \
+--blocking_application=&amp;quot;Microsoft OneNote&amp;quot; \
+--unattended_install
+
+## VL Installer (only required if using the SKU-less Installer). The preinstall_script is located below.
+$ munkiimport /path/to/Microsoft_Office_2016_VL_Serializer.pkg \
+--name=MSOffice2016_Serializer \
+--catalog=testing \
+--developer=Microsoft \
+--category=Productivity \
+--update_for=MSOffice2016 \
+--preinstall_script=/path/to/preinstall_script \
+--unattended_install
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The VL Serializer should have the following preinstall script. This will help users who incorrectly copied com.microsoft.office.licensingV2.plist to their machine.&lt;br /&gt;
+(&lt;a href=&#34;https://gist.github.com/clburlison/ac182c465ff40429aa1a/archive/e2729d9724fd08ed630e878193f75effc2159aa6.zip&#34; target=&#34;_blank&#34;&gt;download link&lt;/a&gt;)
+&lt;script src=&#34;//gist.github.com/clburlison/ac182c465ff40429aa1a.js?file=preinstall_script&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;If you wish to implement a choice xml file for munki you will want to copy and paste the &lt;code&gt;installer_choices_xml&lt;/code&gt; array from the &lt;code&gt;office2016_munki.xml&lt;/code&gt; file into your Office 2016 pkginfo (&lt;a href=&#34;https://gist.github.com/clburlison/8fd09ae20de4279281f4/archive/89a8735ac42fd634389e89f0f45c80e8f0e3bf3b.zip&#34; target=&#34;_blank&#34;&gt;download link&lt;/a&gt;). Also, if you wish to apply an icon supply the &lt;code&gt;--icon_path=/path/to/MSOffice2016.png&lt;/code&gt; key (the icon I used can be downloaded below).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/MSOffice2016.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Right Click &amp;gt; Save Image As&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Munki - Installs Arrays&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If you are planning on having a hybrid setup with MAU and munki both pushing updates to Office 2016 applications I highly recommend adding an install array to your Office 2016 installer. I also recommend this if your users have admin access and might &amp;ldquo;accidentally&amp;rdquo; delete an office application that you want to make sure doesn&amp;rsquo;t disappear. This can be done two ways, during the &lt;code&gt;munkiimport&lt;/code&gt; of your installer or by running &lt;code&gt;makepkginfo&lt;/code&gt; and manually pasting the install array into your pkginfo:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: In order for the following to work the installer you are importing must be first installed on your admin machine.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+## via munkiimport (appended to the above example)
+
+$ munkiimport /path/to/Microsoft_Office_2016_Installer.pkg \
+...
+--file &amp;quot;/Applications/Microsoft Excel.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft OneNote.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft Outlook.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft PowerPoint.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft Word.app&amp;quot; \
+--file &amp;quot;/Library/Application Support/Microsoft/MAU2.0/Microsoft AutoUpdate.app&amp;quot; \
+...
+--unattended_install
+
+## via makepkginfo
+
+$ makepkginfo \
+--file &amp;quot;/Applications/Microsoft Excel.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft OneNote.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft Outlook.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft PowerPoint.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft Word.app&amp;quot; \
+--file &amp;quot;/Library/Application Support/Microsoft/MAU2.0/Microsoft AutoUpdate.app&amp;quot;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;casper&#34;&gt;Casper&lt;/h2&gt;
+
+&lt;p&gt;I was going to try and give resources for Casper&amp;hellip;then I realized how completely unqualified for this section. Luckily Rich Trouton &lt;a href=&#34;https://derflounder.wordpress.com/2016/01/14/creating-an-office-2016-15-18-0-installer/&#34; target=&#34;_blank&#34;&gt;has got you covered&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using his method you could add a &lt;a href=&#34;#i-dont-want-to-install-mau-is-that-supported&#34;&gt;choice xml&lt;/a&gt; file if you wanted to customize your installation. Inside of Packages under the &amp;ldquo;Additional Resources&amp;rdquo; tab you would need to copy in your choice xml (&lt;a href=&#34;https://gist.github.com/clburlison/8fd09ae20de4279281f4/archive/89a8735ac42fd634389e89f0f45c80e8f0e3bf3b.zip&#34; target=&#34;_blank&#34;&gt;download link&lt;/a&gt;). This is Step #6 in Rich&amp;rsquo;s guide.&lt;/p&gt;
+
+&lt;p&gt;Then a modified postinstall script would look like:&lt;/p&gt;
+
+&lt;script src=&#34;//gist.github.com/clburlison/8fd09ae20de4279281f4.js?file=postinstall&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;Make sure and walk through the remaining steps in Rich&amp;rsquo;s guide to complete this process.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: Using his method is repackaging the installer however he is making no-modifications to the Office installer 😊.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;faq&#34;&gt;FAQ&lt;/h1&gt;
+
+&lt;p&gt;Due to the shear quantity of content I am attempting to cover the remanding section of this post will be in FAQ format.&lt;/p&gt;
+
+&lt;h2 id=&#34;why-is-o2016-so-different-from-o2011&#34;&gt;Why is O2016 so different from O2011?&lt;/h2&gt;
+
+&lt;p&gt;The main reason why Office 2016 is so different is the fact that each application is now &lt;a href=&#34;https://developer.apple.com/library/mac/documentation/Security/Conceptual/AppSandboxDesignGuide/AboutAppSandbox/AboutAppSandbox.html&#34; target=&#34;_blank&#34;&gt;Sandboxed&lt;/a&gt;. Due to that fact, Microsoft is now just one step away from releasing Office 2016 apps on the Mac App Store (figuratively speaking at least). Obviously time frame for this move would depend greatly on internal policies, process with Apple, and other factors unknown to me. Sandboxing also means it is easier to remove an Application after it has been installed IE - &lt;code&gt;sudo rm -rf &amp;quot;/Applications/Microsoft Word.app&amp;quot;&lt;/code&gt;. However, one downside of Sandboxed applications is the large quantity of duplicated data (mostly Fonts) being stored on the disk in five applications.&lt;/p&gt;
+
+&lt;p&gt;Bonus regarding the MAS:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To add to the optional statement, one of the reasons why MAU is optional is because we don’t/can’t use it for apps that are delivered through the Mac AppStore. Technically, those apps (such as OneNote) are the same regardless of whether you get them from the Mac AppStore vs. Suite installer. MAU does have some additional logic to look for _MASReceipt in the app bundle so that it doesn’t attempt to update an MS app that came through the Mac AppStore.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1447219900000887&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;o2016-takes-up-so-much-more-space&#34;&gt;O2016 takes up so much more space.&lt;/h2&gt;
+
+&lt;p&gt;True. This is due to Sandboxing. This is a limitation is due to Apple&amp;rsquo;s guidelines on how Sandboxing is implemented.&lt;/p&gt;
+
+&lt;p&gt;Nothing can be done about the increased size at this point in time.&lt;/p&gt;
+
+&lt;p&gt;Now is a good time to mention &lt;a href=&#34;https://github.com/goodbest/OfficeThinner&#34; target=&#34;_blank&#34;&gt;OfficeThinner&lt;/a&gt; is bad, will break code signing, and is &lt;strong&gt;not&lt;/strong&gt; supported. If you did this on a personal machine you should revert the changes sooner rather than later (easiest fix is to install latest SKU-less installer).&lt;/p&gt;
+
+&lt;h2 id=&#34;how-do-i-manage-updates-for-office-2016&#34;&gt;How do I manage updates for Office 2016?&lt;/h2&gt;
+
+&lt;p&gt;You&amp;rsquo;re limited to two solutions:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Use MAU&lt;/li&gt;
+&lt;li&gt;Manually apply the updates with management system (munki, casper, etc.)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Technically speaking if you aren&amp;rsquo;t using MAU, you really need to look into &lt;a href=&#34;#autopkg&#34;&gt;AutoPkg&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;autopkg&#34;&gt;AutoPkg&lt;/h2&gt;
+
+&lt;div class=&#34;alert alert-danger&#34;&gt;
+  &lt;p&gt;&lt;b&gt;Unsupported!&lt;/b&gt;
+&lt;p&gt;If you wish to utilize AutoPkg to install the individual applications IE - &lt;code&gt;MSWord2016.{download,install,munki,jss,etc.}&lt;/code&gt;, &lt;code&gt;MSExcel2016.{etc}&lt;/code&gt;, &lt;code&gt;MSPowerPoint2016.{etc}&lt;/code&gt;. &lt;code&gt;MSOutlook2016.{etc}&lt;/code&gt; or &lt;code&gt;MSOneNote2016.{etc}&lt;/code&gt;, on &lt;b&gt;&lt;u&gt;NEW&lt;/u&gt;&lt;/b&gt; machines this is unsupported by Microsoft. These recipes correlate to the &amp;lsquo;Combo&amp;rsquo; update packages (by default) and are not suitable for first time installation. The delta updates are also not suitable for first time installation.
+&lt;br&gt;&lt;br&gt;
+  This means your base installation should be one of the &lt;a href=&#34;#how-do-i-install-o2016&#34;&gt;supported options&lt;/a&gt; above. Afterwards you can utilize AutoPkg to download the combo updates in place of MAU.
+&lt;br&gt;&lt;br&gt;
+  This is a common practice in the community that needs to stop. If you did this in the past to get Office 2016 on your computers simply changing to one of the supported solutions above will get your computers in compliance. I am unable to say for sure but it is very possible that if you did install using this unsupported method the 15.20 update in March might break your installation (purely a guess).&lt;/p&gt;&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;As MAU is the recommended solution for updates, it was important to make that flow as seamless as possible. When you run custom install/update solutions you need to take care of those things yourself.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1452617616007496&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Normally quotes go at the end however that one was important. Go ahead read it again. So AutoPkg users: the importance of that statement is you need to make sure MS applications are closed when installing updates. For munki users this means incorporating &lt;code&gt;blocking_applications&lt;/code&gt; arrays in your pkginfos. When installing &amp;ldquo;update&amp;rdquo; packages (delta or combo) you only need to force one application to be closed per update package. However, if you wish to utilize the &amp;ldquo;SKU-less Installer&amp;rdquo; package for both fresh machine installs and updates your &lt;code&gt;blocking_applications&lt;/code&gt; will need to make sure all five applications plus MAU are closed (the example I listed in the &lt;a href=&#34;#munki&#34;&gt;munki&lt;/a&gt; section covers this).&lt;/p&gt;
+
+&lt;p&gt;EX 1 - Update Packages:&lt;/p&gt;
+
+&lt;p&gt;This applies to the &amp;lsquo;Delta&amp;rsquo; and &amp;lsquo;Combo&amp;rsquo; updates and the &amp;lsquo;Standalone Installer&amp;rsquo; packages. If you wish to deploy one of the &amp;ldquo;updates&amp;rdquo; your end-users will only need to close the application(s) that are being updated. Each update package correlates to one application on the file system. IE - Jane has Outlook open but the other O2016 applications closed. If your management solution supports unattended installs Word, PowerPoint, Excel, &amp;amp; OneNote could all be updated without bothering Jane. However, when it comes time to install Outlook she will need to close the application in order for the installation to properly complete.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: The standalone installer packages currently do not have an AutoPkg recipe. Nor do I personally feel a need for them.&lt;/p&gt;
+
+&lt;p&gt;EX 2 - SKU-less Installer:&lt;/p&gt;
+
+&lt;p&gt;If you go this route new machines will only ever need to install one package to get the latest Office 2016 (two packages if you count the VL Serializer). The down side to this solution is all five apps (Word, Excel, OneNote, PowerPoint, &amp;amp; Outlook plus MAU) will need to be closed prior to starting an update. Due to file size this package will take longer to download from your management system to the client computer, and will take longer to install compared to the update packages.&lt;/p&gt;
+
+&lt;p&gt;If you aren&amp;rsquo;t in the autopkg loop you&amp;rsquo;ll want to add the main recipe repo (combo &amp;amp; delta update packages) and Allister repo (SKU-less &amp;amp; MAU installer packages).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+autopkg repo-add https://github.com/autopkg/recipes
+autopkg repo-add https://github.com/autopkg/arubdesu-recipes
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Using AutoPkg is outside of the scope of this guide.&lt;/p&gt;
+
+&lt;h2 id=&#34;http-macadmins-software&#34;&gt;&lt;a href=&#34;http://macadmins.software&#34; target=&#34;_blank&#34;&gt;http://macadmins.software&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;This is a site that is &lt;em&gt;not&lt;/em&gt; affiliated with Microsoft but ran by a friendly face (&lt;em&gt;cough&lt;/em&gt; pbowden &lt;em&gt;cough&lt;/em&gt;). This website is simple and has one purpose: get current software links/version easier. With that said all of the links are actually redirects to Microsoft&amp;rsquo;s Official CDN so software downloaded from this site is safe. The packages can be verified as they are all signed by Microsoft&amp;rsquo;s developer certs.&lt;/p&gt;
+
+&lt;h2 id=&#34;when-saving-i-get-a-blank-directory&#34;&gt;When saving I get a blank directory!&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/saving_online_default.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;By default the Office 2016 suite of applications have &amp;lsquo;Online Locations&amp;rsquo; selected in the save window. This might be considered confusing to end-users. In addition some environments are not allowed to save files to cloud based storage locations. This is now manageable with a preference, example below:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: This is a user-level setting. This can be ran with &lt;a href=&#34;https://github.com/chilcote/outset&#34; target=&#34;_blank&#34;&gt;outset&lt;/a&gt; or some other scripting solution.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+$ defaults write $HOME/Library/Group\ Containers/UBF8T346G9.Office/com.microsoft.officeprefs.plist DefaultsToLocalOpenSave -bool TRUE
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is not a perfect solution however if you really need to change the default save location we have a solution!&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;And one more from me for &lt;strong&gt;15.18&lt;/strong&gt;, you can now set the following plist preference to force the open/save panel to ‘On my Mac’ instead of &amp;lsquo;Online Locations&amp;rsquo; &amp;ndash; [preference above]. I know it’s a little long, but it’s a single place that will affect the behavior of Word, Excel and PowerPoint 2016.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1450417854005113&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;set-the-user-information&#34;&gt;Set the User Information&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/MeContact.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This was found by &lt;a href=&#34;http://maclovin.org/blog-native/2015/office-2016-where-is-the-name-of-the-user-stored-&#34; target=&#34;_blank&#34;&gt;François Levaux&lt;/a&gt; so I take no credit for the discovery however to make it more readily accessable I will be posting this here. If you wish to automatically populate the User Information fields (Name and Initials) the following script can do so.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This is another user level script and &lt;strong&gt;must&lt;/strong&gt; be ran as the logged in user. Running under any instance of root (IE - sudo, or LaunchDaemon) will result in unfavorable results.&lt;/p&gt;
+
+&lt;script src=&#34;//gist.github.com/clburlison/4552c1036236a22ba829.js?file=Office2016-MeContact.sh&#34;&gt;&lt;/script&gt;
+
+&lt;h2 id=&#34;can-t-i-just-copy-com-microsoft-office-licensingv2-plist&#34;&gt;Can&amp;rsquo;t I just copy com.microsoft.office.licensingV2.plist?&lt;/h2&gt;
+
+&lt;p&gt;No. This was a bug. Microsoft is aware of the issue and this will be fixed in 15.20 which is scheduled to be released in March.&lt;/p&gt;
+
+&lt;p&gt;The first editions of the Volume License installer from Microsoft caused issues with licensing. The Mac Admin Community collectively came to the solution of packaging &lt;code&gt;/Library/Preferences/com.microsoft.office.licensingV2.plist&lt;/code&gt; separately and applying this file to new installations. This was wrong. Do not do it.&lt;/p&gt;
+
+&lt;p&gt;If you did copy the &lt;code&gt;com.microsoft.office.licensingV2.plist&lt;/code&gt; file see &lt;a href=&#34;#vl-serializer&#34;&gt;VL Serializer&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;@reidblondell: bottom line is that if you&amp;rsquo;re copying com.microsoft.office.licensingv2.plist between machines then you are not in a supportable state. The only supportable solution is to have that plist file generated on the machine you intend to use by the Microsoft Office Setup Assistant (MOSA). Up to you how you package this, but MOSA needs to be run&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1447525532000461&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;dialog-prompt-s-ie-what-s-new&#34;&gt;Dialog Prompt(s) - IE What&amp;rsquo;s New&lt;/h2&gt;
+
+&lt;p&gt;Eric Holtam has a great post regarding these dialog prompts and managing them with profiles &lt;a href=&#34;https://osxbytes.wordpress.com/2015/09/17/not-much-whats-new-with-you/&#34; target=&#34;_blank&#34;&gt;located here&lt;/a&gt;. The only part that I didn&amp;rsquo;t understand, initially, was Office is actually providing your with two separate &amp;ldquo;What&amp;rsquo;s New&amp;rdquo; dialog boxes. The first (shown below with Excel) gives you a splash screen and then prompts you to select your colour theme: Classic or Colorful. Along with prompting O365 users to sign-in for activation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/WhatsNew1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The second &amp;ldquo;What&amp;rsquo;s New&amp;rdquo; dialog prompt will only be shown for O365 users. With 15.15 and up VL customers will not see these prompts. It does not matter how you installed O2016, even the SKU-less installer, if you are a VL customer these dialog prompts will not be shown.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/WhatsNew2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Both of these dialog boxes can be disabled, however if you are a O365 customer disabling the first dialog prompt is not recommended (see quote from Eric below).&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;If you&amp;rsquo;re an O365 customer and you suppress the 1507 key your users won&amp;rsquo;t be prompted to authorize the license on first launch.  You&amp;rsquo;ll have to do that from in-app and the dialog that appears makes it sound like it needs to be purchased.  There&amp;rsquo;s a small link to click to specify you already have a license.&lt;/p&gt;
+
+&lt;p&gt;@eholtam &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1452712063008493&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;delta-updates&#34;&gt;Delta Updates&lt;/h2&gt;
+
+&lt;p&gt;With the release of 15.18 Microsoft has released Delta updates. Paul has released a public document that goes over these updates in quite a bit of detail (see below). The biggest note for these delta updates is that they will only work on the current release minus one minor revision (N-1).&lt;/p&gt;
+
+&lt;p&gt;IE - I have Office 15.17 installed when 15.18 was released MAU offered to install the latest 15.18 updates as delta packages. However, if I was on 15.16 I would need the 15.18 combo update packages (quite a bit larger in file size) in order to update to the latest release.&lt;/p&gt;
+
+&lt;p&gt;The nice part about these Delta updates is if you are using MAU these are automatically offered to your users without any intervention on your part.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://clburlison.com/images/2016-01-14/Delta_Updates.pdf&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/pdf-200x200.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;If anyone wants to try out delta updates (we’ve now got them down to 350 MB for the entire suite), just change MAU to the Internal channel&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1452622212007576&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;vl-serializer&#34;&gt;VL Serializer&lt;/h2&gt;
+
+&lt;p&gt;Again, Paul has released a document that will cover more information than I can. The only thing I want to highlight is if you are coming from a known bad install of office (IE - you copied com.microsoft.office.licensingV2.plist) you need to run a &lt;code&gt;rm -f /Library/Preferences/com.microsoft.office.licensingV2.plist&lt;/code&gt; prior to running the VL Serializer package.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://clburlison.com/images/2016-01-14/VL_Serializer.pdf&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/pdf-200x200.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;office-insider&#34;&gt;Office Insider&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The   Office  Insider program is  a   new initiative  to  provide Office  customers   on  all platforms   to  get early   access  to  the very    latest  builds  of  the
+product.    The public  description can be  found   at  &lt;a href=&#34;https://products.office.com/office-insider&#34; target=&#34;_blank&#34;&gt;https://products.office.com/office-insider&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://clburlison.com/images/2016-01-14/Office_Insider.pdf&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/pdf-200x200.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;mau&#34;&gt;MAU&lt;/h1&gt;
+
+&lt;p&gt;Sorry, MAU is a very complex topic. I do not plan on utilizing it in my environment so below are important notes from Paul.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Warning …long paragraph coming up  😉&lt;/p&gt;
+
+&lt;p&gt;Here’s a new feature that I implemented in MAU 3.3 which got released alongside 15.17 yesterday. I was talking to an enterprise customer a couple of months ago, and they had a semi-managed environment where they ‘slow’ pushed updates to Office 2016, but they also wanted to allow users to use MAU and get updates. Problem is that they wanted to control the ‘maximum’ version that MAU would see. For example, even though 15.17 got recently released, they didn’t want users to update to it until IT had a chance to validate it and make sure it didn’t break anything. However, they were happy for users to upgrade to 15.16 even though they hadn’t pushed it out to everyone.&lt;/p&gt;
+
+&lt;p&gt;So, while I was implementing the new ‘channels’ feature in MAU, I allow a ‘Custom’ channel to be set. You can then point MAU at your own HTTPS server that has a copy of the manifests you want to use, instead of the latest ones at &lt;a href=&#34;https://www.microsoft.com/mac/autoupdate&#34; target=&#34;_blank&#34;&gt;https://www.microsoft.com/mac/autoupdate&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The manifests are named as follows, and these are the files you’ll want to copy to your own web server:
+Word 2016 for Mac - &lt;code&gt;0409MSWD15.xml&lt;/code&gt; &amp;amp; &lt;code&gt;0409MSWD15.cat&lt;/code&gt;
+Excel 2016 for Mac - &lt;code&gt;0409XCEL15.xml&lt;/code&gt; &amp;amp; &lt;code&gt;0409XCEL15.cat&lt;/code&gt;
+PowerPoint 2016 for Mac - &lt;code&gt;0409PPT315.xml&lt;/code&gt; &amp;amp; &lt;code&gt;0409PPT315.cat&lt;/code&gt;
+Outlook 2016 for Mac - &lt;code&gt;0409OPIM15.xml&lt;/code&gt; &amp;amp; &lt;code&gt;0409OPIM15.cat&lt;/code&gt;
+OneNote 2016 for Mac - &lt;code&gt;0409ONMC15.xml&lt;/code&gt; &amp;amp; &lt;code&gt;0409ONMC15.cat&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;As MAU is version agnostic, you can also use this same mechanism to control Office 2011 and Lync updates.
+Now, MAU verifies the hash across the CAT and XML, so you can’t tamper with the XML, or try to use your own server for PKGs, but you can at least prevent MAU from ‘seeing’ versions that you don’t support.&lt;/p&gt;
+
+&lt;p&gt;The MAU configuration for this is as follows:
+&lt;code&gt;defaults write com.microsoft.autoupdate2 ChannelName -string &#39;Custom&#39;&lt;/code&gt;
+&lt;code&gt;defaults write com.microsoft.autoupdate2 ManifestServer -string &#39;https://yourwebserver/yourpath/&#39;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;NOTE: That MAU 3.3 will only work with HTTPS servers. In MAU 3.4 which is coming next month, I’ve relaxed this so you can also use HTTP.
+Let me know if you have any questions or comments! When we get closer to end of this month, I’ll talk more about how channels work in MAU 3.4 and how to take advantage of them(edited)&lt;/p&gt;
+
+&lt;p&gt;Also note that it’s important to remember the trailing &lt;code&gt;/&lt;/code&gt; at the end of the ManifestServer path value&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1449904185003906&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;mau-3-4-update&#34;&gt;MAU 3.4 update&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/insider_builds.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Lots of good progress today towards our 15.18 January release that I wanted to share. First up, MAU 3.4 which is scheduled to release on &amp;frac14;. The big change here is support for the new Office Insiders program, and the official release of multiple update channels.&lt;/p&gt;
+
+&lt;p&gt;There’s a new checkbox in the UI which you can see in the screenshot below. If you check this box, it sets the underlying ChannelName key to ‘External’ which means you’ll get new builds roughly 7 days before the rest of the world. Not exposed through the UI, but if you’re feeling super keen, you can manually set the ChannelName key to ‘Internal’ (&lt;code&gt;defaults write com.microsoft.autoupdate2 ChannelName -string &#39;Internal&#39;&lt;/code&gt;) and get new builds roughly 14 days before the rest of the world. It goes without saying that release quality improves as we head toward worldwide release. However, this mechanism of getting early builds means that all of you can enjoy early access and new feature testing without needing special FTP creds - all the PKGs for all channels will be published on our public Office CDN. For those of you who don’t want users opting in to early builds, I’ve added a pref to disable the checkbox (&lt;code&gt;defaults write com.microsoft.autoupdate2 DisableInsiderCheckbox -bool TRUE&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Mainly for @allister, the channel names map to the following URLs:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Internal == &lt;a href=&#34;https://www.microsoft.com/mac/Internal&#34; target=&#34;_blank&#34;&gt;https://www.microsoft.com/mac/Internal&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;External == &lt;a href=&#34;https://www.microsoft.com/mac/External&#34; target=&#34;_blank&#34;&gt;https://www.microsoft.com/mac/External&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/files/pbowden/F0GUKFW4C/pasted_image_at_2015_12_17_09_36_pm.png&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;can-i-disable-mau-from-auto-checking-for-updates&#34;&gt;Can I disable MAU from auto-checking for updates?&lt;/h2&gt;
+
+&lt;p&gt;Sure. This process is the same as it was with Office 2011. My recommended method for making this change is with a profile. Example from Greg Neagle: &lt;a href=&#34;https://github.com/gregneagle/profiles/blob/master/autoupdate_disablers/disable_autoupdates_microsoftautoupdater.mobileconfig&#34; target=&#34;_blank&#34;&gt;disable_autoupdates_microsoftautoupdater.mobileconfig&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The change can also be applied per user with defaults:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+$ defaults write com.microsoft.autoupdate2 HowToCheck -string &#39;Manual&#39;
+$ defaults write com.microsoft.autoupdate2 LastUpdate -date &#39;2001-01-01T00:00:00Z&#39;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;i-don-t-want-to-install-mau-is-that-supported&#34;&gt;I don&amp;rsquo;t want to install MAU, is that supported?&lt;/h2&gt;
+
+&lt;p&gt;Yes, MAU is completely optional. In fact each of the five core MS applications are optional. Just because the installer has all five available does not mean you must install them.&lt;/p&gt;
+
+&lt;p&gt;If you choose to &lt;em&gt;not&lt;/em&gt; install MAU, all updates to the Office suite will be completely on you as the administrator. In my environment MAU is removed when I uninstall Office 2011. During the rollout of Office 2016 I use a choice xml file to disable the installation of MAU from the SKU-less installer.&lt;/p&gt;
+
+&lt;p&gt;In the example below:&lt;/p&gt;
+
+&lt;p&gt;Notice the &lt;code&gt;attributeSetting&lt;/code&gt; setting for &lt;code&gt;com.microsoft.autoupdate&lt;/code&gt; is set to a 0. That is telling the installer to not install MAU. You can modify the example choice xml to customize which applications you do/don&amp;rsquo;t want installed.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1 - install&lt;/li&gt;
+&lt;li&gt;0 - don&amp;rsquo;t install&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script src=&#34;//gist.github.com/clburlison/8fd09ae20de4279281f4.js?file=office2016.xml&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;Lastly, once you make these changes you can install from the command line like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+$ /usr/sbin/installer -applyChoiceChangesXML /path/to/office2016.xml \
+-pkg /path/to/Microsoft_Office_2016_Installer.pkg \
+-target /
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you are interested in how I created the choice xml above please see the following links: &lt;a href=&#34;https://jamfnation.jamfsoftware.com/discussion.html?id=13946#responseChild84049&#34; target=&#34;_blank&#34;&gt;Office 2011 Choices Explained&lt;/a&gt;, &amp;amp; &lt;a href=&#34;https://github.com/munki/munki/wiki/ChoiceChangesXML&#34; target=&#34;_blank&#34;&gt;Munki Wiki ChoiceChangeXML&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Okay, makes sense - thanks for the clarification. MAU is designed to be independent from the apps, so it is considered ​*optional*​ ….you’re fully supported if you want to omit it from your installs. However, the same is not true for the licensing and fonts/frameworks/proofing tools packages - those are required&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1447219794000886&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Following section:&lt;/strong&gt; I debated adding the following section or not. The TL;DR is make sure you are using release 15.17.0 or greater. If you want more details then carry on.
+{: .notice}&lt;/p&gt;
+
+&lt;h1 id=&#34;bugs&#34;&gt;Bugs&lt;/h1&gt;
+
+&lt;p&gt;Oh the bugs that have been squashed. This is not an all encompassing list however &amp;ldquo;big issues&amp;rdquo; should be listed below.&lt;/p&gt;
+
+&lt;h1 id=&#34;15-17-release-log-for-admins&#34;&gt;15.17 Release Log for Admins&lt;/h1&gt;
+
+&lt;p&gt;Included in 15.17 mid-December Release (i.e. work already complete and verified)*​&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Support for ARD installs, and other solutions like Casper, Munki (as verified by your good selves)&lt;/li&gt;
+&lt;li&gt;New package in VL ISO called �Microsoft_Office_2016_VL_Serializer.pkg� which you can use to generate a bona fide licensingv2.plist file on top of a SKU-less install&lt;/li&gt;
+&lt;li&gt;Installer GUI now supports selecting which volume to install on&lt;/li&gt;
+&lt;li&gt;Installer GUI now supports selecting which app packages to install (including MAU)&lt;/li&gt;
+&lt;li&gt;MAU Daemon pop-up now suppressed for unattended installs&lt;/li&gt;
+&lt;li&gt;Word is no longer auto-launched at the end of the GUI install&lt;/li&gt;
+&lt;li&gt;OneNote Sign-in button now works&lt;/li&gt;
+&lt;li&gt;New plist preference to control whether Error Reporting shows the �send additional files� dialog. Will never send additional files or prompt the user if set&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1448495549001887&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;keychain-prompt&#34;&gt;Keychain Prompt&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/bad_mau_daemon.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;FIXED - 15.17&lt;/p&gt;
+
+&lt;p&gt;Issue - MAU (Microsoft Auto Update app) has a background process that would run to see if updates are available. This process would prompt end users for permission to access the keychain which resulted in the picture above. Many end-users had no idea what or why this prompt was being displayed.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Next up, those pesky keychain access errors on first app launch are now a thing of the past. Most of you on VL probably don’t see these, but O365 users see them a lot. I’ve changed the code so that the Office 2016 apps are automatically provisioned with access on keychain creation.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1450417340005109&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;More on the actual fix to this issue. Inside of &lt;code&gt;$HOME/Library/Preferences/com.microsoft.autoupdate2.plist&lt;/code&gt; the following key value is created during a GUI installation:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; In case it isn&amp;rsquo;t clear &lt;em&gt;you&lt;/em&gt; as the admin should &lt;strong&gt;NOT&lt;/strong&gt; be creating or modifying this setting. That is the responsibility of Microsoft and the installer.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;
+&amp;lt;key&amp;gt;StartDaemonOnAppLaunch&amp;lt;/key&amp;gt;
+&amp;lt;true/&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Yep, that’s a new key in MAU 3.3 and 15.17 - it’s how I implemented the fix for the MAU daemon issue. Basically, if this pref exists and set to 1, then the MAU daemon attempts to launch on app boot. The pref is written by the MAU postinstall script for a GUI install, so it won’t exist for unattended installs&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1449899823003896&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;software-not-actually-becoming-licensed&#34;&gt;Software not actually becoming licensed&lt;/h2&gt;
+
+&lt;p&gt;FIXED - 15.14&lt;/p&gt;
+
+&lt;p&gt;Issue - If the VL intall package was installed at the loginwindow, Office 2016 would fail to properly serialize O2016.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;@chrfr no, you won’t break if you manually extracted the VL serializer from 15.14 and run it with a 15.17 install. It’s just that there’s a bug with that VL serializer where it won’t run properly if the user is not logged on. That’s fixed in the 15.17 VL serializer.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1449897132003874&#34; target=&#34;_blank&#34;&gt;source link #5&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;outlook-resizing-word-crashing-bugs&#34;&gt;Outlook Resizing/Word Crashing Bugs&lt;/h2&gt;
+
+&lt;p&gt;FIXED - 15.17.1&lt;/p&gt;
+
+&lt;p&gt;Issue - A bug that caused issues when resizing Outlook and some bug fixes for Word.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Just a heads-up that Outlook and Word 15.17.1 will release this afternoon. Outlook has a fix for the resizing issue (thanks to everyone that tested the build from yesterday). Word has some targeted fixes for some crashing issues we’ve seen with custom keyboards and invalid document URLs)&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1450377975004954&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;wrap-up&#34;&gt;Wrap up&lt;/h1&gt;
+
+&lt;p&gt;Hopefully that covers all the bits and pieces a Mac Administrator would want to know.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Links:&lt;br /&gt;
+&lt;a href=&#34;https://macops.ca/whats-wrong-with-the-office-2016-volume-license-installer/&#34; target=&#34;_blank&#34;&gt;What&amp;rsquo;s Wrong with Office 2016 VL Installer&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://macops.ca/the-office-for-mac-2016-volume-license-installer-two-months-later/&#34; target=&#34;_blank&#34;&gt;VL Installer two months later&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://www.richard-purves.com/?p=79&#34; target=&#34;_blank&#34;&gt;Office 2016 Packaging&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://jamfnation.jamfsoftware.com/discussion.html?id=16761&#34; target=&#34;_blank&#34;&gt;Office 2016 Volume Installer findings&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://jamfnation.jamfsoftware.com/discussion.html?id=17013&#34; target=&#34;_blank&#34;&gt;JAMF Nation - Suppress this Dialog&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://osxbytes.wordpress.com/2015/09/17/not-much-whats-new-with-you/&#34; target=&#34;_blank&#34;&gt;Not much what&amp;rsquo;s new with you&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://osxbytes.wordpress.com/2015/09/23/office-2016-mac-admin-resource-links/&#34; target=&#34;_blank&#34;&gt;Office 2016 Mac Admin Resource Links&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://support.office.com/en-us/article/What-s-New-and-Improved-in-Office-2016-for-Mac-for-Office-365-44d5a464-3051-41b0-b44e-c6cee569f545&#34; target=&#34;_blank&#34;&gt;What&amp;rsquo;s New and Improved in Office 2016 for Mac for Office 365&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://derflounder.wordpress.com/2016/01/14/creating-an-office-2016-15-18-0-installer/&#34; target=&#34;_blank&#34;&gt;Creating an Office 2016 Installer&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://jamfnation.jamfsoftware.com/discussion.html?id=13946#responseChild84049&#34; target=&#34;_blank&#34;&gt;Office 2011 Choices Explained&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://maclovin.org/blog-native/2015/office-2016-where-is-the-name-of-the-user-stored-&#34; target=&#34;_blank&#34;&gt;Office 2016 where is the name of the user stored&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://github.com/munki/munki/wiki/ChoiceChangesXML&#34; target=&#34;_blank&#34;&gt;Munki Wiki ChoiceChangeXML&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Setup Munkireport on Ubuntu 14.04 - Part 3</title>
+      <link>https://clburlison.com/munkirepo-guide-part-3/</link>
+      <pubDate>Thu, 23 Oct 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/munkirepo-guide-part-3/</guid>
+      <description>
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Ubuntu 16.04/ PHP 7:&lt;/strong&gt; Lucas Hall has created an updated guide based off of this one that uses Ubuntu 16.04 with PHP 7, which can be viewed &lt;a href=&#34;https://lucasjhall.com/2016/08/06/munkireport-ubuntu-sql/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;Welcome to the third part in our munki server setup series. In this section, we will download and configure &lt;a href=&#34;https://github.com/munkireport/munkireport-php&#34; target=&#34;_blank&#34;&gt;Munkireport-php&lt;/a&gt; on our munki server.&lt;/p&gt;
+
+&lt;p&gt;Before we get to far you might want to head over to &lt;a href=&#34;https://clburlison.com/munkirepo-guide-part-1/&#34;&gt;Part 1 - Setting up the munki repo&lt;/a&gt; or &lt;a href=&#34;https://clburlison.com/munkirepo-guide-part-2/&#34;&gt;Part 2 - Setting up mandrill&lt;/a&gt;. Parts 1 and 2 are not technically required for MunkiReport by you will want to have an understanding of how the other components of your munki server work before setting up the reporting server.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2014-10-23/mr.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;the-install&#34;&gt;The Install&lt;/h1&gt;
+
+&lt;p&gt;Munkireport is a web application written in php that displays useful stats about your munki fleet. The resources taken up by MunkiReport are quite small but like all web apps if you client base grows very large you will want to make sure the database can keep up. With that you can install MunkiReport on any compatible web-server (IIS, apache, or nginx) for this guide we will be using our munki server from Parts 1 &amp;amp; 2 as our reporting server.&lt;/p&gt;
+
+&lt;p&gt;Part of this installation includes setting up MySQL as our database backend. SQLite is the default database but I highly recommend setting my MySQL since the &lt;a href=&#34;https://github.com/munkireport/munkireport-php/wiki/Performance&#34; target=&#34;_blank&#34;&gt;performance&lt;/a&gt; gains are high and setup only takes a few more steps, not to mention SQLite will start to choke when higher volumes of clients start to check-in with the reporting server.&lt;/p&gt;
+
+&lt;p&gt;It is also important to note, I like MunkiReport to be hosted on a sub-directory. This means when connecting to MuniReport you will type [&lt;a href=&#34;http://yourserver.example.com/report/](&#34; target=&#34;_blank&#34;&gt;http://yourserver.example.com/report/](&lt;/a&gt;) to access the site. If you want a different setup, you will need to make the necessary changes.&lt;/p&gt;
+
+&lt;h2 id=&#34;installing-required-software&#34;&gt;Installing Required Software&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get update
+sudo apt-get -y install nginx git php5-fpm php5-mysql php5-ldap
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The &lt;code&gt;php5-ldap&lt;/code&gt; package is only needed if you are planning on connecting to an Active Directory or LDAP directory for authenticating to MunkiReport.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;setup-mysql&#34;&gt;Setup MySQL&lt;/h2&gt;
+
+&lt;p&gt;Lets install MySQL&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install mysql-client mysql-server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;This will prompt you to create the root mysql database account. Do not forget the password you set.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, we need to tell MySQL to generate the directory structure it needs to store its databases and information. We can do this by typing:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo mysql_install_db
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next, you can optionally run a simple security script that will prompt you to modify some insecure defaults (this is highly recommended on production servers). Begin the script by typing:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo mysql_secure_installation
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You will need to enter the MySQL root password that you selected during installation.&lt;/p&gt;
+
+&lt;p&gt;During the secure installation script it will ask if you want to change the root password. If you are happy with your MySQL root password, type &amp;ldquo;N&amp;rdquo; for no and hit &amp;ldquo;ENTER&amp;rdquo;. Afterwards, you will be prompted to remove some test users and databases. You should choice &amp;ldquo;Y&amp;rdquo; and hit &amp;ldquo;enter&amp;rdquo; through these prompts to remove the &amp;ldquo;unsafe&amp;rdquo; defaults from installation.&lt;/p&gt;
+
+&lt;p&gt;Once the script has been run, MySQL is ready to go.&lt;/p&gt;
+
+&lt;h3 id=&#34;creating-the-database&#34;&gt;Creating the database&lt;/h3&gt;
+
+&lt;p&gt;Lets create our MunkiReport database with the name of &lt;code&gt;munkireport&lt;/code&gt;. We will also create a database user and password. Change &lt;em&gt;USERNAME&lt;/em&gt; and &lt;em&gt;PASSWORD&lt;/em&gt; to your preference. Note the database username that is created below is what you will enter into your config.php in the following steps. It is bad practice to use the root account for database entry.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+echo &amp;quot;CREATE DATABASE munkireport CHARACTER SET utf8 COLLATE utf8_bin;&amp;quot; | mysql -u root -p
+echo &amp;quot;CREATE USER &#39;USERNAME&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;PASSWORD&#39;;&amp;quot; | mysql -u root -p
+echo &amp;quot;GRANT ALL PRIVILEGES ON munkireport.* TO &#39;USERNAME&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;PASSWORD&#39;;&amp;quot; | mysql -u root -p
+echo &amp;quot;FLUSH PRIVILEGES;&amp;quot; | mysql -u root -p
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;configure-php&#34;&gt;Configure php&lt;/h2&gt;
+
+&lt;p&gt;Lets make one small change to the default php configuration.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo nano /etc/php5/fpm/php.ini
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Find the line, &lt;strong&gt;cgi.fix_pathinfo=1&lt;/strong&gt;, and change the &lt;strong&gt;1 to 0&lt;/strong&gt;. Also, uncomment this line to enable this security setting. The file should now look like the below excerpt:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;&amp;lt;---------------
+
+; cgi.fix_pathinfo provides *real* PATH_INFO/PATH_TRANSLATED support for CGI.  PHP&#39;s
+; previous behaviour was to set PATH_TRANSLATED to SCRIPT_FILENAME, and to not grok
+; what PATH_INFO is.  For more information on PATH_INFO, see the cgi specs.  Setting
+; this to 1 will cause PHP CGI to fix its paths to conform to the spec.  A setting
+; of zero causes PHP to behave as before.  Default is 1.  You should fix your scripts
+; to use SCRIPT_FILENAME rather than PATH_TRANSLATED.
+; http://php.net/cgi.fix-pathinfo
+cgi.fix_pathinfo=0
+
+---------------&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If this number is kept as 1, the php interpreter will do its best to process the file that is as near to the requested file as possible. This is a possible security risk. If this number is set to 0, conversely, the interpreter will only process the exact file path—a much safer alternative. Save and Exit.&lt;/p&gt;
+
+&lt;p&gt;Now, restart php-fpm for the change to take affect:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo service php5-fpm restart
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;downloading-munkireport&#34;&gt;Downloading MunkiReport&lt;/h2&gt;
+
+&lt;p&gt;We are finally to the point that we can start getting MunkiReport setup.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo git clone https://github.com/munkireport/munkireport-php /usr/share/nginx/html/report
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;At this point, lets create a link to our report folder for our local Ubuntu admin, this allows us to make modifications easier in the future.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo ln -s /usr/share/nginx/html/report ~/report
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;MunkiReport requires a config.php, this is your settings for MunkiReport. Below are some defaults that I think most users will want. For a full list of options please visit &lt;a href=&#34;https://github.com/munkireport/munkireport-php/blob/master/config_default.php&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You will want to change  the following in your config.php file:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;sitename = change Company to something useful&lt;/li&gt;
+&lt;li&gt;allow_migrations = you will want to change this to true for MunkiReport updates&lt;/li&gt;
+&lt;li&gt;debug = change this to false if you don&amp;rsquo;t need debugging&lt;/li&gt;
+&lt;li&gt;timezone = for your &lt;a href=&#34;http://en.wikipedia.org/wiki/List_of_tz_database_time_zones&#34; target=&#34;_blank&#34;&gt;timezone&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;ssh = change &lt;em&gt;ladmin&lt;/em&gt; to your company local mac admin account&lt;/li&gt;
+&lt;li&gt;locale = change to location&lt;/li&gt;
+&lt;li&gt;lang = change to your language&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The root account is created for you, for testing purposes. You will want to create your own admin account by visiting &lt;a href=&#34;http://yourserver.example.com/report/index.php?/auth/generate&#34; target=&#34;_blank&#34;&gt;http://yourserver.example.com/report/index.php?/auth/generate&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s create a new &lt;code&gt;config.php&lt;/code&gt; file that stores our settings.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo nano /usr/share/nginx/html/report/config.php
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You&amp;rsquo;ll want to copy/paste the entire section below, making changes where necessary. The last section of the config file deals with our MySQL database. You will want to change the username and password to match what you created in the previous step.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php if ( ! defined( &#39;KISS&#39; ) ) exit;
+
+$conf[&#39;index_page&#39;] = &#39;index.php?&#39;;
+$conf[&#39;sitename&#39;] = &#39;Company - MunkiReport&#39;;
+$conf[&#39;allow_migrations&#39;] = FALSE;
+$conf[&#39;debug&#39;] = TRUE;
+$conf[&#39;timezone&#39;] = @date_default_timezone_get(America/Chicago);
+$conf[&#39;vnc_link&#39;] = &amp;quot;vnc://%s:5900&amp;quot;;
+$conf[&#39;ssh_link&#39;] = &amp;quot;ssh://ladmin@%s&amp;quot;;
+ini_set(&#39;session.cookie_lifetime&#39;, 43200);
+$conf[&#39;locale&#39;] = &#39;en_US&#39;;
+$conf[&#39;lang&#39;] = &#39;en&#39;;
+$conf[&#39;keep_previous_displays&#39;] = TRUE;
+
+/*
+|===============================================
+| Authorized Users of Munki Report
+|===============================================
+| Visit http://yourserver.example.com/report/index.php?/auth/generate to generate additional local values
+*/
+$auth_config[&#39;root&#39;] = &#39;$P$BUqxGuzR2VfbSvOtjxlwsHTLIMTmuw0&#39;; // Password is root
+
+/*
+|===============================================
+| PDO Datasource
+|===============================================
+*/
+$conf[&#39;pdo_dsn&#39;] = &#39;mysql:host=localhost;dbname=munkireport&#39;;
+$conf[&#39;pdo_user&#39;] = &#39;munki&#39;;
+$conf[&#39;pdo_pass&#39;] = &#39;munki&#39;;
+$conf[&#39;pdo_opts&#39;] = array(PDO::MYSQL_ATTR_INIT_COMMAND =&amp;gt; &#39;SET NAMES utf8&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We are an Active Directory shop at my work place and for that reason I really like the ability for MunkiReport to pull an AD group and give access (remember the php5-ldap package we installed earlier). Unfortunately, in my current testing this function is slightly broken at the moment. When attempting to login to MunkiReport using AD Group Authorization you will be presented a white screen. A refresh on the blank screen along with a &amp;ldquo;Resend form data&amp;rdquo; will get you to the dashboard. This is a pretty annoying inconvenience, so at this moment I have simply added our report administrators into the &amp;lsquo;allowed_users&amp;rsquo; line in my config.php.&lt;/p&gt;
+
+&lt;p&gt;Below are the additional settings need to make Active Directory work with MunkiReport:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+// Below are the options for Active Directory user authorization
+$conf[&#39;auth&#39;][&#39;auth_AD&#39;][&#39;account_suffix&#39;] = &#39;@example.com&#39;;
+$conf[&#39;auth&#39;][&#39;auth_AD&#39;][&#39;base_dn&#39;] = &#39;dc=example,dc=come&#39;; //set to NULL to auto-detect
+$conf[&#39;auth&#39;][&#39;auth_AD&#39;][&#39;domain_controllers&#39;] = array(&#39;server1.example.com&#39;,&#39;server2.example.com&#39;); //can be an array of servers
+$conf[&#39;auth&#39;][&#39;auth_AD&#39;][&#39;admin_username&#39;] = &#39;admin&#39;; //if needed to perform the search
+$conf[&#39;auth&#39;][&#39;auth_AD&#39;][&#39;admin_password&#39;] = &#39;munki_is_cool&#39;; //if needed to perform the search
+$conf[&#39;auth&#39;][&#39;auth_AD&#39;][&#39;mr_allowed_users&#39;] = array(&#39;userA&#39;,&#39;userB&#39;,&#39;userC&#39;);
+$conf[&#39;auth&#39;][&#39;auth_AD&#39;][&#39;mr_allowed_groups&#39;] = array(&#39;MunkiReportAdmins&#39;); //case sensitive
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;configure-nginx-for-munkireport&#34;&gt;Configure nginx for MunkiReport&lt;/h2&gt;
+
+&lt;p&gt;Lets configure nginx to use &lt;a href=&#34;http://yourserver.example.com/report&#34; target=&#34;_blank&#34;&gt;http://yourserver.example.com/report&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo nano /etc/nginx/sites-enabled/default
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Make sure and change your &lt;code&gt;server_name&lt;/code&gt;. This file also takes care of our munki_repo from &lt;a href=&#34;https://clburlison.com/munkirepo-guide-part-1/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    root /usr/share/nginx/html;
+    index index.php index.html index.htm;
+
+    server_name munki;
+
+    error_page 404 /404.html;
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+
+    location /report {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+    }
+
+    location /munki_repo/ {
+      alias /usr/local/munki_repo/;
+      autoindex off;
+      auth_basic &amp;quot;Restricted&amp;quot;;
+      auth_basic_user_file /etc/nginx/.htpasswd;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We must change our nginx default settings for php to work.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo nano /etc/nginx/nginx.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Look for &lt;code&gt;default_type  application/octet-stream;&lt;/code&gt; and comment this line out. Check out the below excerpt:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;&amp;lt;---------------
+
+# server_names_hash_bucket_size 64;
+        # server_name_in_redirect off;
+
+        include /etc/nginx/mime.types;
+        #default_type application/octet-stream; //comment me out for MunkiReport to work
+
+        ##
+        # Logging Settings
+        ##
+
+---------------&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To test your nginx configuration run the following command. This will make sure that you have no errors.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo nginx -c /etc/nginx/nginx.conf -t
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Restart Nginx to make the necessary changes:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo service nginx restart
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;You should now have a basic MunkiReport configuration up and running. Double check that everything is working by visiting &lt;a href=&#34;http://youserver.example.com/report/&#34; target=&#34;_blank&#34;&gt;http://youserver.example.com/report/&lt;/a&gt;. Remember the default username and password, &lt;code&gt;root&lt;/code&gt;. For more settings and additional information please visit the Wiki for &lt;a href=&#34;https://github.com/munkireport/munkireport-php/wiki&#34; target=&#34;_blank&#34;&gt;MunkiReport&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;As always feel free to drop a comment below or on Twitter. Feedback is always appreciated.&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Congrats!&lt;/strong&gt; You made it this far. Unfortunately you&amp;rsquo;re not done yet. You will likely run into an issue with request size on your munki clients as such please go read &lt;a href=&#34;https://clburlison.com/munkireport-error-fix/&#34; target=&#34;_blank&#34;&gt;this&lt;/a&gt;.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;apendium-1-connecting-a-client-to-munkireport&#34;&gt;Apendium 1 - connecting a client to MunkiReport&lt;/h1&gt;
+
+&lt;p&gt;If you would like to connect a single munki client to MunkiReport you can use the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo /bin/bash -c &amp;quot;$(curl -s http://yourserver.example.com/report/index.php?/install)&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;apendium-2-adding-munkireport-to-your-munki-repo&#34;&gt;Apendium 2 - adding MunkiReport to your munki_repo&lt;/h1&gt;
+
+&lt;p&gt;To add multiple Munki clients to MunkiReport we should use munki. To get a generated plist file that you can drop into your _munki&lt;em&gt;repo/pkginfo&lt;/em&gt; directory run the following command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;curl -s https://yourserver.example.com/report/index.php?/install/plist -o \
+~/Desktop/MunkiReport.plist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The output file will end up on your Desktop for easy transfer to your repo.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:&lt;br /&gt;
+&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04&#34; target=&#34;_blank&#34;&gt;Install LEMP stack on Ubuntu 14.04&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://github.com/munkireport/munkireport-php/wiki&#34; target=&#34;_blank&#34;&gt;Munkireport Wiki&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://www.nbalonso.com/new-munkireport-php-2/&#34; target=&#34;_blank&#34;&gt;nbalonso Munkireport-php&lt;/a&gt;,&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Setup Mandrill on Ubuntu 14.04 - Part 2</title>
+      <link>https://clburlison.com/munkirepo-guide-part-2/</link>
+      <pubDate>Fri, 17 Oct 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/munkirepo-guide-part-2/</guid>
+      <description>
+
+&lt;div class=&#34;alert alert-danger&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; This article should only be used for reference at this time. Mandrill has been great for many years but no longer has an active maintainer. Please use MunkiWebAdmin 2 (mwa2) from &lt;a href=&#34;https://github.com/munki/mwa2&#34; target=&#34;_blank&#34;&gt;github.com/munki/mwa2&lt;/a&gt; instead.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;This is Part 2 of a series on setting up a munki server on Ubuntu 14.04. Read &lt;a href=&#34;https://clburlison.com/blog/2014/10/06/munkirepo-guide-part-1/&#34;&gt;Part 1 here&lt;/a&gt;. This section goes over setting up &lt;a href=&#34;https://github.com/wollardj/Mandrill&#34; target=&#34;_blank&#34;&gt;Mandrill&lt;/a&gt; so we can edit our repo metadata files, modify manifests, and assign new software to our fleet using a web browser.&lt;/p&gt;
+
+&lt;p&gt;A brief description of Mandrill.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Multi-user web front-end for managing a Munki repository. If you&amp;rsquo;re here because of MailChimp, my apologies but this isn&amp;rsquo;t the Mandrill you&amp;rsquo;re looking for. /wavehand&lt;/p&gt;
+
+&lt;p&gt;Mandrill is a NodeJS web application written using the Meteor framework. It supports one database engine: MongoDB. There are no plans to support other engines, but fear not, mandrillctl will install and secure MongoDB for you. If you already have MongoDB running on your server via homebrew, you should probably remove that installation first, or use an alternate server.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;Joe Wollard&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2014-10-19/mandrill.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;the-install&#34;&gt;The Install&lt;/h1&gt;
+
+&lt;p&gt;Lucky for us Joe, the developer, has excellent documentation for installation on Ubuntu. Unfortunately, the documentation is for an older version of Ubuntu and some of the commands need modification to work with 14.04 and this series. Instead of redirecting you back and forth between his guide and this, I decided to include all the commands required below without the descriptions. For more information on what/why you are doing something please reference the wiki &lt;a href=&#34;https://github.com/wollardj/Mandrill/wiki&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-users-groups&#34;&gt;Creating Users &amp;amp; Groups&lt;/h2&gt;
+
+&lt;p&gt;Lets create the Mandrill user and munki group along with allow mandrill access to modify our munki repo.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo addgroup --system munki
+sudo adduser --system _mandrill --ingroup munki --force-badname
+sudo chown -R _mandrill:munki /usr/local/munki_repo/
+sudo chmod -R 2774 /usr/local/munki_repo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; You should receive an error from creating the &amp;lsquo;munki&amp;rsquo; group if you went through &lt;a href=&#34;https://clburlison.com/munkirepo-guide-part-1/&#34;&gt;Part 1&lt;/a&gt;. This is fine move along.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;install-build-tools&#34;&gt;Install build tools&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install git curl build-essential
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;install-nodejs&#34;&gt;Install NodeJS&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd ~/
+curl -O http://nodejs.org/dist/v0.10.26/node-v0.10.26-linux-x64.tar.gz
+sudo tar --strip-components 1 -C /usr/local -zxf node-v0.10.26-linux-x64.tar.gz
+rm node-v0.10.26-linux-x64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;install-nginx-pm2&#34;&gt;Install Nginx &amp;amp; pm2&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install nginx
+sudo npm install pm2 -g --unsafe-perm # updated from wiki
+
+# install startup scripts to make sure pm2 and all its daemons
+# respawn when the server reboots.
+sudo pm2 startup ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;configuring-pm2&#34;&gt;Configuring pm2&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;&amp;ndash;direct from wiki start&amp;ndash;&lt;/em&gt;&lt;br /&gt;
+Be sure to change ROOT_URL and PORT to values appropriate for your environment! If you&amp;rsquo;re running a MongoDB instance on another server, or if your MongoDB instance requires authentication, you should change MONGO_URL as well.&lt;/p&gt;
+
+&lt;p&gt;One thing you should not change is instances as Mandrill is not currently aware of other instances of itself and will needlessly consume resources.&lt;br /&gt;
+&lt;em&gt;&amp;ndash;end&amp;ndash;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /usr/local/etc/mandrilld.json&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+[{
+    &amp;quot;name&amp;quot;: &amp;quot;mandrilld&amp;quot;,
+    &amp;quot;script&amp;quot;: &amp;quot;/usr/local/Mandrill/main.js&amp;quot;,
+    &amp;quot;env&amp;quot;: {
+        &amp;quot;ROOT_URL&amp;quot;: &amp;quot;http://192.168.20.133:3001&amp;quot;,
+        &amp;quot;PORT&amp;quot;: &amp;quot;3001&amp;quot;,
+        &amp;quot;MONGO_URL&amp;quot;: &amp;quot;mongodb://localhost:27017/Mandrill&amp;quot;,
+        &amp;quot;MANDRILL_MODE&amp;quot;: &amp;quot;production&amp;quot;
+    },
+    &amp;quot;instances&amp;quot;: &amp;quot;1&amp;quot;,
+    &amp;quot;error_file&amp;quot;: &amp;quot;/var/log/mandrill/mandrill-err.log&amp;quot;,
+    &amp;quot;out_file&amp;quot;: &amp;quot;/var/log/mandrill/mandrill.log&amp;quot;,
+    &amp;quot;pid_file&amp;quot;: &amp;quot;/var/run/mandrill.pid&amp;quot;
+}]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The log directory must exist before you start mandrilld for the first time.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo mkdir /var/log/mandrill
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;configuring-nginx&#34;&gt;Configuring Nginx&lt;/h2&gt;
+
+&lt;p&gt;If you read my Part 1 guide before October 19th you will want to follow the new steps from &lt;a href=&#34;https://clburlison.com/blog/2014/10/06/munkirepo-guide-part-1/#setting-up-nginx&#34;&gt;Part 1 - Setting up Nginx&lt;/a&gt;. These changes were made in order to accommodate Munkireport, which we will setup next.&lt;/p&gt;
+
+&lt;p&gt;At this point, you have two options that you need to be aware of for using Mandrill:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use the  default port 3001&lt;/li&gt;
+&lt;li&gt;Setup a DNS A record for your server&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You get these choices since we will be setting up Munkireport next. Since I am not in charge of the network at my workplace I will simply leave Nginx alone and connect via port 3001. If however you would like to access Mandrill via a sub domain name or alternate address you can follow the original setup steps below. Just make sure and change your server_name to a record that is not the current hostname of your server. This change is necessary since by default Mandrill needs redirects for both the root directory of your web-server and /mandrill to work.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/wollardj/Mandrill/wiki/Configuring-Nginx-%28Ubuntu%29&#34; target=&#34;_blank&#34;&gt;Configuring Nginx in Ubuntu&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;install-meteor&#34;&gt;Install Meteor&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# First, install meteor
+curl https://install.meteor.com | /bin/sh
+
+# next, install meteorite
+sudo npm install -g meteorite
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;install-mongodb&#34;&gt;Install MongoDB&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 \
+    --recv 7F0CEB10
+
+echo &#39;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&#39; \
+    | sudo tee /etc/apt/sources.list.d/mongodb.list
+
+sudo apt-get update
+sudo apt-get install mongodb-10gen
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;installing-mandrill&#34;&gt;Installing Mandrill&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone https://github.com/wollardj/Mandrill.git
+
+# If you want the latest source code, you&#39;re done. However,
+# I suggest sticking with the latest release...
+cd Mandrill
+git checkout tags/`git tag -l | tail -n 1`
+
+sudo mrt bundle Mandrill.tar.gz # updated from wiki
+
+sudo mkdir /usr/local/Mandrill
+sudo tar --strip-components 1 -C /usr/local/Mandrill -zxf Mandrill.tar.gz
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now lets manually start our mandrill site.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo pm2 start /usr/local/etc/mandrilld.json
+sudo service mongodb start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Visit to verify that everything is working [&lt;a href=&#34;http://munki:3001](&#34; target=&#34;_blank&#34;&gt;http://munki:3001](&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;mandrill-settings&#34;&gt;Mandrill Settings&lt;/h2&gt;
+
+&lt;p&gt;Log into the web portal with the default username &lt;em&gt;admin&lt;/em&gt; and password &lt;em&gt;admin&lt;/em&gt;. You will obviously want to change this password to something more secure. Under the mandrill settings tab you will want to change your repo path to &lt;code&gt;/usr/local/munki_repo/&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2014-10-19/mandrill_settings.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;Mandrill is setup! Stay tuned for Part 3, setting up Munkireport.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:&lt;br /&gt;
+&lt;a href=&#34;https://github.com/wollardj/Mandrill/wiki&#34; target=&#34;_blank&#34;&gt;Mandrill Wiki&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Setup a Munki repo on Ubuntu 14.04 - Part 1</title>
+      <link>https://clburlison.com/munkirepo-guide-part-1/</link>
+      <pubDate>Mon, 06 Oct 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/munkirepo-guide-part-1/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;As you might have guessed from my previous &lt;a href=&#34;https://clburlison.com/blog/2014/10/02/reposado-guide/&#34;&gt;post&lt;/a&gt;, I am trying to standardize at work. Part of this was to move many core OS X services away from OS X Server and towards Ubuntu. This will allow us to use our existing virtualization infrastructure. After reposado the next big service was our munki repo.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2014-10-06/munki.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://github.com/munki/munki&#34; target=&#34;_blank&#34;&gt;Munki&lt;/a&gt; is a very powerful open source tool for patch management and software updates for OS X clients. The client component is pretty easy to install but the server component can be a bit more tricky for newer administrators. The goal of this guide is to walk through setting up the server web share with http basic authentication (read simply security), and lastly setup samba so we can remote into our web server to manage files.&lt;/p&gt;
+
+&lt;p&gt;In the past, our munki_repo has been shared using apache but due to some research and a few internal tests I will be using nginx as the backend in this guide.&lt;/p&gt;
+
+&lt;p&gt;Since our Munki setup has many add-on projects including: &lt;a href=&#34;https://github.com/wollardj/Mandrill&#34; target=&#34;_blank&#34;&gt;mandrill&lt;/a&gt;,  &lt;a href=&#34;https://github.com/munkireport/munkireport-php/&#34; target=&#34;_blank&#34;&gt;munkireport-php&lt;/a&gt;, and our in-house rsync replication I will be splitting this series into multiple parts.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2014-10-06/managed_software_center.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;the-install&#34;&gt;The Install&lt;/h1&gt;
+
+&lt;p&gt;It is good practice to make sure our Ubuntu server is fully patched before we start. Then we will install &lt;em&gt;git, curl, build-essential, nginx, apache2-utils, and samba&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;installing-required-software&#34;&gt;Installing Required Software&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get -y install git curl build-essential nginx apache2-utils samba
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;setup-the-directories&#34;&gt;Setup the directories:&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+sudo mkdir /usr/local/munki_repo
+sudo mkdir -p /etc/nginx/sites-enabled/
+ln -s /usr/local/munki_repo/ ~/
+cd /usr/local/munki_repo
+sudo mkdir catalogs client_resources icons manifests pkgs pkgsinfo
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;creating-the-service-accounts-set-directory-permissions&#34;&gt;Creating the service accounts &amp;amp; set directory permissions:&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+sudo addgroup --system munki
+sudo adduser --system munki --ingroup munki
+sudo usermod -a -G munki $USER # Adds the current console user to munki group
+sudo usermod -a -G munki www-data # Adds web user to munki group
+sudo chown -R $USER:munki /usr/local/munki_repo
+sudo chmod -R 2774 /usr/local/munki_repo
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;setting-up-nginx&#34;&gt;Setting up Nginx&lt;/h2&gt;
+
+&lt;p&gt;Nginx is fast, light-weight, and uses a fraction of the resources that Apache uses. But don&amp;rsquo;t take my word for it there are lots of &lt;a href=&#34;http://arstechnica.com/business/2011/11/a-faster-web-server-ripping-out-apache-for-nginx/&#34; target=&#34;_blank&#34;&gt;other reason&lt;/a&gt; why &lt;a href=&#34;http://wiki.nginx.org/WhyUseIt&#34; target=&#34;_blank&#34;&gt;you might want to use Nginx&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Nginx&amp;rsquo;s installation on Ubuntu is very similar to Apache. All of its config files are stored in &lt;em&gt;/etc/nginx&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Lets backup the original default file create and create our own.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo mv /etc/nginx/sites-enabled/default ~/default.bkup
+sudo nano /etc/nginx/sites-enabled/default
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make sure and change the server_name to match your server&amp;rsquo;s Fully Qualified Domain Name (FQDN) or IP.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;server {
+  listen 80 default_server;
+  listen [::]:80 default_server ipv6only=on;
+
+  root /usr/share/nginx/html;
+  index index.php index.html index.htm;
+
+  server_name munki; # Change this to your FQDN.
+
+  location /munki_repo/ {
+    alias /usr/local/munki_repo/;
+    autoindex off;
+    auth_basic &amp;quot;Restricted&amp;quot;;
+    auth_basic_user_file /etc/nginx/.htpasswd;
+  }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And finally start the nginx service.&lt;br /&gt;
+&lt;code&gt;sudo /etc/init.d/nginx start&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Nginx Issues:&lt;/strong&gt; To have Nginx check your configuration for issues run the following command: &lt;br&gt; &lt;code&gt;nginx -c /etc/nginx/nginx.conf -t&lt;/code&gt;&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;h3 id=&#34;securing-your-munki-repo&#34;&gt;Securing your munki_repo&lt;/h3&gt;
+
+&lt;p&gt;For my purpose, I will be securing my munki_repo with simple http basic authentication. Depending on the needs of your organization this might be enough but you might need to look into ssl and other advanced options. If you are interesting in these options check out the &lt;a href=&#34;https://github.com/munki/munki/wiki&#34; target=&#34;_blank&#34;&gt;munki wiki&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Create an http user and password&lt;/strong&gt;
+&lt;code&gt;sudo htpasswd -c /etc/nginx/.htpasswd munkihttpuser&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The tool will prompt you to enter a password (make it strong).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+New password: ******
+Re-type new password: ******
+Adding password for user munkihttpuser
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The structure of the htpasswd is &lt;code&gt;login:password_hash&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;We must reload the nginx service to update the reflected change.&lt;br /&gt;
+&lt;code&gt;sudo /etc/init.d/nginx reload&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now when you try to access your website, [&lt;a href=&#34;http://yourmunkiserver/munki_repo/](&#34; target=&#34;_blank&#34;&gt;http://yourmunkiserver/munki_repo/](&lt;/a&gt;), you will notice a browser prompt that asks you to enter the login and password. Enter the details that you used while creating the .htpasswd file. The prompt does not allow you to access the website until you enter the right credentials. The munki client supports this security feature with the AdditionalHttpHeaders key &lt;a href=&#34;https://github.com/munki/munki/wiki/Using-Basic-Authentication#configuring-the-clients-to-use-a-password&#34; target=&#34;_blank&#34;&gt;more info&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;{&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; If you do not want to secure your munki repo you can remove this setting in the above nginx config file by removing the two lines that start with &lt;code&gt;auth_basic&lt;/code&gt;&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;setting-up-samba&#34;&gt;Setting up Samba&lt;/h2&gt;
+
+&lt;p&gt;Now we just need a way to mount our munki_repo on a mac so we can do administrative things. Samba uses a separate set of passwords than the standard Linux system accounts (stored in /etc/samba/smbpasswd), so you&amp;rsquo;ll need to create a Samba password for yourself.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo smbpasswd -a munki
+#output on the following lines
+New SMB password: *****
+Retype new SMB password: ****
+Added user munki.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we need to share the munki_repo. Once &amp;ldquo;smb.conf&amp;rdquo; has loaded, add this to the very end of the file:&lt;br /&gt;
+&lt;code&gt;sudo nano /etc/samba/smb.conf&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+[munki_repo]
+path = /usr/local/munki_repo
+available = yes
+valid users = munki      
+read only = no
+browseable = yes
+public = no
+writable = yes
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Test for errors with the config file with: &lt;code&gt;testparm&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we must restart samba.&lt;br /&gt;
+&lt;code&gt;sudo /etc/init.d/smbd reload&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;From your mac you will be able to access the munki_repo with the following: &lt;code&gt;smb://munki.example.com/munki_repo&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;We now have a working munki_repo fully configured and ready for use to start importing packages into the repo. If you are really new to Munki, this takes care of the &amp;ldquo;Demonstration Setup&amp;rdquo; section from the &lt;a href=&#34;https://github.com/munki/munki/wiki&#34; target=&#34;_blank&#34;&gt;munki wiki&lt;/a&gt;. To start populating Munki with manifests, packages, and more I would recommend using &lt;a href=&#34;https://github.com/hjuutilainen/munkiadmin&#34; target=&#34;_blank&#34;&gt;MunkiAdmin&lt;/a&gt;.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:&lt;br /&gt;
+&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-configure-the-nginx-web-server-on-a-virtual-private-server&#34; target=&#34;_blank&#34;&gt;How to configure Nginx&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://wiki.nginx.org/Configuration&#34; target=&#34;_blank&#34;&gt;Configuration - Official nginx documentation&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://help.ubuntu.com/community/How%20to%20Create%20a%20Network%20Share%20Via%20Samba%20Via%20CLI%20(Command-line%20interface/Linux%20Terminal)%20-%20Uncomplicated,%20Simple%20and%20Brief%20Way!&#34; target=&#34;_blank&#34;&gt;Samba Setup&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-set-up-http-authentication-with-nginx-on-ubuntu-12-10&#34; target=&#34;_blank&#34;&gt;Basic Http Auth with Nginx&lt;/a&gt;,&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Setup Reposado &#43; Margarita on Ubuntu 14.04</title>
+      <link>https://clburlison.com/reposado-guide/</link>
+      <pubDate>Thu, 02 Oct 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/reposado-guide/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;Why on earth are you creating another guide? Why not use Puppet or Docker? Well the short answer is I could not find anything that covered all the criteria that I needed. I might go back later and puppetize this or use docker but needed a working solution. Plus the first step to automating something is to document how to do it manually, so below is the process to get Reposado and Margarita with Authorization (optional) setup on a clean install of Ubuntu 14.04 using Apache. The only pre-requirement is having an administrator account on the Ubuntu box already setup.&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; I have added &lt;a href=&#34;./#addendum-4-using-nginx&#34;&gt;Addendum 4&lt;/a&gt; if you would like to serve files using nginx instead of apache. In my testing, it has been much faster at serving html requests. Also, a little easier to setup the redirect rules.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;h1 id=&#34;the-software&#34;&gt;The software&lt;/h1&gt;
+
+&lt;p&gt;If you have not heard of &lt;a href=&#34;https://github.com/wdas/reposado&#34; target=&#34;_blank&#34;&gt;reposado&lt;/a&gt;. It is a set of tools that replicate the key functionality of Mac OS X Server&amp;rsquo;s Software Update Service.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;It doesn’t need to run on a Mac.&lt;/li&gt;
+&lt;li&gt;It can provide updates to any OS X version, whereas Apple’s Mac OS X server can only provide updates (not strictly true, but not easily!) to its current version or below e.g. your OS X 10.6 server can only provide to OS X 10.6 or below – it can’t cater for your OS X 10.7 or OS X 10.8 clients. Reposado doesn’t have this pitfall, it caters for all!&lt;br /&gt;
+&amp;ndash; &lt;a href=&#34;http://jerome.co.za/&#34; target=&#34;_blank&#34;&gt;Jerome&lt;/a&gt; &lt;em&gt;orginal article has been removed&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Plus, with reposado you can create multiple releases aka Production and Testing catalogs.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/jessepeterson/margarita&#34; target=&#34;_blank&#34;&gt;Margarita&lt;/a&gt; is an add-on to reposado that gives you a web GUI!&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Margarita is a web interface to reposado the Apple Software Update replication and catalog management tool. While the reposado command line administration tools work great for folks who are comfortable in that environment something a little more accesible might be desired.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash; jessepeterson&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;the-install&#34;&gt;The Install&lt;/h1&gt;
+
+&lt;p&gt;As a matter of good practice, we are going to make sure our Ubuntu server is fully patched before we start. Then we will install _mod&lt;em&gt;wsgi, git, apache tools, python setuptools, curl, pip, and apache2&lt;/em&gt;. Since Margarita runs on &lt;em&gt;Flask&lt;/em&gt;, we will need to install that as well.&lt;/p&gt;
+
+&lt;h2 id=&#34;installing-required-software&#34;&gt;Installing Required Software&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get -y install apache2-utils libapache2-mod-wsgi git python-setuptools python curl python-pip apache2
+sudo easy_install flask
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can install Reposado and Margarita anywhere you would like, but I am going to use &lt;em&gt;/usr/local/asus&lt;/em&gt; (which stands for Apple Software Update Server) just to keep things organized. The following commands will create the reposado, margarita, www and meta directories within &lt;em&gt;/usr/local/asus&lt;/em&gt;. The &lt;em&gt;www&lt;/em&gt; directory will be the location from which reposado’s catalogs and downloads will be served, and you can think of the &lt;em&gt;meta&lt;/em&gt; directory as reposado’s work area. A link to the asus directory will also be created in your home directory for faster access.&lt;/p&gt;
+
+&lt;h3 id=&#34;clone-the-code-and-setup-the-directories&#34;&gt;Clone the code and setup the directories:&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+sudo mkdir /usr/local/asus
+ln -s /usr/local/asus/ ~/
+cd /usr/local/asus
+sudo chown $USER:$USER .
+git clone https://github.com/wdas/reposado.git
+git clone https://github.com/jessepeterson/margarita.git
+mkdir www meta
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You will notice that I had you chown the directory so that you own it. This is not required, but it eliminates a bunch of extra ‘sudo’ calls for the rest of the steps.&lt;/p&gt;
+
+&lt;p&gt;Next we will need to configure Reposado and let it sync, and I am going to do so without replication. If you want replication so your clients will download updates from your server instead of Apple’s, you will need to enter your host’s FQDN for the answer to the last prompt, e.g. [&lt;a href=&#34;http://su.example.com](&#34; target=&#34;_blank&#34;&gt;http://su.example.com](&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;configure-reposado&#34;&gt;Configure Reposado:&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+./reposado/code/repoutil --configure
+Filesystem path to store replicated catalogs and updates [None]: /usr/local/asus/www
+Filesystem path to store Reposado metadata [None]: /usr/local/asus/meta
+Base URL for your local Software Update Service
+(Example: http://su.your.org -- leave empty if you are not replicating updates) [None]:
+
+
+./reposado/code/repo_sync # This will take a while
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The repo_sync command will download Apple catalogs + updates (if enabled). Grab a coffee, this could be upwards of 170GB. Time obviously depends on connection speed.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;p&gt;You now have Reposado fully installed and configured! Now we need to serve those files over http so clients can do something with the downloads.&lt;/p&gt;
+
+&lt;p&gt;Lets move on to setting up your Margarita front-end. We will start things off by borrowing from Jesse’s instructions, just to make sure things have been properly installed. Since Margarita and Reposado are both written in Python and share common tasks, it only makes sense that code is reused where possible; that is exactly what Jesse has done. So in order for Margarita to use Reposado’s code, it needs to be able to find it. We will need to create a few symbolic links to do this.&lt;/p&gt;
+
+&lt;h3 id=&#34;let-margarita-access-reposado-s-shared-resources&#34;&gt;Let Margarita access Reposado’s shared resources:&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+ln -s /usr/local/asus/reposado/code/reposadolib margarita/reposadolib
+ln -s /usr/local/asus/reposado/code/preferences.plist margarita/preferences.plist
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;At this point, Margarita should be completely installed and configured. To test, run the following command and then point your favorite browser to [&lt;a href=&#34;http://example.com:8089](&#34; target=&#34;_blank&#34;&gt;http://example.com:8089](&lt;/a&gt;) (do not worry, port 8089 is just for this test). If all goes well, Margarita should load but without showing any updates. To see the updates, uncheck the “Hide commonly listed updates” button at the top of the page. If you still do not see any updates, you have encountered a problem and should look at the output in your terminal window to start troubleshooting.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Testing Margarita:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+python margarita/margarita.py
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;setting-up-apache&#34;&gt;Setting up Apache&lt;/h2&gt;
+
+&lt;p&gt;So far we have properly configured both Reposado and Margarita. Now all we want to do is make sure the web interface will automatically come back to life when the server is rebooted. We could write a custom service that uses Python to launch the margarita.py script as we have done in the above test, but we already have Apache running to serve the software updates, so why not use that to serve the Margarita web interface as well?&lt;/p&gt;
+
+&lt;h3 id=&#34;creating-our-very-own-wsgi-script&#34;&gt;Creating Our Very Own .wsgi Script&lt;/h3&gt;
+
+&lt;p&gt;A .wsgi script gives mod_wsgi the information it needs to launch the python web app, but Margarita does not come with one. Fortunately, these files are pretty easy to make. Using your favorite text editor (&lt;em&gt;cough&lt;/em&gt; nano &lt;em&gt;cough&lt;/em&gt;), create the file &lt;em&gt;/usr/local/asus/margarita/margarita.wsgi&lt;/em&gt; with the following contents:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /usr/local/asus/margarita/margarita.wsgi&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+import sys
+EXTRA_DIR = &amp;quot;/usr/local/asus/margarita&amp;quot;
+if EXTRA_DIR not in sys.path:
+    sys.path.append(EXTRA_DIR)
+
+from margarita import app as application
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;configuring-apache&#34;&gt;Configuring Apache&lt;/h3&gt;
+
+&lt;p&gt;Before we go about configuring Apache, we need to make sure it has the proper filesystem permissions.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo chown -R www-data:www-data /usr/local/asus
+sudo chmod -R g+r /usr/local/asus
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I have apache sharing the reposado files via port 8088 (the Apple default) and margarita on port 8089 (default). You should be able to copy and paste the following snippets of my apache config files, and see everything working properly.&lt;/p&gt;
+
+&lt;p&gt;Enable the mod_rewrite engine:&lt;br /&gt;
+&lt;code&gt;sudo a2enmod rewrite&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Lets initialize apache with the following command:&lt;br /&gt;
+ &lt;code&gt;sudo service apache2 restart&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we need to add ports 8088 and 8089 to apache&amp;rsquo;s listening ports.&lt;br /&gt;
+&lt;code&gt;sudo nano /etc/apache2/ports.conf&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+Listen 80
+Listen 8088
+Listen 8089
+
+&amp;lt;IfModule ssl_module&amp;gt;
+        Listen 443
+&amp;lt;/IfModule&amp;gt;
+
+&amp;lt;IfModule mod_gnutls.c&amp;gt;
+        Listen 443
+&amp;lt;/IfModule&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once done your files should look like the above.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Now, lets get reposado and margarita configured with apache:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /etc/apache2/sites-enabled/reposado.conf&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;
+&amp;lt;VirtualHost *:8088&amp;gt;
+    ServerAdmin webmaster@localhost
+    DocumentRoot /usr/local/asus/www
+
+    Alias /content /usr/local/asus/www/content
+    &amp;lt;Directory /&amp;gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Require all granted
+    &amp;lt;/Directory&amp;gt;
+
+    # Logging
+    ErrorLog ${APACHE_LOG_DIR}/asus-error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/asus-access.log combined
+&amp;lt;/VirtualHost&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /etc/apache2/sites-enabled/margarita.conf&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;
+&amp;lt;VirtualHost *:8089&amp;gt;
+    ServerAdmin webmaster@localhost
+    DocumentRoot /usr/local/asus/www
+
+    # Base cofiguration
+    &amp;lt;Directory /&amp;gt;
+        Options FollowSymLinks
+        AllowOverride None
+    &amp;lt;/Directory&amp;gt;
+
+    # Margarita
+    Alias /static /usr/local/asus/margarita/static
+    WSGIDaemonProcess margarita home=/usr/local/asus/margarita user=www-data group=www-data threads=5
+    WSGIScriptAlias / /usr/local/asus/margarita/margarita.wsgi
+    &amp;lt;Directory /&amp;gt;
+        WSGIProcessGroup margarita
+        WSGIApplicationGroup %{GLOBAL}
+        Require all granted
+    &amp;lt;/Directory&amp;gt;
+
+    # Logging
+    ErrorLog ${APACHE_LOG_DIR}/asus-error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/asus-access.log combined
+&amp;lt;/VirtualHost&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;rewrite-rules&#34;&gt;Rewrite Rules&lt;/h3&gt;
+
+&lt;p&gt;To allow Apple Clients to use pretty configuration URLs like [&lt;a href=&#34;http://su.example.com:8088](&#34; target=&#34;_blank&#34;&gt;http://su.example.com:8088](&lt;/a&gt;) lets enable Rewrite Rules for the www directory.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;nano /usr/local/asus/www/.htaccess&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;
+RewriteEngine On
+Options FollowSymLinks
+RewriteBase  /
+RewriteCond %{HTTP_USER_AGENT} Darwin/8
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/index$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/9
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/10
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-leopard-snowleopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/11
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/12
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/13
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/14
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/15
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+RewriteCond %{HTTP_USER_AGENT} Darwin/16
+RewriteRule ^index(.*)\.sucatalog$ content/catalogs/others/index-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog [L]
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we need to make sure the web service has permissions to the file we will re-run the following commands.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo chown -R www-data:www-data /usr/local/asus
+sudo chmod -R g+r /usr/local/asus
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly, restart apache for the changes to take place.&lt;br /&gt;
+&lt;code&gt;sudo service apache2 restart&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;done&#34;&gt;Done.&lt;/h2&gt;
+
+&lt;p&gt;Well, that is the plan anyway. If you are still having trouble getting things working, here are a few resources to get you started down the troubleshooting path:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;[&lt;a href=&#34;https://github.com/jessepeterson/margarita](&#34; target=&#34;_blank&#34;&gt;https://github.com/jessepeterson/margarita](&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;[&lt;a href=&#34;http://groups.google.com/group/reposado](&#34; target=&#34;_blank&#34;&gt;http://groups.google.com/group/reposado](&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;[&lt;a href=&#34;https://github.com/wdas/reposado/wiki/_pages](&#34; target=&#34;_blank&#34;&gt;https://github.com/wdas/reposado/wiki/_pages](&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;[&lt;a href=&#34;http://flask.pocoo.org/docs/deploying/mod_wsgi/](&#34; target=&#34;_blank&#34;&gt;http://flask.pocoo.org/docs/deploying/mod_wsgi/](&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;addendum-1-scheduling-repo-sync&#34;&gt;Addendum 1: Scheduling repo_sync&lt;/h1&gt;
+
+&lt;p&gt;Out of the box, reposado will not run the repo_sync command without your direct invocation. If you want your new SUS server to look for any new updates released by Apple on its own, leaving you to simply approve them, you can setup a simple cron job. Since it is probably sane for most environments to simply run this script once per day, fire up a sudo nano session and…&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /etc/cron.daily/repo_sync&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#!/bin/bash
+/usr/local/asus/reposado/code/repo_sync
+/bin/chgrp -R www-data /usr/local/asus/www
+/bin/chmod -R g+rX /usr/local/asus/www
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;…and of course, make sure the script is executable with&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chmod +x /etc/cron.daily/repo_sync&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;For more information on creating a cron job &lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps&#34; target=&#34;_blank&#34;&gt;click here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;addendum-2-keeping-up-to-date&#34;&gt;Addendum 2: Keeping Up To Date&lt;/h1&gt;
+
+&lt;p&gt;Every once in a while, Apple will throw a curveball at Reposado which requires a code modification. When that happens, you can easily upgrade both Reposado and Margarita via the git command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd /usr/local/asus/reposado
+git pull
+cd /usr/local/asus/margarita
+git pull
+sudo apachectl restart
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;addendum-3-securing-margarita&#34;&gt;Addendum 3: Securing Margarita&lt;/h1&gt;
+
+&lt;p&gt;Margarita by default is open to everyone. To secure the site using basic http authentication make the following changes.&lt;/p&gt;
+
+&lt;p&gt;First, lets create a basic authentication user with the following.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;htpasswd -c /usr/local/asus/users admin
+# The following is output.enter a secure password!
+New password: **********
+Re-type new password: **********
+Adding password for user admin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For security reasons make it so root is the only user that can edit the file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo chown root.nogroup /usr/local/asus/users
+sudo chmod 640 /usr/local/asus/users
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now modify the apache configuration file for Margarita. Add the following &amp;ldquo;Authentication&amp;rdquo; section in-between the &amp;ldquo;Margarita&amp;rdquo; and &amp;ldquo;logging&amp;rdquo; sections.&lt;br /&gt;
+&lt;code&gt;sudo nano /etc/apache2/sites-enabled/margarita.conf&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+       &amp;lt;---Require all granted
+    &amp;lt;/Directory&amp;gt;
+
+    # Authentication    
+    &amp;lt;Location /&amp;gt;
+      AuthType Basic
+      AuthName &amp;quot;Authentication Required&amp;quot;
+      AuthUserFile &amp;quot;/usr/local/asus/users&amp;quot;
+      Require valid-user
+    &amp;lt;/Location&amp;gt;
+
+    # Logging
+        ErrorLog ${APACHE_LOG_DIR}/asus-error.log
+        LogLevel warn
+---&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Modify permissions, one last time.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo chown -R www-data:www-data /usr/local/asus
+sudo chmod -R g+r /usr/local/asus
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly, restart apache for the changes to take place.&lt;br /&gt;
+&lt;code&gt;sudo service apache2 restart&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;addendum-4-using-nginx&#34;&gt;Addendum 4: Using nginx&lt;/h1&gt;
+
+&lt;p&gt;Nginx offers a few benefits over using apache, with the key benefit being lighter. This results in faster transfers from the web server to clients. With that said, Nginx does not offer as wide of a selection of modules as Apache. For that reason, I am currently running Margarita over apache while serving reposado (Apple client updates) via nginx.&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This section should be used in replace of using the &lt;code&gt;/etc/apache2/sites-enabled/reposado.conf&lt;/code&gt; file not in addition. Bad things will happen if you try to share the reposado downloaded updates via both apache and nginx.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;p&gt;Firstly, we must install nginx on our server so we can use it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get -y install nginx
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we need to modify our apache ports file so nginx has access our desired ports. You can pick the port yourself just make sure and be consistent when you modify your &lt;code&gt;reposado.conf&lt;/code&gt; file. Remove both port 80 &amp;amp; 8088 from the file below.&lt;br /&gt;
+&lt;code&gt;sudo nano /etc/apache2/ports.conf&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+#Listen 80
+#Listen 8088
+Listen 8089
+
+&amp;lt;IfModule ssl_module&amp;gt;
+        Listen 443
+&amp;lt;/IfModule&amp;gt;
+
+&amp;lt;IfModule mod_gnutls.c&amp;gt;
+        Listen 443
+&amp;lt;/IfModule&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Restart apache to free ports 80 and 8088 for nginx.&lt;br /&gt;
+&lt;code&gt;sudo service apache2 restart&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We need to setup nginx with the following config file. Modify your listening port to your preference.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /etc/nginx/sites-enabled/reposado.conf&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;server {
+  listen 8088;
+  server_name reposado01;
+  root /usr/local/asus/www;
+  autoindex off;
+  ## 10.4.x - Tiger
+  if ( $http_user_agent ~ &amp;quot;Darwin/8&amp;quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/index$1.sucatalog last;
+  }
+  ## 10.5.x - Leopard
+  if ( $http_user_agent ~ &amp;quot;Darwin/9&amp;quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-leopard.merged-1$1.sucatalog last;
+  }
+  ## 10.6.x - Snow Leopard
+  if ( $http_user_agent ~ &amp;quot;Darwin/10&amp;quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-leopard-snowleopard.merged-1$1.sucatalog last;
+  }
+  ## 10.7.x - Lion
+  if ( $http_user_agent ~ &amp;quot;Darwin/11&amp;quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+  ## 10.8.x - Mountain Lion
+  if ( $http_user_agent ~ &amp;quot;Darwin/12&amp;quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+  ## 10.9.x - Mavericks
+  if ( $http_user_agent ~ &amp;quot;Darwin/13&amp;quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+  ## 10.10.x - Yosemite
+  if ( $http_user_agent ~ &amp;quot;Darwin/14&amp;quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+  ## 10.11.x - El Capitan
+  if ( $http_user_agent ~ &amp;quot;Darwin/15&amp;quot; ){
+    rewrite ^/index(.*)\.sucatalog$ /content/catalogs/others/index-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+
+  ## 10.12.x - Sierra
+  if ( $http_user_agent ~ &amp;quot;Darwin/16&amp;quot; ){
+    rewrite ^/index(.*)\.sucatalog$
+    /content/catalogs/others/index-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1$1.sucatalog last;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly, start the nginx service to start serving your files.&lt;br /&gt;
+&lt;code&gt;sudo /etc/init.d/nginx start&lt;/code&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;credits&#34;&gt;Credits&lt;/h1&gt;
+
+&lt;p&gt;Need to truly thank both Joe Wollard &amp;amp; Jerome for their excellent documentation. This page is strongly based off of their work.&lt;/p&gt;
+
+&lt;p&gt;Thanks Owen Pragel for reporting &lt;a href=&#34;https://github.com/clburlison/clburlison.github.io/issues/42&#34; target=&#34;_blank&#34;&gt;issue #42&lt;/a&gt;.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Links:&lt;br /&gt;
+&lt;a href=&#34;http://www.webreference.com/programming/apache_authentication/index.html&#34; target=&#34;_blank&#34;&gt;Apache authentication&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://www.iotopia.com/configure-reposado-on-an-ubuntu-oneric-server-so-deploy-studio-can-use-it/&#34; target=&#34;_blank&#34;&gt;Configure reposado with Rewrite Rules&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps&#34; target=&#34;_blank&#34;&gt;Creating a Cron task&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://jerome.co.za/reposado-a-custom-apple-software-update-server/&#34; target=&#34;_blank&#34;&gt;Reposado - Apple Software Update Server&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://denisonmac.wordpress.com/2013/02/28/running-margarita-in-apache/&#34; target=&#34;_blank&#34;&gt;Running Margarita in apache&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://github.com/clburlison/clburlison.github.io/issues/42&#34; target=&#34;_blank&#34;&gt;Issue #42&lt;/a&gt;,&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

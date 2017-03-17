@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Converting Audio With Media Encoder  &middot; clburlison</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="Describes how to convert audio to a mono format that is suitable for phone distribution purposes." />
+
+<meta name="keywords" content="audio,, editing,, wav,, windows,, mac, ">
+
+
+<meta property="og:title" content="Converting Audio With Media Encoder  &middot; clburlison ">
+<meta property="og:site_name" content="clburlison"/>
+<meta property="og:url" content="https://clburlison.com/converting-audio-with-media-encoder/" />
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="Describes how to convert audio to a mono format that is suitable for phone distribution purposes."/>
+<meta property="og:article:published_time" content="2014-07-23T00:00:00Z" />
+<meta property="og:article:modified_time" content="2014-07-23T00:00:00Z" />
+
+  
+    
+<meta property="og:article:tag" content="audio,">
+    
+<meta property="og:article:tag" content="editing,">
+    
+<meta property="og:article:tag" content="wav,">
+    
+<meta property="og:article:tag" content="windows,">
+    
+<meta property="og:article:tag" content="mac">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@clburlison" />
+<meta name="twitter:creator" content="@clburlison" />
+<meta name="twitter:title" content="Converting Audio With Media Encoder" />
+<meta name="twitter:description" content="Describes how to convert audio to a mono format that is suitable for phone distribution purposes." />
+<meta name="twitter:url" content="https://clburlison.com/converting-audio-with-media-encoder/" />
+<meta name="twitter:domain" content="https://clburlison.com/">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Converting Audio With Media Encoder",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2014-07-23",
+    "description": "Describes how to convert audio to a mono format that is suitable for phone distribution purposes.",
+    "wordCount": 313
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://clburlison.com/converting-audio-with-media-encoder/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://clburlison.com/touch-icon-144-precomposed.png">
+<link href="https://clburlison.com/favicon.png" rel="icon">
+
+<meta name="generator" content="Hugo 0.19" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://clburlison.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://clburlison.com/css/style.css">
+<link rel="stylesheet" href="https://clburlison.com/css/highlight/default.css">
+
+  
+  
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-49614309-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://clburlison.com/">
+  clburlison
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  A Mac sysadmin, documenting useful code, ideas, &amp; guides.
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+<a class="homelink" href="https://clburlison.com/">Home</a>
+
+
+  
+<a href="https://clburlison.com/about">About</a>
+
+<a href="https://clburlison.com/post" title="Show list of posts">Posts</a>
+
+<a href="https://clburlison.com/resources">Resources</a>
+
+<a href="https://clburlison.com/tags" title="Show list of tags">Tags</a>
+
+<a href="https://clburlison.com/talks">Talks</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:clburlison@gmail.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/clburlison">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+<a id="contact-link-linkedin" class="contact_link" href="https://www.linkedin.com/in/clburlison">
+  <span class="fa fa-linkedin-square"></span><span>linkedin</span></a>
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/clburlison">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Converting Audio With Media Encoder
+</h1>
+
+  <div class="metas">
+<time datetime="2014-07-23">Jul 23, 2014</time>
+
+
+  
+  &middot; Read in about 2 min
+  &middot; (313 Words)
+  <br>
+  
+<a class="label" href="https://clburlison.com/tags/editing">editing</a>
+
+
+
+</div>
+
+</header>
+
+  
+
+
+
+
+  <div class="container content">
+  <p>I received a unique request today from a co-worker of mine. In short, he asked me if I was able to convert an audio clip from a Tascam audio recorder to a lower quality format suitable for our phone distribution system. The real challenge&hellip;was I going to be able to do this with the software currently installed?
+</p>
+
+<p>Fortunately, I have access to the Adobe Create Suite (CS6) at work from which I will be using Media Encoder in this tutorial. The screenshots below are from a Mac but the steps should be pretty close on a Windows computer. The added benefit of this process is if you ever need to post-process audio that was recorded <code>clean</code> and make it sound like it went through a phone this will produce a pretty decent <code>phone sound</code>.</p>
+
+<p><strong>Goal:</strong> Create a <code>.wma</code> or <code>.wav</code> format file with a low sample rate, low sample size, and mono channel audio.</p>
+
+<h1 id="process-to-convert-the-audio">Process to convert the audio</h1>
+
+<ol>
+<li><p>Open Adobe Media Encoder.<br />
+<img src="/images/2014-07-23/1_open.png" alt="" /></p></li>
+
+<li><p>Create the Phone Preset by clicking on the <code>+</code> button in the Preset Browser window.<br />
+<img src="/images/2014-07-23/2_add_preset.png" alt="" /></p></li>
+
+<li><p>Add a preset name and change the format to Waveform Audio.<br />
+<img src="/images/2014-07-23/3_format.png" alt="" /></p></li>
+
+<li><p>Change the basic audio setting the values below. Click okay to save the preset.<br />
+<img src="/images/2014-07-23/4_settings.png" alt="" /></p></li>
+
+<li><p>Add your audio file to be converted by clicking the <code>+</code> button in the Queue window.<br />
+<img src="/images/2014-07-23/5_adding_file_2_encode.png" alt="" /></p></li>
+
+<li><p>Drag your phone setting preset from the Preset Browser window on top of the audio file you want to convert. It should look like the picture below. (note the .wav file extension)<br />
+<img src="/images/2014-07-23/6_ready_2_encode.png" alt="" /></p></li>
+
+<li><p>Click the green encode button.<br />
+<img src="/images/2014-07-23/7_encode.png" alt="" /></p></li>
+</ol>
+
+<h2 id="before-after">Before/After</h2>
+
+<div>
+    <a href="/images/2014-07-23/audio-test.mp3" target="_blank"><img src="/images/speaker-30.jpg" height="30"> Before</a>
+</div>
+
+<div>
+    <a href="/images/2014-07-23/audio-test_1.wav" target="_blank"><img src="/images/speaker-30.jpg" height="30">  After</a>
+</div>
+
+<p>The result is a Linear PCM codec audio file with 16 bit/sample rate, 8 kilohertz (kHz) in a <code>.wav</code> format.</p>
+
+<h1 id="update">Update</h1>
+
+<p>Although, this method does work and creates a windows audio file, it ended up not working for the original application that I needed. Needless to say there is no point removing this guide.</p>
+</div>
+
+
+  <footer class="container">
+  <div class="container navigation no-print">
+  <h2>Navigation</h2>
+  
+  
+
+    
+    <a class="prev" href="https://clburlison.com/show-helpdesk-info/" title="Show Help Desk Information">
+      Previous
+    </a>
+    
+
+    
+    <a class="next" href="https://clburlison.com/bash-if-then-cheat-sheet/" title="Bash if then cheat sheet">
+      Next
+    </a>
+    
+
+  
+
+
+</div>
+
+  <div class="container comments">
+  <h2>Comments</h2>
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+  powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>.
+
+
+</div>
+
+
+  
+<div class="container copyright">
+  
+  &copy; 2014 - 2017 Clayton Burlison
+
+
+</div>
+
+
+</div>
+
+</footer>
+
+    </main>
+    
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+<script src="https://clburlison.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Adobe on clburlison</title>
+    <link>https://clburlison.com/tags/adobe/feed/index.xml</link>
+    <description>Recent content in Adobe on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/tags/adobe/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Adobe CC Oops</title>
+      <link>https://clburlison.com/adobe-cc-oops/</link>
+      <pubDate>Tue, 17 May 2016 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/adobe-cc-oops/</guid>
+      <description>&lt;p&gt;I ran into the following error earlier this year and have yet to write about it. Adobe has the correct solution in another &lt;a href=&#34;https://helpx.adobe.com/creative-cloud/kb/unknown-server-error-launching-cc.html&#34; target=&#34;_blank&#34;&gt;knowledge base article&lt;/a&gt; however the error messages are different. Since the errors looked to be different I never would have attempted the solution until &lt;a href=&#34;https://twitter.com/Adobe_ITToolkit&#34; target=&#34;_blank&#34;&gt;Karl&lt;/a&gt; gave me a poke.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-17/adobecc_oops.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Basically I would launch Adobe&amp;rsquo;s Creative Cloud Packager (CCP) tool and nothing would work. Luckily the fix is really simple:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;rm -rf ~/Library/Application\ Support/Adobe/OOBE
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Links:&lt;br /&gt;
+&lt;a href=&#34;https://helpx.adobe.com/creative-cloud/kb/unknown-server-error-launching-cc.html&#34; target=&#34;_blank&#34;&gt;Adobe Unknown Server Error&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

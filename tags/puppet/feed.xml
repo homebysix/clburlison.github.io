@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Puppet on clburlison</title>
+    <link>https://clburlison.com/tags/puppet/feed/index.xml</link>
+    <description>Recent content in Puppet on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/tags/puppet/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Configuration Management</title>
+      <link>https://clburlison.com/configuration-management/</link>
+      <pubDate>Wed, 27 May 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/configuration-management/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;This is part one in a four part series on using Puppet on OS X. However to understand my move to Puppet I wanted to share my thoughts on Configuration Management (CM) in general.&lt;/p&gt;
+
+&lt;p&gt;For the last five months, I have been seriously questioning my deployment/management process. Even with Munki&amp;rsquo;s native support for configuration profiles in &lt;a href=&#34;https://github.com/munki/munki/releases/tag/v2.2.4&#34; target=&#34;_blank&#34;&gt;v2.2.4&lt;/a&gt;, it has always seemed like I was creating extra work for myself. This extra work is mainly related to how we need to manage settings on OS X, it is quite the balancing act:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;What settings are required for me to manage?&lt;/li&gt;
+&lt;li&gt;What settings should I apply defaults?&lt;/li&gt;
+&lt;li&gt;What settings should I leave alone?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Many sysadmins have the idea of &amp;ldquo;settings&amp;rdquo; as a user level choice however in education that is not really a fair comparison to private corporations. Students and teachers should have an easy transition to using the OS X platform. If that means I add all the &amp;ldquo;Program specific&amp;rdquo; applications to the dock, then so be it I will add them all. This is were I started to run into a major road block with Munki. It was designed to manage software installs. Even though I can package specific settings to work for 18+ different classrooms it is error prone  and quite a royal pain to manage.&lt;/p&gt;
+
+&lt;p&gt;In comes Configuration Management to the rescue. Obligatory CM definition below.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Configuration management (CM) is a systems engineering process for establishing and maintaining consistency of a product&amp;rsquo;s performance, functional and physical attributes with its requirements, design and operational information throughout its life.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;en.wikipedia.org/wiki/Configuration_management&#34; target=&#34;_blank&#34;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;pain-prior-to-cm&#34;&gt;Pain prior to CM&lt;/h1&gt;
+
+&lt;p&gt;Before using CM, I was required to maintain many different scripts for prod, testing, classroomA, classroomB, classroomC, etc. In conjunction add on firstboot scripts as those &lt;a href=&#34;https://github.com/rtrouton/rtrouton_scripts/tree/master/rtrouton_scripts/first_boot&#34; target=&#34;_blank&#34;&gt;rarely change&lt;/a&gt; &lt;em&gt;{sarcasm}&lt;/em&gt;. Firstboot scripts are great in getting a system setup however after initial setup everything goes the way of the Dodo bird. Configuration Management allows one to apply settings to their entire fleet, sub sections of the fleet, and effectively say &amp;ldquo;Be this way until I say otherwise.&amp;rdquo; It&amp;rsquo;s great but a huge change in the way of thinking if you are use to the &amp;ldquo;Apply this now&amp;rdquo; mentality which is effectively how many use Munki (myself included).&lt;/p&gt;
+
+&lt;p&gt;But doesn&amp;rsquo;t Munki have check a &lt;code&gt;installcheck_script&lt;/code&gt;? Yes, that feature is available but it does not replace the services that many CM products provide.&lt;/p&gt;
+
+&lt;p&gt;Tim Sutton explained this recently on the munki-dev googlegroup. A relevant quote is below however the specific thread is of value related to this idea of CM and Munki.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;More and more of these CM &amp;lsquo;tasks&amp;rsquo; are best handled using Configuration&lt;br /&gt;
+Profiles, and Munki actually has good built-in support for these. I&amp;rsquo;ve&lt;br /&gt;
+been able to get by using Munki as my &amp;ldquo;configuration management&amp;rdquo;&lt;br /&gt;
+system instead of implementing another tool, just because the things I&lt;br /&gt;
+would use Puppet for only account for about 5% of the items in my&lt;br /&gt;
+repository - the rest are installers for software, updates,&lt;br /&gt;
+configuration profiles and supporting LaunchAgents/LaunchDaemons.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://twitter.com/tvsutton&#34; target=&#34;_blank&#34;&gt;Tim Sutton&lt;/a&gt; - &lt;a href=&#34;https://groups.google.com/d/msg/munki-dev/l_T_aZM9TGU/yb-CWZAv7UQJ&#34; target=&#34;_blank&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;What Tim says above is absolutely true. However when that 5% is the most time consuming to &amp;ldquo;manage&amp;rdquo; and update you might want to look into a different solution. I have gotten away with using Munki as an all-in-one solution for over three years however when you need something custom&amp;hellip;you have to write something custom. Also, don&amp;rsquo;t forget to verify that custom something you just wrote works on all machines, with the logic in place to work with older operating systems.&lt;/p&gt;
+
+&lt;h1 id=&#34;how-to-use-cm&#34;&gt;How to use CM?&lt;/h1&gt;
+
+&lt;p&gt;I am still relatively new to using configuration management. However I have been working on a functional approach that fills the gap for me. The best advice I can give is to use CM for settings. Use a software solution, like Munki, for all packages. When you start making your CM product install software things can get complicated very quickly.&lt;/p&gt;
+
+&lt;p&gt;For a list of items I believe a CM product excels at managing:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Admin account&lt;/li&gt;
+&lt;li&gt;All profiles (Wi-fi, Safari, Finder, Office2011, Chrome, iCloud, LoginWindow, etc.)&lt;/li&gt;
+&lt;li&gt;Management scripts (dockutil, BigHonkingText, Exchange Setup, etc.)&lt;/li&gt;
+&lt;li&gt;Remote Management settings&lt;/li&gt;
+&lt;li&gt;Remote Login&lt;/li&gt;
+&lt;li&gt;Sudoers file&lt;/li&gt;
+&lt;li&gt;etc.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;puppet&#34;&gt;Puppet&lt;/h1&gt;
+
+&lt;p&gt;After looking around at the many options for CM I decided on using Puppet. But don&amp;rsquo;t let me stop you from checking out the &lt;a href=&#34;http://en.wikipedia.org/wiki/Comparison_of_open-source_configuration_management_software&#34; target=&#34;_blank&#34;&gt;competition&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I had already used Puppet personally but had always hated the idea of yet another server to maintain for yet another service. Puppet has had the ability to use a masterless setup, via &lt;code&gt;puppet apply&lt;/code&gt;, however usage of a masterless setup always seemed even more unlikely for me. After revisiting the issues again in February of 2015 using this solution finally started to seem more feasible.&lt;/p&gt;
+
+&lt;p&gt;Puppet takes a huge change in thinking. Puppet code defines a state that you want clients to be in&amp;hellip;not how to be in that state. This will be touched on later but I wanted to plant that seed prior to getting into the full setup later. I found getting started with Puppet was relatively easy however starting to manage specific parts of the OS X client leaves tons of room for issues to arise. With the assistance mainly the &lt;a href=&#34;https://github.com/dayglojesus/managedmac&#34; target=&#34;_blank&#34;&gt;managedmac&lt;/a&gt; module from Brian Warsing it becomes much easier to work with OS X clients using puppet.&lt;/p&gt;
+
+&lt;h2 id=&#34;example-code&#34;&gt;Example code&lt;/h2&gt;
+
+&lt;p&gt;The hiera code below is used to create a local admin account and make sure that account is always present:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;managedmac::users::accounts:
+  ladmin:
+    uid: 999
+    gid: 80
+    ensure: present
+    iterations: 36630
+    password: 92d2d837084ac329006a16d67f8c87fdba141b6665c2d4910aee72e3ce777bd58cc7170fe266201ddc8bfc79ca78ab6ba85824019429e8f37072dc0cc26cf7b726d78f8d7543eb72c7be2db6483c3027d77e0eb8146d6dc03e10e5650d7c2560a97b86b287e945dbcf112edde5f3c61b07ee80615e0ada5ac11278651f9eef4b
+    salt: 2562f7a1bde6eac36352ec1a4621ee945e663a2180bb90fab0f9cdd98b202d3e
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;Note:&lt;/em&gt; the above password is &lt;code&gt;temp&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To allow that admin account to have ssh and remote management access:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;managedmac::remotemanagement::enable: true
+managedmac::remotemanagement::users:
+  techsupport: -1073741569
+
+managedmac::sshd::enable: true
+managedmac::sshd::users:
+   - techsupport
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The syntax is easy to read. Even without knowing anything about Puppet or how Hiera works the above lines should make sense. Unfortunately, the above code on its own does nothing. The computer needs to know how to use that code which I will detail in a later post.&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;Although using CM is not needed everywhere it can become quite handy. Using check scripts and creating multiple packages for closely related settings can be time consuming plus they are prone to error. In using Puppet, I am able to apply settings for multiple different groups however I only write the code once. The main advantage is when change is needed all 18+ versions look to one &amp;ldquo;master code&amp;rdquo; allowing me to make my updated change once.&lt;/p&gt;
+
+&lt;p&gt;In following posts I will describe the setup process and specifics on how to use Puppet in a masterless workflow.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:
+&lt;a href=&#34;https://groups.google.com/d/msg/munki-dev/l_T_aZM9TGU/yb-CWZAv7UQJ&#34; target=&#34;_blank&#34;&gt;Tim&amp;rsquo;s comment on googlegroups/munki-dev&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Puppet Module desktop picture</title>
+      <link>https://clburlison.com/puppet-module-desktoppicture/</link>
+      <pubDate>Tue, 10 Feb 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/puppet-module-desktoppicture/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;I have been using puppet in one way or another since April of 2014. My first introduction to puppet was &lt;a href=&#34;https://boxen.github.com/&#34; target=&#34;_blank&#34;&gt;boxen&lt;/a&gt; but up until recently I have only focused on how puppet can apply to me personally. With this module and a few ideas I have for the future this is going to change the way clients are configured at &lt;code&gt;$work_place&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now this technically is not my first module it is the first module that I have created the logic and wrote entirely myself. The predecessor to this module &lt;a href=&#34;https://github.com/clburlison/puppet-outset&#34; target=&#34;_blank&#34;&gt;puppet-outset&lt;/a&gt; was basically a few line changes from a module that Graham Gilbert &lt;a href=&#34;https://github.com/grahamgilbert/puppet-scriptrunner&#34; target=&#34;_blank&#34;&gt;made&lt;/a&gt;. With this project my eyes have been really opened into how powerful puppet is.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-does-it-do&#34;&gt;What does it do?&lt;/h2&gt;
+
+&lt;p&gt;This module handles dynamically creating scripts that will change the wallpaper on Mac OS X. It has been testing with 10.7 through 10.10. Works great with hiera and validates your data if you input bad entries. This module is in a way an add-on to my &lt;a href=&#34;https://github.com/clburlison/puppet-outset&#34; target=&#34;_blank&#34;&gt;puppet-outset&lt;/a&gt; module.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-02-10/puppet-module.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/puppet-desktoppicture&#34; target=&#34;_blank&#34;&gt;Check it out&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you are familiar with puppet code and the standard practices the documentation I have included within the classes should make this module self-explanatory. Also, if you have any issues please let me know on &lt;a href=&#34;https://github.com/clburlison/puppet-desktoppicture/issues&#34; target=&#34;_blank&#34;&gt;Github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;more&#34;&gt;More&lt;/h1&gt;
+
+&lt;p&gt;In the next few months expect a few more posts on puppet from the OS X Administration perspective.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:&lt;br /&gt;
+&lt;a href=&#34;https://github.com/clburlison/puppet-desktoppicture&#34; target=&#34;_blank&#34;&gt;desktoppicture on GitHub&lt;/a&gt;,&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Things learned from boxen</title>
+      <link>https://clburlison.com/things-learned-from-boxen/</link>
+      <pubDate>Thu, 24 Apr 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/things-learned-from-boxen/</guid>
+      <description>
+
+&lt;h2 id=&#34;what-is-boxen&#34;&gt;What is boxen?&lt;/h2&gt;
+
+&lt;p&gt;So odds are if you have landed on this page you have probably already heard of boxen. For those who have not heard yet, boxen is an open source project created by the good people at &lt;a href=&#34;http://github.com&#34; target=&#34;_blank&#34;&gt;github.com&lt;/a&gt; as a way to quickly setup a Macintosh computer. Boxen can also be used as a way to keep certain settings managed between two or more devices. Think for a second, your laptop goes with you everywhere and along with that you have all of your custom shell scripts, shell alias, ssh keys, etc. With boxen you can systematically take all those settings that you love and move them to every computer you use.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;first-lesson-learned&#34;&gt;First lesson learned&lt;/h2&gt;
+
+&lt;p&gt;Starting out I found out how few of my settings I had documented. The problem that plagues every IT department, documentation. With a mult-user network, this is a pretty big deal since it can cause confusion in the future along with creating ample down time when you are trying to troubleshoot a system that you setup, customized, and did not document. We all know the pit falls of doing this in a mult-user environment but my laptop is a single-user environment and except for extremely rare cases, I am the only one that uses it. Why do I need to document settings for my laptop you might ask?&lt;/p&gt;
+
+&lt;p&gt;Well hopefully, this never happens but what do you do when your hard drive crashes, or you accidentally ran a remove command in the wrong directory tree? Gone are the days where you could shut the door and start rebuilding from scratch&amp;hellip;sure you could restore from a backup but boxen tackles a task like this a little differently. Boxen is not a backup solution it is used to manage a system. With boxen, I have a complete history of all the changes I have made to my system. Might not seem like a big deal, but it makes life much easier when trying to find out how you set AirDrop to work over Ethernet connections. Hint: &lt;a href=&#34;https://clburlison.com/blog/2014/04/18/enable-airdrop-on-ethernet/&#34;&gt;Previous Article&lt;/a&gt;, or &lt;a href=&#34;https://raw.githubusercontent.com/clburlison/my-boxen/master/modules/people/manifests/clburlison/config.pp&#34; target=&#34;_blank&#34;&gt;my config file&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Hopefully you can see the power of this. I was late to the party but finally got around to using boxen and now cannot imagine making changes without documenting it this way. Sure having text files stored on a file-share is a solution, but this is a living git repo that allows me to document everything, plus I have a built-in file versioning with commits.&lt;/p&gt;
+
+&lt;h3 id=&#34;how-you-can-get-started&#34;&gt;How you can get started?&lt;/h3&gt;
+
+&lt;p&gt;Now is a good time to note, I am not completely up to speed with puppet aka the backend of boxen. I was however able to hack around until I got the stuff to work. Start small with configuring the installation of say Firefox. Once you get that working keep looking around on &lt;a href=&#34;http://github.com/boxen&#34; target=&#34;_blank&#34;&gt;github.com/boxen&lt;/a&gt; and see if there are other applications you can add easily. If not move on to what I like to call &amp;ldquo;borrowing code from those smarter than me&amp;rdquo;. You too can participate in this act by downloading other&amp;rsquo;s boxen repos. Looking inside their configurations files and copying and pasting code.&lt;/p&gt;
+
+&lt;p&gt;At first, you might not know what you&amp;rsquo;re doing and that is fine. It is a learning experience after all but over time you will begin to understand the structure of the code. Odds are, if you are trying to automate some part of your Mac someone else wants to do it as well or already has. Do not attempt to reinvent the wheel.&lt;/p&gt;
+
+&lt;p&gt;So which repo&amp;rsquo;s do I recommend you looking at the most? &lt;a href=&#34;https://github.com/glarizza/my-boxen&#34; target=&#34;_blank&#34;&gt;Gary Larizza&lt;/a&gt;, &lt;a href=&#34;https://github.com/grahamgilbert/my-boxen&#34; target=&#34;_blank&#34;&gt;Graham Gilbert&lt;/a&gt;, and &lt;a href=&#34;https://github.com/clburlison/my-boxen&#34; target=&#34;_blank&#34;&gt;mine&lt;/a&gt; are full of useful code. You will still want to learn puppet but hopefully the comments in the repos listed above help guide you through starting out.&lt;/p&gt;
+
+&lt;h3 id=&#34;dropbox-usage&#34;&gt;Dropbox usage&lt;/h3&gt;
+
+&lt;p&gt;One of the issues I ran into while looking at boxen was storing personal information in a public github repo. You could make your boxen repo private but that was not the method I wanted to take. I could also just copy all my private information after the initial boxen setup but does that not defeat the main purpose of boxen? Luckily Graham had already found out a solution which is to use Dropbox for everything that should not be shared with others. Before I continue on let me put a disclaimer that if you plan on storing ssh keys, license files, or really personal information you really need to enable two-step verification. Attached &lt;a href=&#34;https://www.dropbox.com/help/363/en&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt; is the setup guide as this is very important for you to do.&lt;/p&gt;
+
+&lt;p&gt;You setup 2fa for Drobox, right? If you have not what are you waiting for? Now that your Dropbox is secure or at least more secure, I would create a directory structure that matches OS X. This might make for long paths while creating settings in puppet code but having a logical file-management system that actually matches where the files are actually being placed by boxen will help. Below is a screenshot of my directory structure as of this writing.&lt;br /&gt;
+&lt;img src=&#34;https://clburlison.com/images/2014-04-24/Dropbox-config.png&#34; alt=&#34;dropbox-config&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;no-really-how-can-i-get-started&#34;&gt;No really how can I get started?&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Well Gary has the best write up though it is a bit dated &lt;a href=&#34;http://garylarizza.com/blog/2013/02/15/puppet-plus-github-equals-laptop-love/&#34; target=&#34;_blank&#34;&gt;Puppet + Github = Laptop Love&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Easy step-by-step setup &lt;a href=&#34;http://coffeecupblog.com/blog/2013/03/24/automate-your-mac-provisioning-with-boxen-first-steps/&#34; target=&#34;_blank&#34;&gt;Coffee Cup Blog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Another easy let&amp;rsquo;s get started &lt;a href=&#34;https://coderwall.com/p/kppokq&#34; target=&#34;_blank&#34;&gt;Thomas Riboulet&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Boxen is free to use. Allows you to configure existing computers, bootstrap new computers, and keep an online documentation detailed of all the custom settings that you love about your computer. Boxen is also a great way to get started with puppet.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Setting up a puppetmaster on Mavericks</title>
+      <link>https://clburlison.com/setting-up-a-puppetmaster-on-mavericks/</link>
+      <pubDate>Fri, 04 Apr 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/setting-up-a-puppetmaster-on-mavericks/</guid>
+      <description>
+
+&lt;p&gt;For various reasons I decided to set up my puppetmaster on an OS X install of Mavericks instead of what I would consider the norm, being a linux distro. Here are the results. This documentation is strongly based on the article by Nate Walck on afp548.com.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Notice:&lt;/strong&gt; I do not use these instructions any longer. The setup of a puppetmaster on OS X Server was just for testing purposes.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;h3 id=&#34;introduction-to-puppet&#34;&gt;Introduction to puppet&lt;/h3&gt;
+
+&lt;p&gt;Puppet is a service that is normally ran in a client/server setup that helps manage and configure devices. Since I am an OS X administrator, this article will be coving the installation and configuration on an OS X platform. While many sysadmins will prefer server installation on a linux distro I simply did not want to mess with getting a Virtual Machine approved in my environment. Below are the steps that I took to set up a puppetmaster on an OS X Mavericks install.&lt;/p&gt;
+
+&lt;h3 id=&#34;pre-steps&#34;&gt;Pre-steps&lt;/h3&gt;
+
+&lt;p&gt;Setting up dns, creating a CNAME record, verifying dns records, etc. Aka all the things I should have done but did not. I will go ahead and mention now that if you are doing this for production taking a moment to do this correctly the first time will save you hours of headache down the road. Since I do not have control over network settings at work, I skipped these steps and decided to use the server hostnames in my case. Please refer to the &lt;a href=&#34;http://www.afp548.com/2013/02/26/setting-up-a-basic-3-1-x-puppet-master-on-os-x-10-8/&#34; target=&#34;_blank&#34;&gt;article&lt;/a&gt; by Nate if you want to do things the approved way.&lt;/p&gt;
+
+&lt;h3 id=&#34;install-the-software&#34;&gt;Install the software&lt;/h3&gt;
+
+&lt;p&gt;Next, we must install Puppet on our master.  The Reference Manual has a section specifically for OS X regarding the puppet install. For Mavericks, you will want at least &lt;strong&gt;Puppet version 3.2.X&lt;/strong&gt; or higher. You will also want to install &lt;strong&gt;Facter, and Hiera&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Each of these pieces of software can be obtained from &lt;a href=&#34;http://downloads.puppetlabs.com/mac/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;. (After downloading, you will want to install each of the three packages. A control click might be needed if you have Gatekeeper enabled.)&lt;/p&gt;
+
+&lt;p&gt;The puppet service account should be created automatically. It is good practice to double checking this by running. Check for Puppet user:
+&lt;code&gt;bashid puppet&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The command above should list the puppet user’s uid, gid and groups.  If you get ‘id: puppet: no such user’ instead, then you will need to create the user manually.  Create the service account and puppet group using the following two commands (As per the Reference Manual):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo puppet resource group puppet ensure=present
+sudo puppet resource user puppet ensure=present gid=puppet shell=&#39;/sbin/nologin&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You also do not want this puppet user to appear at the login window (since it is a service account), so run the following command to hide it (or you can set it via MCX, Profile, etc):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo defaults write /Library/Preferences/com.apple.loginwindow Hide500Users -boolean YES
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;settings-up-our-puppetmaster&#34;&gt;Settings up our puppetmaster&lt;/h3&gt;
+
+&lt;p&gt;Now we will make changes to the default puppet configuration for our server. This can be done with &lt;strong&gt;sudo nano /etc/puppet/puppet.conf&lt;/strong&gt; then enter the following text. Save with &amp;ldquo;Ctrl + X&amp;rdquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Default Puppet Settings
+server = server_host_name_here # default is &#39;puppet&#39;
+report = true
+pluginsync = true
+certname = server.company.com (The FQDN of the machine that is running puppet)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Also, since pluginsync is enabled by default, create the modules folder and make sure the puppet user owns it. We can create our manifests directory while we are at it. The latter command will create the default &lt;em&gt;site.pp&lt;/em&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo mkdir /etc/puppet/modules
+sudo chown puppet /etc/puppet/modules
+sudo mkdir /etc/puppet/manifests
+sudo touch /etc/puppet/manifests/site.pp
+sudo chown puppet /etc/puppet/manifests/site.pp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly, run puppet as a master for the first time using the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo puppet master --debug --verbose --no-daemonize
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Because we are running puppet as a master, it will generate a CA (Certificate Authority) so it can securely talk to clients and create other folder structure that the master needs to function.&lt;/p&gt;
+
+&lt;h4 id=&#34;launchdaemon-setup&#34;&gt;LaunchDaemon setup&lt;/h4&gt;
+
+&lt;p&gt;Puppet is now fully configured as a basic master, but we are missing one key component: a service to make sure that Puppet is running.  Since we are setting this up on OS X, we will use a launchd job.  The Puppet documentation on setting up the launchd item can be found &lt;a href=&#34;http://docs.puppetlabs.com/guides/installation.html#with-launchd&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.  In this documentation, Puppet Labs has provided us with a launchd item that can take care of starting our puppet master for us.  You can view the original plist &lt;a href=&#34;http://docs.puppetlabs.com/guides/installation.html#mac-os-x&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt; or copy it from the box.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
+&amp;lt;!DOCTYPE plist PUBLIC &amp;quot;-//Apple Computer//DTD PLIST 1.0//EN&amp;quot; &amp;quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&amp;quot;&amp;gt;
+&amp;lt;plist version=&amp;quot;1.0&amp;quot;&amp;gt;
+&amp;lt;dict&amp;gt;
+        &amp;lt;key&amp;gt;EnvironmentVariables&amp;lt;/key&amp;gt;
+        &amp;lt;dict&amp;gt;
+                &amp;lt;key&amp;gt;PATH&amp;lt;/key&amp;gt;
+                &amp;lt;string&amp;gt;/sbin:/usr/sbin:/bin:/usr/bin&amp;lt;/string&amp;gt;
+                &amp;lt;key&amp;gt;RUBYLIB&amp;lt;/key&amp;gt;
+                &amp;lt;string&amp;gt;/usr/lib/ruby/site_ruby/1.8/&amp;lt;/string&amp;gt;
+        &amp;lt;/dict&amp;gt;
+        &amp;lt;key&amp;gt;Label&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;com.puppetlabs.puppetmaster&amp;lt;/string&amp;gt;
+        &amp;lt;key&amp;gt;OnDemand&amp;lt;/key&amp;gt;
+        &amp;lt;false/&amp;gt;
+        &amp;lt;key&amp;gt;ProgramArguments&amp;lt;/key&amp;gt;
+        &amp;lt;array&amp;gt;
+                &amp;lt;string&amp;gt;/usr/bin/puppet&amp;lt;/string&amp;gt;
+                &amp;lt;string&amp;gt;master&amp;lt;/string&amp;gt;
+                &amp;lt;string&amp;gt;--verbose&amp;lt;/string&amp;gt;
+                &amp;lt;string&amp;gt;--no-daemonize&amp;lt;/string&amp;gt;
+        &amp;lt;/array&amp;gt;
+        &amp;lt;key&amp;gt;RunAtLoad&amp;lt;/key&amp;gt;
+        &amp;lt;true/&amp;gt;
+        &amp;lt;key&amp;gt;ServiceDescription&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;Puppetmaster Daemon&amp;lt;/string&amp;gt;
+        &amp;lt;key&amp;gt;ServiceIPC&amp;lt;/key&amp;gt;
+        &amp;lt;false/&amp;gt;
+        &amp;lt;key&amp;gt;StandardErrorPath&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;/var/log/puppet/puppetmaster.err&amp;lt;/string&amp;gt;
+        &amp;lt;key&amp;gt;StandardOutPath&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;/var/log/puppet/puppetmaster.out&amp;lt;/string&amp;gt;
+&amp;lt;/dict&amp;gt;
+&amp;lt;/plist&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Save the contents of this file into &lt;strong&gt;/Library/LaunchDaemons/com.puppetlabs.puppetmaster.plist&lt;/strong&gt; . Also, make sure the permissions are correct on the file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo chown root:wheel /Library/LaunchDaemons/com.puppetlabs.puppetmaster.plist  
+sudo chmod 644 /Library/LaunchDaemons/com.puppetlabs.puppetmaster.plist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly, load the launchd using launchctl:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo launchctl load -w /Library/LaunchDaemons/com.puppetlabs.puppetmaster.plist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We should now have a fully functional puppetmaster running on OS X Mavericks. Note that this is running with the default WEBrick server that comes with puppet. While this should be okay for development it is not suitable for production. Methods for scaling Puppet can be found on the &lt;a href=&#34;http://docs.puppetlabs.com/guides/scaling.html&#34; target=&#34;_blank&#34;&gt;Scaling Puppet&lt;/a&gt; page.&lt;/p&gt;
+
+&lt;p&gt;More information about puppet will be published in the future. I am going through beta testing with Puppet at the time of this writing.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles: &lt;a href=&#34;http://www.afp548.com/2013/02/26/setting-up-a-basic-3-1-x-puppet-master-on-os-x-10-8/&#34; target=&#34;_blank&#34;&gt;afp548.com&lt;/a&gt;, &lt;a href=&#34;http://docs.puppetlabs.com/guides/installation.html#mac-os-x&#34; target=&#34;_blank&#34;&gt;Puppetlabs Offical Documentation&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

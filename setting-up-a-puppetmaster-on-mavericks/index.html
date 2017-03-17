@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Setting up a puppetmaster on Mavericks  &middot; clburlison</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="Setting up a puppetmaster on osx Mavericks." />
+
+<meta name="keywords" content="puppet,, mavericks,, osx,, install,, puppetmaster, ">
+
+
+<meta property="og:title" content="Setting up a puppetmaster on Mavericks  &middot; clburlison ">
+<meta property="og:site_name" content="clburlison"/>
+<meta property="og:url" content="https://clburlison.com/setting-up-a-puppetmaster-on-mavericks/" />
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="Setting up a puppetmaster on osx Mavericks."/>
+<meta property="og:article:published_time" content="2014-04-04T00:00:00Z" />
+<meta property="og:article:modified_time" content="2014-04-04T00:00:00Z" />
+
+  
+    
+<meta property="og:article:tag" content="puppet,">
+    
+<meta property="og:article:tag" content="mavericks,">
+    
+<meta property="og:article:tag" content="osx,">
+    
+<meta property="og:article:tag" content="install,">
+    
+<meta property="og:article:tag" content="puppetmaster">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@clburlison" />
+<meta name="twitter:creator" content="@clburlison" />
+<meta name="twitter:title" content="Setting up a puppetmaster on Mavericks" />
+<meta name="twitter:description" content="Setting up a puppetmaster on osx Mavericks." />
+<meta name="twitter:url" content="https://clburlison.com/setting-up-a-puppetmaster-on-mavericks/" />
+<meta name="twitter:domain" content="https://clburlison.com/">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Setting up a puppetmaster on Mavericks",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2014-04-04",
+    "description": "Setting up a puppetmaster on osx Mavericks.",
+    "wordCount": 891
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://clburlison.com/setting-up-a-puppetmaster-on-mavericks/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://clburlison.com/touch-icon-144-precomposed.png">
+<link href="https://clburlison.com/favicon.png" rel="icon">
+
+<meta name="generator" content="Hugo 0.19" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://clburlison.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://clburlison.com/css/style.css">
+<link rel="stylesheet" href="https://clburlison.com/css/highlight/default.css">
+
+  
+  
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-49614309-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://clburlison.com/">
+  clburlison
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  A Mac sysadmin, documenting useful code, ideas, &amp; guides.
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+<a class="homelink" href="https://clburlison.com/">Home</a>
+
+
+  
+<a href="https://clburlison.com/about">About</a>
+
+<a href="https://clburlison.com/post" title="Show list of posts">Posts</a>
+
+<a href="https://clburlison.com/resources">Resources</a>
+
+<a href="https://clburlison.com/tags" title="Show list of tags">Tags</a>
+
+<a href="https://clburlison.com/talks">Talks</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:clburlison@gmail.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/clburlison">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+<a id="contact-link-linkedin" class="contact_link" href="https://www.linkedin.com/in/clburlison">
+  <span class="fa fa-linkedin-square"></span><span>linkedin</span></a>
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/clburlison">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Setting up a puppetmaster on Mavericks
+</h1>
+
+  <div class="metas">
+<time datetime="2014-04-04">Apr 04, 2014</time>
+
+
+  
+  &middot; Read in about 5 min
+  &middot; (891 Words)
+  <br>
+  
+<a class="label" href="https://clburlison.com/tags/puppet">puppet</a>
+
+<a class="label" href="https://clburlison.com/tags/osx">osx</a>
+
+
+
+</div>
+
+</header>
+
+  
+
+
+
+
+  <div class="container content">
+  
+
+<p>For various reasons I decided to set up my puppetmaster on an OS X install of Mavericks instead of what I would consider the norm, being a linux distro. Here are the results. This documentation is strongly based on the article by Nate Walck on afp548.com.</p>
+
+<hr />
+
+<div class="alert alert-info">
+  <p><strong>Notice:</strong> I do not use these instructions any longer. The setup of a puppetmaster on OS X Server was just for testing purposes.</p>
+
+</div>
+
+
+<h3 id="introduction-to-puppet">Introduction to puppet</h3>
+
+<p>Puppet is a service that is normally ran in a client/server setup that helps manage and configure devices. Since I am an OS X administrator, this article will be coving the installation and configuration on an OS X platform. While many sysadmins will prefer server installation on a linux distro I simply did not want to mess with getting a Virtual Machine approved in my environment. Below are the steps that I took to set up a puppetmaster on an OS X Mavericks install.</p>
+
+<h3 id="pre-steps">Pre-steps</h3>
+
+<p>Setting up dns, creating a CNAME record, verifying dns records, etc. Aka all the things I should have done but did not. I will go ahead and mention now that if you are doing this for production taking a moment to do this correctly the first time will save you hours of headache down the road. Since I do not have control over network settings at work, I skipped these steps and decided to use the server hostnames in my case. Please refer to the <a href="http://www.afp548.com/2013/02/26/setting-up-a-basic-3-1-x-puppet-master-on-os-x-10-8/" target="_blank">article</a> by Nate if you want to do things the approved way.</p>
+
+<h3 id="install-the-software">Install the software</h3>
+
+<p>Next, we must install Puppet on our master.  The Reference Manual has a section specifically for OS X regarding the puppet install. For Mavericks, you will want at least <strong>Puppet version 3.2.X</strong> or higher. You will also want to install <strong>Facter, and Hiera</strong>.</p>
+
+<p>Each of these pieces of software can be obtained from <a href="http://downloads.puppetlabs.com/mac/" target="_blank">here</a>. (After downloading, you will want to install each of the three packages. A control click might be needed if you have Gatekeeper enabled.)</p>
+
+<p>The puppet service account should be created automatically. It is good practice to double checking this by running. Check for Puppet user:
+<code>bashid puppet</code></p>
+
+<p>The command above should list the puppet user’s uid, gid and groups.  If you get ‘id: puppet: no such user’ instead, then you will need to create the user manually.  Create the service account and puppet group using the following two commands (As per the Reference Manual):</p>
+
+<pre><code class="language-bash">sudo puppet resource group puppet ensure=present
+sudo puppet resource user puppet ensure=present gid=puppet shell='/sbin/nologin'
+</code></pre>
+
+<p>You also do not want this puppet user to appear at the login window (since it is a service account), so run the following command to hide it (or you can set it via MCX, Profile, etc):</p>
+
+<pre><code class="language-bash">sudo defaults write /Library/Preferences/com.apple.loginwindow Hide500Users -boolean YES
+</code></pre>
+
+<h3 id="settings-up-our-puppetmaster">Settings up our puppetmaster</h3>
+
+<p>Now we will make changes to the default puppet configuration for our server. This can be done with <strong>sudo nano /etc/puppet/puppet.conf</strong> then enter the following text. Save with &ldquo;Ctrl + X&rdquo;</p>
+
+<pre><code class="language-bash"># Default Puppet Settings
+server = server_host_name_here # default is 'puppet'
+report = true
+pluginsync = true
+certname = server.company.com (The FQDN of the machine that is running puppet)
+</code></pre>
+
+<p>Also, since pluginsync is enabled by default, create the modules folder and make sure the puppet user owns it. We can create our manifests directory while we are at it. The latter command will create the default <em>site.pp</em> file:</p>
+
+<pre><code class="language-bash">sudo mkdir /etc/puppet/modules
+sudo chown puppet /etc/puppet/modules
+sudo mkdir /etc/puppet/manifests
+sudo touch /etc/puppet/manifests/site.pp
+sudo chown puppet /etc/puppet/manifests/site.pp
+</code></pre>
+
+<p>Lastly, run puppet as a master for the first time using the following command:</p>
+
+<pre><code class="language-bash">sudo puppet master --debug --verbose --no-daemonize
+</code></pre>
+
+<p>Because we are running puppet as a master, it will generate a CA (Certificate Authority) so it can securely talk to clients and create other folder structure that the master needs to function.</p>
+
+<h4 id="launchdaemon-setup">LaunchDaemon setup</h4>
+
+<p>Puppet is now fully configured as a basic master, but we are missing one key component: a service to make sure that Puppet is running.  Since we are setting this up on OS X, we will use a launchd job.  The Puppet documentation on setting up the launchd item can be found <a href="http://docs.puppetlabs.com/guides/installation.html#with-launchd" target="_blank">here</a>.  In this documentation, Puppet Labs has provided us with a launchd item that can take care of starting our puppet master for us.  You can view the original plist <a href="http://docs.puppetlabs.com/guides/installation.html#mac-os-x" target="_blank">here</a> or copy it from the box.</p>
+
+<pre><code class="language-bash">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple Computer//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+        &lt;key&gt;EnvironmentVariables&lt;/key&gt;
+        &lt;dict&gt;
+                &lt;key&gt;PATH&lt;/key&gt;
+                &lt;string&gt;/sbin:/usr/sbin:/bin:/usr/bin&lt;/string&gt;
+                &lt;key&gt;RUBYLIB&lt;/key&gt;
+                &lt;string&gt;/usr/lib/ruby/site_ruby/1.8/&lt;/string&gt;
+        &lt;/dict&gt;
+        &lt;key&gt;Label&lt;/key&gt;
+        &lt;string&gt;com.puppetlabs.puppetmaster&lt;/string&gt;
+        &lt;key&gt;OnDemand&lt;/key&gt;
+        &lt;false/&gt;
+        &lt;key&gt;ProgramArguments&lt;/key&gt;
+        &lt;array&gt;
+                &lt;string&gt;/usr/bin/puppet&lt;/string&gt;
+                &lt;string&gt;master&lt;/string&gt;
+                &lt;string&gt;--verbose&lt;/string&gt;
+                &lt;string&gt;--no-daemonize&lt;/string&gt;
+        &lt;/array&gt;
+        &lt;key&gt;RunAtLoad&lt;/key&gt;
+        &lt;true/&gt;
+        &lt;key&gt;ServiceDescription&lt;/key&gt;
+        &lt;string&gt;Puppetmaster Daemon&lt;/string&gt;
+        &lt;key&gt;ServiceIPC&lt;/key&gt;
+        &lt;false/&gt;
+        &lt;key&gt;StandardErrorPath&lt;/key&gt;
+        &lt;string&gt;/var/log/puppet/puppetmaster.err&lt;/string&gt;
+        &lt;key&gt;StandardOutPath&lt;/key&gt;
+        &lt;string&gt;/var/log/puppet/puppetmaster.out&lt;/string&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre>
+
+<p>Save the contents of this file into <strong>/Library/LaunchDaemons/com.puppetlabs.puppetmaster.plist</strong> . Also, make sure the permissions are correct on the file:</p>
+
+<pre><code class="language-bash">sudo chown root:wheel /Library/LaunchDaemons/com.puppetlabs.puppetmaster.plist  
+sudo chmod 644 /Library/LaunchDaemons/com.puppetlabs.puppetmaster.plist
+</code></pre>
+
+<p>Lastly, load the launchd using launchctl:</p>
+
+<pre><code class="language-bash">sudo launchctl load -w /Library/LaunchDaemons/com.puppetlabs.puppetmaster.plist
+</code></pre>
+
+<p>We should now have a fully functional puppetmaster running on OS X Mavericks. Note that this is running with the default WEBrick server that comes with puppet. While this should be okay for development it is not suitable for production. Methods for scaling Puppet can be found on the <a href="http://docs.puppetlabs.com/guides/scaling.html" target="_blank">Scaling Puppet</a> page.</p>
+
+<p>More information about puppet will be published in the future. I am going through beta testing with Puppet at the time of this writing.</p>
+
+<hr />
+
+<p>Articles: <a href="http://www.afp548.com/2013/02/26/setting-up-a-basic-3-1-x-puppet-master-on-os-x-10-8/" target="_blank">afp548.com</a>, <a href="http://docs.puppetlabs.com/guides/installation.html#mac-os-x" target="_blank">Puppetlabs Offical Documentation</a></p>
+
+</div>
+
+
+  <footer class="container">
+  <div class="container navigation no-print">
+  <h2>Navigation</h2>
+  
+  
+
+    
+    <a class="prev" href="https://clburlison.com/shrinking-the-disk-image-of-an-os-x-vm/" title="Shrinking the disk image of an OS X VM">
+      Previous
+    </a>
+    
+
+    
+    <a class="next" href="https://clburlison.com/deploying-octopress-to-amazon-s3/" title="Deploying Octopress to Amazon S3">
+      Next
+    </a>
+    
+
+  
+
+
+</div>
+
+  <div class="container comments">
+  <h2>Comments</h2>
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+  powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>.
+
+
+</div>
+
+
+  
+<div class="container copyright">
+  
+  &copy; 2014 - 2017 Clayton Burlison
+
+
+</div>
+
+
+</div>
+
+</footer>
+
+    </main>
+    
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+<script src="https://clburlison.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Java, CoreOS, Docker, &amp; More  &middot; clburlison</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+
+<meta property="og:title" content="Java, CoreOS, Docker, &amp; More  &middot; clburlison ">
+<meta property="og:site_name" content="clburlison"/>
+<meta property="og:url" content="https://clburlison.com/java-coreos-docker-and-more/" />
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2014-09-09T00:00:00Z" />
+<meta property="og:article:modified_time" content="2014-09-09T00:00:00Z" />
+
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@clburlison" />
+<meta name="twitter:creator" content="@clburlison" />
+<meta name="twitter:title" content="Java, CoreOS, Docker, &amp; More" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://clburlison.com/java-coreos-docker-and-more/" />
+<meta name="twitter:domain" content="https://clburlison.com/">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Java, CoreOS, Docker, &amp; More",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2014-09-09",
+    "description": "",
+    "wordCount": 680
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://clburlison.com/java-coreos-docker-and-more/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://clburlison.com/touch-icon-144-precomposed.png">
+<link href="https://clburlison.com/favicon.png" rel="icon">
+
+<meta name="generator" content="Hugo 0.19" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://clburlison.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://clburlison.com/css/style.css">
+<link rel="stylesheet" href="https://clburlison.com/css/highlight/default.css">
+
+  
+  
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-49614309-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://clburlison.com/">
+  clburlison
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  A Mac sysadmin, documenting useful code, ideas, &amp; guides.
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+<a class="homelink" href="https://clburlison.com/">Home</a>
+
+
+  
+<a href="https://clburlison.com/about">About</a>
+
+<a href="https://clburlison.com/post" title="Show list of posts">Posts</a>
+
+<a href="https://clburlison.com/resources">Resources</a>
+
+<a href="https://clburlison.com/tags" title="Show list of tags">Tags</a>
+
+<a href="https://clburlison.com/talks">Talks</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:clburlison@gmail.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/clburlison">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+<a id="contact-link-linkedin" class="contact_link" href="https://www.linkedin.com/in/clburlison">
+  <span class="fa fa-linkedin-square"></span><span>linkedin</span></a>
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/clburlison">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Java, CoreOS, Docker, &amp; More
+</h1>
+
+  <div class="metas">
+<time datetime="2014-09-09">Sep 09, 2014</time>
+
+
+  
+  &middot; Read in about 4 min
+  &middot; (680 Words)
+  <br>
+  
+
+
+</div>
+
+</header>
+
+  
+
+
+
+
+  <div class="container content">
+  
+
+<h1 id="quick-update">Quick Update</h1>
+
+<p>Firstly, the new semester has started up and my previous goal of one post per month might become a little more difficult to keep up with. For that reason I will be making this post mostly personal opinions and ideas rather than technical writing.</p>
+
+<p>It has certainly been a busy start to this school year getting multiple labs ready, updating computers, installing new software, and plenty of other daily tasks that are quite difficult to stay on top of. Hopefully, I can better prepare next summer&hellip;this year was quite different.</p>
+
+<h2 id="java">Java</h2>
+
+<p>I have been in college for a grand total of four (4) years now. Going part time has given me an amazing opportunity to work and obtain real-world experience but has also delayed me from getting into my upper level courses and even now I am just now starting to take courses related to the IT field.</p>
+
+<p>Experience with the command line and scripting at work has prepared farther than I could have imagined. The first class I am taking regarding my degree plan is &ldquo;Object Oriented Programming&rdquo; using Java (INSY 3300). All the code that I have seen while looking through open source projects has been quite beneficial since the ideas of variables, comments, tabbing/spacing, and even to an extent the idea of OS X packages has some relationship to Java code. I am still in the introduction of Java but it is quite fun to finally get the time to learn a programming language.</p>
+
+<h2 id="coreos">CoreOS</h2>
+
+<p>CoreOS is pretty new to me but the whole idea behind it is quite fascinating.</p>
+
+<blockquote>
+<p>CoreOS is a new Linux distribution that has been rearchitected to provide features needed to run modern infrastructure stacks. The strategies and architectures that influence CoreOS allow companies like Google, Facebook and Twitter to run their services at scale with high resilience. &ndash;<a href="https://coreos.com/" target="_blank">CoreOS</a></p>
+</blockquote>
+
+<p>Think really really tiny virtual machine that uses linux, has the ability to automatically update, is heavily scalable, and automatable. This is still in the learning mode for me, much like Java, and I have not had a chance to dig very deep into the usability of CoreOS. If you wish to play around with CoreOS I highly recommend using Digital Ocean since the setup is quite painless and allows you to test things on a cloud platform. Below is a link if you want to sign up and receive $10 free credit.</p>
+
+<p><a href="https://www.digitalocean.com/?refcode=b50b2cfc8144" target="_blank">Click here to receive $10 credit with Digital Ocean</a></p>
+
+<div class="alert alert-info">
+  <p><strong>Note:</strong> The referral above also earns me credit.</p>
+
+</div>
+
+
+<h2 id="docker">Docker</h2>
+
+<p>Docker is related to CoreOS but only since Core heavily relies on the foundation of <a href="https://www.docker.com/" target="_blank">Docker</a>. However, Docker does not rely on CoreOS and can be ran on any operating system. Without using the terminology created by Docker it is kind of hard to understand what Docker actually does. In the simplest terms, Docker is ran at the lowest level of the computer interacting with the operating system.</p>
+
+<p>For example, to setup a simple website, instead of directly modifying the apache service to serve the website. Docker will interact with apache for you, almost like sandboxing. Docker will then manage apache which will serve the web files for the website like normal.</p>
+
+<p>So you have a slight idea about Docker, but what does it do? It will allow you quickly setup services automatically with minimal to no manual labor. Below are a few cool Docker projects hosted on Github to get ideas flowing.</p>
+
+<ul>
+<li><a href="https://github.com/overshard/docker-teamspeak" target="_blank">overshard/docker-teamspeak</a></li>
+<li><a href="https://github.com/macadmins/sal" target="_blank">macadmins/sal</a></li>
+<li><a href="https://github.com/macadmins/munkireport-php" target="_blank">macadmins/munkireport-php</a></li>
+<li><a href="https://github.com/arcus-io/docker-puppetmaster" target="_blank">arcus-io/docker-puppetmaster</a></li>
+</ul>
+
+<p>Docker is <em>not</em> another application to virtualize operating systems. It allows you to have &ldquo;containers&rdquo; that maintain a certain service and can easily be modified on one server or 1,000&rsquo;s of servers.</p>
+
+<h2 id="more">More</h2>
+
+<p>Currently, I have a running list of topics I would like to share using this blog. It is simply taking much longer for me to get around to them than I anticipated. There are so many awesome technologies being developed everyday. I am just lucky I get to experience it first hand.</p>
+
+<p>Let me know what you think in the comments below!</p>
+
+<hr />
+
+<p>Resources:<br />
+<a href="https://coreos.com/blog/digital-ocean-supports-coreos/" target="_blank">Digital Ocean Supports CoreOS</a><br />
+<a href="https://coreos.com/docs/" target="_blank">CoreOS Docs</a><br />
+<a href="http://docs.docker.com/" target="_blank">Docker Docs</a></p>
+
+</div>
+
+
+  <footer class="container">
+  <div class="container navigation no-print">
+  <h2>Navigation</h2>
+  
+  
+
+    
+    <a class="prev" href="https://clburlison.com/vimium/" title="Vimium">
+      Previous
+    </a>
+    
+
+    
+    <a class="next" href="https://clburlison.com/shellshock/" title="Shellshock">
+      Next
+    </a>
+    
+
+  
+
+
+</div>
+
+  <div class="container comments">
+  <h2>Comments</h2>
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+  powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>.
+
+
+</div>
+
+
+  
+<div class="container copyright">
+  
+  &copy; 2014 - 2017 Clayton Burlison
+
+
+</div>
+
+
+</div>
+
+</footer>
+
+    </main>
+    
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+<script src="https://clburlison.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+  </body>
+</html>
+

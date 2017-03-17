@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Xcode on clburlison</title>
+    <link>https://clburlison.com/tags/xcode/feed/index.xml</link>
+    <description>Recent content in Xcode on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/tags/xcode/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Xcode Dynamic BundleVersion</title>
+      <link>https://clburlison.com/xcode-dynamic-bundleversion/</link>
+      <pubDate>Tue, 28 Feb 2017 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/xcode-dynamic-bundleversion/</guid>
+      <description>
+
+&lt;p&gt;So lets start with I&amp;rsquo;m not a developer. I won&amp;rsquo;t pretend to be one but I do find development work quite interesting. One thing I&amp;rsquo;m trying to get into is Swift but even the small steps lead me to realize how large the Apple ecosystem is. Cocoa, Swift, Xcode, System frameworks, finding the right documentation, etc. The process of connecting the dots takes a bit of time as you might imagine.&lt;/p&gt;
+
+&lt;p&gt;One of the first tasks I wanted to do was auto update the CFBundleVersion whenever I added a commit via git. This is a &lt;a href=&#34;http://tgoode.com/2014/06/05/sensible-way-increment-bundle-version-cfbundleversion-xcode/&#34; target=&#34;_blank&#34;&gt;solved problem&lt;/a&gt; but I didn&amp;rsquo;t see any videos covering this topic so I thought I&amp;rsquo;d make one. Hat tip to &lt;a href=&#34;https://twitter.com/tvsutton&#34; target=&#34;_blank&#34;&gt;Tim Sutton&lt;/a&gt; as I stole his script that he added to &lt;a href=&#34;https://github.com/grahamgilbert/imagr/pull/26/files&#34; target=&#34;_blank&#34;&gt;Imagr&lt;/a&gt;.&lt;/p&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/nDKtiHfBlYA&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;
+The script:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# based on http://tgoode.com/2014/06/05/sensible-way-increment-bundle-version-cfbundleversion-xcode
+if git rev-parse --is-inside-work-tree 2&amp;gt; /dev/null &amp;gt; /dev/null; then
+echo &amp;quot;Setting CFBundleVersion to Git rev-list --count&amp;quot;
+build_number=$(git rev-list HEAD --count)
+/usr/libexec/PlistBuddy -c &amp;quot;Set :CFBundleVersion $build_number&amp;quot; &amp;quot;${TARGET_BUILD_DIR}/${INFOPLIST_PATH}&amp;quot;
+else
+echo &amp;quot;Not in a Git repo, not setting CFBundleVersion&amp;quot;
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;articles&#34;&gt;Articles:&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://tgoode.com/2014/06/05/sensible-way-increment-bundle-version-cfbundleversion-xcode/&#34; target=&#34;_blank&#34;&gt;http://tgoode.com/2014/06/05/sensible-way-increment-bundle-version-cfbundleversion-xcode/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/grahamgilbert/imagr/pull/26/files&#34; target=&#34;_blank&#34;&gt;https://github.com/grahamgilbert/imagr/pull/26/files&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

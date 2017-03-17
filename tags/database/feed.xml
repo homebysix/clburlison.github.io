@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Database on clburlison</title>
+    <link>https://clburlison.com/tags/database/feed/index.xml</link>
+    <description>Recent content in Database on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/tags/database/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Oracle on Omega at UTA</title>
+      <link>https://clburlison.com/oracle-on-omega-at-uta/</link>
+      <pubDate>Mon, 30 Mar 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/oracle-on-omega-at-uta/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;The University of Texas at Arlington (UTA) has some articles that are quite outdated regarding using their Oracle database server. On top of that no information is given to users that have Macintosh computers. If you happen to be taking an Information System class like Database Management Systems (INSY 3304) then good luck when it comes to remotely connecting to the Oracle server. To make-up for the lack of documentation I am creating the following guide.&lt;/p&gt;
+
+&lt;p&gt;All information should be up-to-date at the time of writing. I however cannot ensure that years or even months from now that UTA&amp;rsquo;s system will be the same. This is mostly targeted at classmates in my current section that expressed an overall sound of confusion when my professor attempted to demonstrate the process in class using a Windows computer.&lt;/p&gt;
+
+&lt;h1 id=&#34;requirements&#34;&gt;Requirements&lt;/h1&gt;
+
+&lt;p&gt;Before you are able to connect to the Oracle application. You need to make sure you have the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A Oracle Database account&lt;/li&gt;
+&lt;li&gt;A active connection at UTA or a VPN connection&lt;/li&gt;
+&lt;li&gt;Access to the Omega server&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;setup-instructions&#34;&gt;Setup Instructions&lt;/h1&gt;
+
+&lt;p&gt;Since each section below is heavily reliant on the setup from the previous section being complete please do not skip any steps. Sorry if you hear background noise during any of the videos below. I was slightly rushed to get the videos created so the volume of my voice might also be a little low.&lt;/p&gt;
+
+&lt;h2 id=&#34;oracle-account&#34;&gt;Oracle account&lt;/h2&gt;
+
+&lt;p&gt;This was the most time consuming step as it seems like a UTA helpdesk staff member has to manually create the account for each request. If you have homework due in the future please do &lt;em&gt;not&lt;/em&gt; wait on getting your account created.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Oracle accounts are available to everyone with a current Omega account. You can request an Oracle account by emailing Help Desk at &lt;a href=&#34;mailto:helpdesk@uta.edu&#34; target=&#34;_blank&#34;&gt;helpdesk@uta.edu&lt;/a&gt;. Additionally, instructors may request Oracle accounts for all students in a particular session.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash; &lt;a href=&#34;http://www.uta.edu/oit/cs/unix/applications/oracle/Using-Oracle-on-Omega.php&#34; target=&#34;_blank&#34;&gt;Using Oracle on Omega&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As of the 2015 Fall semester my Omega account was created automatically. To get my Oracle account created I sent an email to the helpdesk. Make sure and include that you need an &amp;ldquo;Oracle database account created on the Omega server&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;In short, Omega is a server that UTA maintains. On that server they have Oracle&amp;rsquo;s Database application installed. You as a student need access to both Omega (should use your NetID username/password) and an Oracle account which will have the same username as your NetID but the password will be sent to you via the Helpdesk once an account has been created.&lt;/p&gt;
+
+&lt;h2 id=&#34;vpn-connection&#34;&gt;VPN connection&lt;/h2&gt;
+
+&lt;p&gt;Since most students will want to work on their homework while at home I highly recommend setting up the VPN connection now. This VPN connection is needed to access the Omega server. The setup should be very similar on Windows.&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; If you are currently on the UTA campus the VPN connection does not need to be active.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;p&gt;You will need to download and install the Cisco AnyConnect application from &lt;a href=&#34;https://vpn.uta.edu&#34; target=&#34;_blank&#34;&gt;https://vpn.uta.edu&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The server address for the VPN application is: &lt;strong&gt;vpn.uta.edu&lt;/strong&gt;&lt;/p&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/y5Tj9-oMJuI&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;h2 id=&#34;cyberduck&#34;&gt;Cyberduck&lt;/h2&gt;
+
+&lt;p&gt;I highly recommend using Cyberduck to copy files from your computer to the Omega server. The graphical interface is much easier to use for individuals that are new the command line.&lt;/p&gt;
+
+&lt;p&gt;Download Cyberduck from &lt;a href=&#34;https://cyberduck.io&#34; target=&#34;_blank&#34;&gt;https://cyberduck.io&lt;/a&gt;.&lt;/p&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/U2te9s3zkZI&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;h2 id=&#34;ssh-setup&#34;&gt;SSH setup&lt;/h2&gt;
+
+&lt;p&gt;Make sure you are still connected to the UTA VPN for the following.&lt;/p&gt;
+
+&lt;p&gt;Run the following commands on your Mac:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;mkdir -p ~/.ssh
+nano ~/.ssh/config
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;~/.ssh/config&lt;/strong&gt; file contents:&lt;br /&gt;
+Change the &lt;code&gt;User&lt;/code&gt; field to your UTA NetID.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;Host omega
+    User clb4596
+    HostName omega.uta.edu
+    Port 22
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/PQPaXi7mZGA&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;h2 id=&#34;sqlplus&#34;&gt;Sqlplus&lt;/h2&gt;
+
+&lt;p&gt;Type the following commands when connected to the Omega Server:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sqlplus
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;@PERFECTPETS.SQL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all tables owned by you:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;SELECT * FROM cat;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Clear screen in SQLPlus&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;SQL &amp;gt; host clear
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Exit Prompt&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;SQL &amp;gt; exit
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/MNEvtmSJj6Y&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;p&gt;The UTA helpdesk does provide some useful documentation at this point on using the Oracle database. I highly recommend changing your default password using the following instructions:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To change your Oracle password. In sqlplus, type:&lt;/p&gt;
+
+&lt;p&gt;SQL&amp;gt; ALTER USER username IDENTIFIED BY newpassword;&lt;/p&gt;
+
+&lt;p&gt;Replace username with your NetID.&lt;/p&gt;
+
+&lt;p&gt;Replace newpassword with the new password that want to create.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash; &lt;a href=&#34;http://www.uta.edu/oit/cs/unix/applications/oracle/Using-Oracle-on-Omega.php&#34; target=&#34;_blank&#34;&gt;Using Oracle on Omega&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;Hopefully these instructions help clear up any confusion on using the Omega server and Oracle application provided by UTA.&lt;/p&gt;
+
+&lt;p&gt;As always feel free to drop a comment below or on Twitter. Feedback is always appreciated.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:&lt;br /&gt;
+&lt;a href=&#34;http://www.uta.edu/oit/cs/software/vpn/&#34; target=&#34;_blank&#34;&gt;UTA VPN&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://www.uta.edu/oit/cs/software/ssh/ssh-secure-shell-for-workstations-3/index.php&#34; target=&#34;_blank&#34;&gt;SSH application for Windows&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://www.uta.edu/oit/cs/unix/applications/oracle/Using-Oracle-on-Omega.php&#34; target=&#34;_blank&#34;&gt;Using Oracle on Omega&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://crystal.uta.edu/~elmasri/db2/usingOracleOnOmega.html&#34; target=&#34;_blank&#34;&gt;More Oracle tips&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

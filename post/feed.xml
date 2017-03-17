@@ -1,0 +1,1836 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on clburlison</title>
+    <link>https://clburlison.com/post/feed/index.xml</link>
+    <description>Recent content in Posts on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <lastBuildDate>Fri, 10 Mar 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://clburlison.com/post/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>python2 and tls</title>
+      <link>https://clburlison.com/python2-and-tls/</link>
+      <pubDate>Fri, 10 Mar 2017 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/python2-and-tls/</guid>
+      <description>
+
+&lt;p&gt;For your Friday viewing pleasure I present the following cartoon.&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://imgs.xkcd.com/comics/nerd_sniping.png&#34;  /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Credit: https://xkcd.com/356/&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;h1 id=&#34;background&#34;&gt;Background&lt;/h1&gt;
+
+&lt;p&gt;In case you do not know &lt;a href=&#34;http://stackoverflow.com/a/7406994&#34; target=&#34;_blank&#34;&gt;Apple deprecated the usage of OpenSSL&lt;/a&gt; in favor of Common Crypto, back with the release of OS X Lion (10.7) in 2011. On Apple&amp;rsquo;s latest operating system macOS Sierra (10.12) OpenSSL is currently at version &amp;ldquo;0.9.8zh&amp;rdquo; with very little indication that it will get updated. Now this is a specific build that Apple created and it does have a few back-ported fixes however this version doesn&amp;rsquo;t support TLSv1.1 or TLSv1.2.&lt;/p&gt;
+
+&lt;p&gt;If you do not keep up with the latest and greatest in the security world do not worry you are not alone. That is a full time job after all so it is hard for me to keep up with it myself. TLSv1.1 and TLSv1.2 are important because they offer better security. They specifically protect you against two nasty vulnerabilities, &lt;a href=&#34;http://www.webopedia.com/TERM/S/ssl_beast.html&#34; target=&#34;_blank&#34;&gt;BEAST&lt;/a&gt; and &lt;a href=&#34;https://www.us-cert.gov/ncas/alerts/TA14-290A&#34; target=&#34;_blank&#34;&gt;POODLE&lt;/a&gt; if you want more reading.&lt;/p&gt;
+
+&lt;h1 id=&#34;fun-stuff&#34;&gt;Fun stuff&lt;/h1&gt;
+
+&lt;p&gt;So &lt;a href=&#34;https://michaellynn.github.io/about/&#34; target=&#34;_blank&#34;&gt;frogor&lt;/a&gt; recently worked on a way to patch the ssl module that comes with the system python for macOS. You can see his proof of concept in the &lt;a href=&#34;https://github.com/pudquick/tlsssl&#34; target=&#34;_blank&#34;&gt;tlsssl&lt;/a&gt; git repo.&lt;/p&gt;
+
+&lt;p&gt;The process for using it looks a little like (partly pseudo code):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;install homebrew&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;brew install openssl&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;git clone his repo&lt;/li&gt;
+&lt;li&gt;download source files from the github/cpython repo&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;python setup.py build&lt;/code&gt; to compile the project&lt;/li&gt;
+&lt;li&gt;Copy the two dylib files to the correct directory&lt;/li&gt;
+&lt;li&gt;Copy the &lt;code&gt;_tlsssl.so&lt;/code&gt; and &lt;code&gt;tlsssl.py&lt;/code&gt; files to a path that python can import&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Followed with the following code to use it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import tlsssl as ssl
+import urllib2
+ctx = ssl.create_default_context()
+a = urllib2.urlopen(&#39;https://fancyssl.hboeck.de/&#39;, context=ctx)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And it works! Not too bad for a few minutes of work. However, &lt;a href=&#34;https://github.com/Homebrew/legacy-homebrew/issues/20424&#34; target=&#34;_blank&#34;&gt;brew&lt;/a&gt; is a &lt;a href=&#34;https://github.com/Homebrew/legacy-homebrew/issues/47450&#34; target=&#34;_blank&#34;&gt;big&lt;/a&gt; red &lt;a href=&#34;https://github.com/Homebrew/legacy-homebrew/issues/45625&#34; target=&#34;_blank&#34;&gt;flag&lt;/a&gt;. Thankfully the maintainers learned their lessons and &lt;em&gt;finally&lt;/em&gt; resolved my main complaint with &lt;a href=&#34;https://github.com/Homebrew/brew/releases/tag/1.0.0&#34; target=&#34;_blank&#34;&gt;Homebrew v1.0.0&lt;/a&gt; specifically the following &lt;a href=&#34;https://github.com/Homebrew/brew/releases/tag/1.0.0&#34; target=&#34;_blank&#34;&gt;commit&lt;/a&gt;. Homebrew is great for developers and single user machines but once you are on a multiuser system another tool needs to be used.&lt;/p&gt;
+
+&lt;h1 id=&#34;more-fun-stuff&#34;&gt;More fun stuff&lt;/h1&gt;
+
+&lt;p&gt;For the above patch to work we need an updated version of OpenSSL that supports the updated protocols and we need the patched ssl module. We also would ideally like those files to be placed on the disk and what better than a native package to do so. Before we can get to that step, currently the OpenSSL Software Foundation is maintaining two branches of their code the 1.1.0 series and the 1.0.2 series as Long Term Support (LTS) version&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;. Since even the latest releases of the python project are still using the &lt;a href=&#34;https://github.com/python/cpython/pull/459&#34; target=&#34;_blank&#34;&gt;1.0.2 series&lt;/a&gt;, as of 6 days ago, along with many other projects I decided we would stick with that series as well.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&#34;https://github.com/google/macops&#34; target=&#34;_blank&#34;&gt;MacOps team&lt;/a&gt; at Google has been vendoring their own versions of Python and OpenSSL for years, they even open sourced some of their &lt;a href=&#34;https://github.com/google/macops/tree/master/packages&#34; target=&#34;_blank&#34;&gt;build scripts&lt;/a&gt;. My only issue was the lack of customization. Too many variables being hard coded made it difficult to customize for my needs. So I set out to redo all of the build scripts with a new project &lt;a href=&#34;https://github.com/clburlison/vendored&#34; target=&#34;_blank&#34;&gt;vendored&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Although the project isn&amp;rsquo;t complete it has lots of functionality finished. It mainly allows you to create a single package for all the bits frogor did with some bonus built in.&lt;/p&gt;
+
+&lt;h1 id=&#34;even-more-fun-stuff&#34;&gt;Even more fun stuff&lt;/h1&gt;
+
+&lt;p&gt;This is great now I can sit and watch my computer build all these projects for 5-10 minutes.. Or you could skip that and go straight to the &lt;a href=&#34;https://github.com/clburlison/vendored/releases&#34; target=&#34;_blank&#34;&gt;releases page&lt;/a&gt;. Here you&amp;rsquo;ll find pre-built releases that I&amp;rsquo;ve created. These come with a few limitations, mainly you don&amp;rsquo;t get to pick the install paths, package identifiers, or signing cert.&lt;/p&gt;
+
+&lt;p&gt;Before we pick apart the output package let&amp;rsquo;s look at the stock python settings. Run the following on your machine if you want to follow along:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone https://github.com/clburlison/vendored.git
+cd vendored/tests
+/usr/bin/python version_tester.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The output will be:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;Our python is located: /usr/bin/python
+Our python version: 2.7.10
+Our openssl is: OpenSSL 0.9.8zh 14 Jan 2016
+------------------------------------------------------------------
+SUCCESS: Connection was made using TLS 1.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note the version of OpenSSL and TLS version being used.&lt;/p&gt;
+
+&lt;p&gt;Now lets go ahead and download the latest &lt;code&gt;vendored_tlsssl.pkg&lt;/code&gt; file from the latest &lt;a href=&#34;https://github.com/clburlison/vendored/releases/latest&#34; target=&#34;_blank&#34;&gt;releases page&lt;/a&gt;. When you inspect it with &lt;a href=&#34;http://www.mothersruin.com/software/SuspiciousPackage/&#34; target=&#34;_blank&#34;&gt;Suspicious Package&lt;/a&gt; you note that it drops a few files on disk specifically in the &lt;code&gt;/Library/vendored&lt;/code&gt; directory and a single file in &lt;code&gt;/Library/Python/2.7/site-packages&lt;/code&gt; directory named &lt;code&gt;000vendored.pth&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you deem the package safe go ahead and install it on your machine. Now lets run the same script again:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;/usr/bin/python version_tester.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;with the output of:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;Our python is located: /usr/bin/python
+Our python version: 2.7.10
+Our openssl is: OpenSSL 1.0.2k  26 Jan 2017
+------------------------------------------------------------------
+SUCCESS: Connection was made using TLS 1.2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We have a winner! The best part is because how we are adding the patched ssl module to our system python path it becomes very high priority in the list. Verify for yourself:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;/usr/bin/python -m site
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;with the output of:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sys.path = [
+    &#39;/Users/vagrant&#39;,
+    &#39;/Library/vendored/tlsssl&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python27.zip&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-darwin&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac/lib-scriptpackages&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-tk&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-old&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload&#39;,
+    &#39;/Library/Python/2.7/site-packages&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python&#39;,
+    &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/PyObjC&#39;,
+]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice that &lt;code&gt;/Library/vendored/tlsssl&lt;/code&gt; comes before all of the &lt;code&gt;/System/Library&lt;/code&gt; paths?&lt;/p&gt;
+
+&lt;p&gt;That means using this patch is completely seamless. Just install the single 5.15 MB package and use python2 just like normal.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import urllib2
+a = urllib2.urlopen(&#39;https://fancyssl.hboeck.de/&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and you are off to the races.&lt;/p&gt;
+
+&lt;h1 id=&#34;more-fun-to-come&#34;&gt;More fun to come&lt;/h1&gt;
+
+&lt;p&gt;At this time, vendored still has more work. Specifically on creating self contained Python2, Python3 and Ruby. It also needs some love on automating the build of all the tools. Right now &lt;code&gt;build.py&lt;/code&gt; is completely unfinished. I also would like to automate the process of building the distribution style packages.&lt;/p&gt;
+
+&lt;h1 id=&#34;articles&#34;&gt;Articles&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://stackoverflow.com/a/7406994&#34; target=&#34;_blank&#34;&gt;Details on Apple&amp;rsquo;s deprecation of OpenSSL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/google/macops/tree/master/packages&#34; target=&#34;_blank&#34;&gt;Google MacOps Packaging&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/pudquick/tlsssl&#34; target=&#34;_blank&#34;&gt;frogor&amp;rsquo;s tlsssl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/Homebrew/brew/releases/tag/1.0.0&#34; target=&#34;_blank&#34;&gt;Homebrew v1.0 release notes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;OpenSSL supported code branches &lt;a href=&#34;https://www.openssl.org/source/&#34; target=&#34;_blank&#34;&gt;https://www.openssl.org/source/&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Xcode Dynamic BundleVersion</title>
+      <link>https://clburlison.com/xcode-dynamic-bundleversion/</link>
+      <pubDate>Tue, 28 Feb 2017 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/xcode-dynamic-bundleversion/</guid>
+      <description>
+
+&lt;p&gt;So lets start with I&amp;rsquo;m not a developer. I won&amp;rsquo;t pretend to be one but I do find development work quite interesting. One thing I&amp;rsquo;m trying to get into is Swift but even the small steps lead me to realize how large the Apple ecosystem is. Cocoa, Swift, Xcode, System frameworks, finding the right documentation, etc. The process of connecting the dots takes a bit of time as you might imagine.&lt;/p&gt;
+
+&lt;p&gt;One of the first tasks I wanted to do was auto update the CFBundleVersion whenever I added a commit via git. This is a &lt;a href=&#34;http://tgoode.com/2014/06/05/sensible-way-increment-bundle-version-cfbundleversion-xcode/&#34; target=&#34;_blank&#34;&gt;solved problem&lt;/a&gt; but I didn&amp;rsquo;t see any videos covering this topic so I thought I&amp;rsquo;d make one. Hat tip to &lt;a href=&#34;https://twitter.com/tvsutton&#34; target=&#34;_blank&#34;&gt;Tim Sutton&lt;/a&gt; as I stole his script that he added to &lt;a href=&#34;https://github.com/grahamgilbert/imagr/pull/26/files&#34; target=&#34;_blank&#34;&gt;Imagr&lt;/a&gt;.&lt;/p&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/nDKtiHfBlYA&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;
+The script:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# based on http://tgoode.com/2014/06/05/sensible-way-increment-bundle-version-cfbundleversion-xcode
+if git rev-parse --is-inside-work-tree 2&amp;gt; /dev/null &amp;gt; /dev/null; then
+echo &amp;quot;Setting CFBundleVersion to Git rev-list --count&amp;quot;
+build_number=$(git rev-list HEAD --count)
+/usr/libexec/PlistBuddy -c &amp;quot;Set :CFBundleVersion $build_number&amp;quot; &amp;quot;${TARGET_BUILD_DIR}/${INFOPLIST_PATH}&amp;quot;
+else
+echo &amp;quot;Not in a Git repo, not setting CFBundleVersion&amp;quot;
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;articles&#34;&gt;Articles:&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://tgoode.com/2014/06/05/sensible-way-increment-bundle-version-cfbundleversion-xcode/&#34; target=&#34;_blank&#34;&gt;http://tgoode.com/2014/06/05/sensible-way-increment-bundle-version-cfbundleversion-xcode/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/grahamgilbert/imagr/pull/26/files&#34; target=&#34;_blank&#34;&gt;https://github.com/grahamgilbert/imagr/pull/26/files&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Zendesk Automation for Mail</title>
+      <link>https://clburlison.com/zendesk-automation-for-mail/</link>
+      <pubDate>Wed, 18 Jan 2017 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/zendesk-automation-for-mail/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;Before I get into the material of this post I want to refer you to an article written last week by Sal Soghoian, &lt;a href=&#34;https://www.macstories.net/stories/app-extensions-are-not-a-replacement-for-user-automation/&#34; target=&#34;_blank&#34;&gt;click here&lt;/a&gt;. The information that he provides regarding user automation is exactly what makes the process described in this post possible.&lt;/p&gt;
+
+&lt;p&gt;In case you are not aware, Zendesk is a web-based helpdesk application that is cloud hosted and quite popular. They have an email API that allows agents to create a ticket with a simple email. The power behind this API starts to show when you are an agent that happens to get many emails that could be tickets. &lt;em&gt;cough&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now with that out of the way let&amp;rsquo;s look at some automation for Zendesk.&lt;/p&gt;
+
+&lt;!---
+# Apple Mail Stationary
+
+This was the method I attempted first however it turned out to be a big flop. Mail Stationary can only be applied to new emails.
+
+The Mail Stationary is great for creating new tickets. However what is a use has emailed you the issue directly. The simple solution is, use Zendesk&#39;s same email API commands. The only problem is stationary emails are only allowed for new emails in Apple mail.
+
+1. Download stationary
+  This step is given because no matter how you create your stationary it won&#39;t work. It&#39;s actually much easier to just start with this temporary file rather than using Apple&#39;s Mail to start the creation process.
+
+  [[ INSERT ZIP DONWLOAD HERE ]]
+
+
+1. Double click the .mailstationery file to load it into Apple Mail.
+1. Close Mail.app if you have it open
+
+Now lets modify the file.
+
+1. Open the stationary directory `~/Library/Containers/com.apple.mail/Data/Library/Application Support/Mail/Stationery/Apple/Contents/Resources/Custom/Contents/Resources`
+1. Rename your temp.mailstationery to whatever name you wish your stationery to have (don&#39;t include spaces)
+1. Right click your stationary and click &#34;Show Package Contents&#34;
+1. Go down the directory Contents &gt; Resources and open &#39;content.html&#39; in a text editor
+1. Replace the text with whatever you wish to message to say. Make sure and include the break (`&lt;br&gt;`) tag after every space. Apple&#39;s Mail.app is actually reading this file as an html file. However for Zendesk to read your meta-data these must be plain text. Also, make sure and include your email signature here if you wish to do so. Stationary emails will **NOT** include your default signature.
+1. Save the file when finished
+1. Now modify your &#39;Description.plist&#39; changing your Display Name, Folder Name, and TO address accordingly.
+1. Save your file when finished
+1. Open Apple Mail
+1. Create a new message
+1. Click on the Stationary button (VERIFY this button is enabled by default)
+1. Scroll down to &#39;Custom&#39;
+1. Select your template
+
+At this point if you wish to add the stationary to your favorites just drag it up to the favorites folder. This gives you an easy way to create ticket all from your email. Just make sure and modify any of the command tags.
+---&gt;
+
+&lt;h1 id=&#34;automator&#34;&gt;Automator&lt;/h1&gt;
+
+&lt;p&gt;Zendesk has a great article on &lt;a href=&#34;https://support.zendesk.com/hc/en-us/articles/203691006-Updating-ticket-properties-from-your-inbox&#34; target=&#34;_blank&#34;&gt;Updating Ticket Properties from You Inbox&lt;/a&gt; that gives an overview of what the mail API does and how it works. This post will extend on the API to help automate the process. We are going to use an Automator service to type all of the metadata fields. It should be noted that this process will work in Outlook and Apple Mail for macOS. An example of the output can be seen below:&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://clburlison.com/images/2017-01-18/mail_api_example_2.png&#34; alt=&#34;Example api metadata&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Example metadata for the email API. Image credit Zendesk.&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;You can download a template service from &lt;a href=&#34;https://github.com/clburlison/automator_services/archive/master.zip&#34; target=&#34;_blank&#34;&gt;github.com/clburlison/automator_services&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Unzip the archive file and double-click on the &lt;code&gt;_AssignZendeskTicket.workflow&lt;/code&gt; file.&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;When you see the following popup select &amp;ldquo;Open in Automator&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2017-01-18/automator_prompt.png&#34; alt=&#34;automator prompt&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;You will see the following AppleScript action:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;on run {input, parameters}
+tell application &amp;quot;System Events&amp;quot;
+  keystroke &amp;quot;support@example.zendesk.com&amp;quot;
+  keystroke tab
+  keystroke tab
+  keystroke tab
+  keystroke tab
+  #keystroke &amp;quot;#requester&amp;quot;
+  #keystroke space
+  #keystroke return
+  keystroke &amp;quot;#assignee jane.doe@example.com&amp;quot;
+  keystroke return
+  keystroke &amp;quot;#location Some location&amp;quot;
+  keystroke return
+  keystroke &amp;quot;#group IT Staff&amp;quot;
+  keystroke return
+  keystroke &amp;quot;#status open&amp;quot;
+  keystroke return
+  keystroke &amp;quot;#priority normal&amp;quot;
+  keystroke return
+  keystroke &amp;quot;#type incident&amp;quot;
+  keystroke return
+  keystroke &amp;quot;#public false&amp;quot;
+  keystroke return
+  #keystroke return
+  #keystroke &amp;quot;Hi ___ENTER_NAME_HERE,&amp;quot;
+  #keystroke return
+  #keystroke return
+  #keystroke &amp;quot;MESSAGE_HERE.&amp;quot;
+  #keystroke return
+  keystroke return
+end tell
+end run
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;You will want to modify many of the lines to match your location, group, default status, etc.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Notice that I have the &lt;code&gt;#requester&lt;/code&gt; metadata field commented out with a hash (&lt;code&gt;#&lt;/code&gt;), this is due to a Zendesk setting that we have enabled (you might need to uncomment this)&lt;/li&gt;
+&lt;li&gt;I also have a few additional lines at the end for comments if you want to add to the ticket on creation.&lt;/li&gt;
+&lt;li&gt;Lastly, I have four (4) &lt;code&gt;keystroke tab&lt;/code&gt; lines this is due to me enabling the &amp;ldquo;Bcc&amp;rdquo; field so delete one of the tabs if you don&amp;rsquo;t have this enabled.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once you have made all the changes that you want you will want to save and close the file.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now double click on the &lt;code&gt;_AssignZendeskTicket.workflow&lt;/code&gt; file once again, this time selecting &amp;ldquo;Install&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2017-01-18/automator_prompt.png&#34; alt=&#34;automator prompt&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;After the service has been installed the workflow will be copied to &lt;code&gt;~/Library/Services/&lt;/code&gt;. In case you need to locate the service to make changes in the future.&lt;/p&gt;
+
+&lt;p&gt;To use the service start a new email (or forward an existing email) in Apple Mail or Outlook. Go to the application name in the menu bar » Services » select &lt;code&gt;AssignZendeskTicket&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2017-01-18/assign_ticket.png&#34; alt=&#34;Assign ticket&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you wish to add a keyboard shortcut&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Open &lt;strong&gt;System Preferences&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Go to &lt;strong&gt;Keyboard » Shortcuts » Services&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Now assign your service a keyboard shortcut. I used Command + Option + H (⌘ + ⌥ + H)
+&lt;img src=&#34;https://clburlison.com/images/2017-01-18/services.png&#34; alt=&#34;Services&#34; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Resources:&lt;br /&gt;
+&lt;a href=&#34;https://support.zendesk.com/hc/en-us/articles/203691006-Updating-ticket-properties-from-your-inbox&#34; target=&#34;_blank&#34;&gt;Updating Ticket Properties from You Inbox&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://apple.stackexchange.com/a/87989&#34; target=&#34;_blank&#34;&gt;Automatically Inserting Text Globally&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://alvinalexander.com/blog/post/mac-os-x/applescript-simulating-enter-key&#34; target=&#34;_blank&#34;&gt;applescript-simulating-enter-key&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://eastmanreference.com/complete-list-of-applescript-key-codes/&#34; target=&#34;_blank&#34;&gt;Complete list of AppleScript key codes&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://support.apple.com/kb/PH13916?locale=en_US&#34; target=&#34;_blank&#34;&gt;OS X Mavericks: Create keyboard shortcuts for apps&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>AutoWake</title>
+      <link>https://clburlison.com/autowake/</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/autowake/</guid>
+      <description>
+
+&lt;p&gt;Apple has some pretty nice energy savings options built into macOS. Most of these options are tucked nicely inside of the Energy Saver pane of System Preferences.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-10-10/EnergySaver.png&#34; alt=&#34;Energy Saver Panel&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The above settings get written to the &lt;code&gt;com.apple.AutoWake&lt;/code&gt; preference and looks like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;defaults read /Library/Preferences/SystemConfiguration/com.apple.AutoWake
+{
+    RepeatingPowerOff =     {
+        eventtype = shutdown;
+        time = 1020;
+        weekdays = 127;
+    };
+    RepeatingPowerOn =     {
+        eventtype = wakepoweron;
+        time = 420;
+        weekdays = 31;
+    };
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;weekdays&#34;&gt;Weekdays&lt;/h1&gt;
+
+&lt;p&gt;Some of these values are a bit opaque once they are written to the preferences domain. For example, when you set the &lt;code&gt;Every Day&lt;/code&gt; option in the above screenshot this value is written in the &lt;code&gt;weekdays&lt;/code&gt; key with a value of &lt;code&gt;127&lt;/code&gt;. So what does that value actually refer to? Each day gets a value starting from one that doubles with each passing day.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Weekdays values
+
+  1 - Monday
+  2 - Tuesday
+  4 - Wednesday
+  8 - Thursday
+  16 - Friday
+  32 - Saturday
+  64 - Sunday
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To select every day of the week you add all of the values together: &lt;code&gt;1+2+4+8+16+32+64 = 127&lt;/code&gt;. While weekdays would be: &lt;code&gt;1+2+4+8+16 = 31&lt;/code&gt;. The math is quite simple but easy to forget that this specific aspect of the system starts the day on Monday.&lt;/p&gt;
+
+&lt;h1 id=&#34;time&#34;&gt;Time&lt;/h1&gt;
+
+&lt;p&gt;The &lt;code&gt;time&lt;/code&gt; value is configured as time after 00:00, or midnight, in seconds. Examples below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;4 am
+  60m x 4h = 240s
+
+1:30 pm
+  60m x 13.5h = 810s
+
+5:00 pm
+  60m x 17h = 1020s
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;profile&#34;&gt;Profile&lt;/h1&gt;
+
+&lt;p&gt;If you have gotten this far you might be wondering why any of the information above matters? If you have ever needed to create a configuration profile for Energy Saver, understanding these values allow you to customize the options without having to use a GUI like Profile Manager.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;key&amp;gt;com.apple.EnergySaver.desktop.Schedule&amp;lt;/key&amp;gt;
+&amp;lt;dict&amp;gt;
+	&amp;lt;key&amp;gt;RepeatingPowerOff&amp;lt;/key&amp;gt;
+	&amp;lt;dict&amp;gt;
+		&amp;lt;key&amp;gt;eventtype&amp;lt;/key&amp;gt;
+		&amp;lt;string&amp;gt;shutdown&amp;lt;/string&amp;gt;
+		&amp;lt;key&amp;gt;time&amp;lt;/key&amp;gt;
+		&amp;lt;integer&amp;gt;1200&amp;lt;/integer&amp;gt;
+		&amp;lt;key&amp;gt;weekdays&amp;lt;/key&amp;gt;
+		&amp;lt;integer&amp;gt;127&amp;lt;/integer&amp;gt;
+	&amp;lt;/dict&amp;gt;
+	&amp;lt;key&amp;gt;RepeatingPowerOn&amp;lt;/key&amp;gt;
+	&amp;lt;dict&amp;gt;
+		&amp;lt;key&amp;gt;eventtype&amp;lt;/key&amp;gt;
+		&amp;lt;string&amp;gt;wakepoweron&amp;lt;/string&amp;gt;
+		&amp;lt;key&amp;gt;time&amp;lt;/key&amp;gt;
+		&amp;lt;integer&amp;gt;420&amp;lt;/integer&amp;gt;
+		&amp;lt;key&amp;gt;weekdays&amp;lt;/key&amp;gt;
+		&amp;lt;integer&amp;gt;31&amp;lt;/integer&amp;gt;
+	&amp;lt;/dict&amp;gt;
+&amp;lt;/dict&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For a full profile example check out Nick McSpadden&amp;rsquo;s &lt;a href=&#34;https://github.com/nmcspadden/Profiles/blob/4ad119b6274c8f3cd6150bd2414761e02ea55c73/EnergySaver.mobileconfig#L85-L96&#34; target=&#34;_blank&#34;&gt;EnergySaver.mobileconfig&lt;/a&gt;. &lt;em&gt;Note:&lt;/em&gt; Nick&amp;rsquo;s profile contains other energy saver options that you will likely want to include and/or modify.&lt;/p&gt;
+
+&lt;h1 id=&#34;random&#34;&gt;Random&lt;/h1&gt;
+
+&lt;p&gt;The &lt;code&gt;RepeatingPowerOff&lt;/code&gt; &amp;gt; &lt;code&gt;eventtype&lt;/code&gt; string actually accepts three types: &lt;code&gt;restart&lt;/code&gt;, &lt;code&gt;sleep&lt;/code&gt;, and &lt;code&gt;shutdown&lt;/code&gt;. Unfortunately the system will only read one &lt;code&gt;RepeatingPowerOff&lt;/code&gt; dict. That means you are unable to get creative and say restart Monday-Friday at 8pm and shutdown Saturday-Sunday at 3pm.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Links:&lt;br /&gt;
+&lt;a href=&#34;https://support.apple.com/kb/PH18583&#34; target=&#34;_blank&#34;&gt;OS X Yosemite: Schedule a time for your Mac to turn on or off or go to sleep&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://support.apple.com/en-us/HT201988&#34; target=&#34;_blank&#34;&gt;OS X: Setting a startup or shut down time&lt;/a&gt;,&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>OPMA 3306 SAP Help</title>
+      <link>https://clburlison.com/opma-3306/</link>
+      <pubDate>Thu, 19 May 2016 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/opma-3306/</guid>
+      <description>
+
+&lt;p&gt;Java! Currently, I am taking an Operating Management class which uses an Enterprise Resource Planning (ERP) application. The instructions given to my peers consistents of:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Download this file&lt;/li&gt;
+&lt;li&gt;Download one of these two other files (no notes on how to use either config file)&lt;/li&gt;
+&lt;li&gt;Open this jar file&lt;/li&gt;
+&lt;li&gt;and a PS note that you need the Java SDK installed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Okay fine I can deal with bad setup instructions&amp;hellip;then I got an error message and gave up.&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://clburlison.com/images/2016-05-19/jarjarjar.png&#34;  /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Note: the error message will have a different name in the quotes as I didn&amp;#39;t think to get a screen grab at the initial install.&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;instructions&#34;&gt;Instructions&lt;/h2&gt;
+
+&lt;p&gt;If I couldn&amp;rsquo;t get this to work and I&amp;rsquo;m an INSY major I know it wouldn&amp;rsquo;t be very straight forward for non-INSY majors. With that said it isn&amp;rsquo;t very hard to install the SAP software on a Mac. Steps below:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Use the download instructions from your instructor to download the latest &lt;code&gt;PlatinGUI740MacOSX_5.JAR&lt;/code&gt; installer file.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Make sure and also download the &lt;code&gt;Landscape.xml&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-19/config-file.png&#34; alt=&#34;config file&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now download the latest Java JDK from, &lt;a href=&#34;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-19/java-jdk.png&#34; alt=&#34;Java JDK&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;You now have all the requirements!&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Install the Java JDK. It&amp;rsquo;s a standard Apple package.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now double click your JAR installer file. If it doesn&amp;rsquo;t launch and shows a security prompt try again this time this time holding the &amp;lsquo;control&amp;rsquo; key.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once the installer works it should look like below. Click through the installer to install the SAP application.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-19/sap-installer.png&#34; alt=&#34;config file&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now copy your &lt;code&gt;Landscape.xml&lt;/code&gt; file to &lt;code&gt;/Applications/SAP Clients&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-19/copy-config-file.png&#34; alt=&#34;config file&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Lastly, we need to configure the client to use the xml file. Launch the SAPGUI application. The initial screen shown below.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-19/first-screen.png&#34; alt=&#34;config file&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now open your SAPGUI preferences.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-19/app-prefs.png&#34; alt=&#34;config file&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Under Configuration &amp;gt; Logon. Add your &amp;lsquo;SAP UI Landscape&amp;rsquo; file path (shown below). Make sure and click &amp;lsquo;Apply&amp;rsquo; in the bottom.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;file:/Applications/SAP%20Clients/SAPUILandscape.xml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-19/pref-setup.png&#34; alt=&#34;config file&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now at the main menu change the dropdown to &amp;lsquo;Local&amp;rsquo;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-19/dropdown.png&#34; alt=&#34;config file&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You&amp;rsquo;ll now have a list of all the servers. If you&amp;rsquo;re in my class you&amp;rsquo;ll want to double click the &amp;lsquo;Torino&amp;rsquo; server. From here you should be able to use the SAP application on your mac.&lt;/p&gt;
+
+&lt;h2 id=&#34;generic-error&#34;&gt;Generic Error&lt;/h2&gt;
+
+&lt;p&gt;If you received the generic error message below,&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-19/jarjarjar.png&#34; alt=&#34;java error&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;the fix I used was to delete the JavaAppletPlugin. You can do this by navigating to &lt;code&gt;/Library/Internet Plug-Ins/&lt;/code&gt; and moving &lt;code&gt;JavaAppletPlugin.plugin&lt;/code&gt; to the trash can.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-19/plugin-path.png&#34; alt=&#34;java plugin&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now try launching the Jar file and see if the installer works.&lt;/p&gt;
+
+&lt;p&gt;Links:&lt;br /&gt;
+&lt;a href=&#34;http://scn.sap.com/community/gui/blog/2015/04/25/steps-to-install-sap-gui-on-mac-yosemite&#34; target=&#34;_blank&#34;&gt;Install SAP GUI on Mac Yosemite&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Adobe CC Oops</title>
+      <link>https://clburlison.com/adobe-cc-oops/</link>
+      <pubDate>Tue, 17 May 2016 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/adobe-cc-oops/</guid>
+      <description>&lt;p&gt;I ran into the following error earlier this year and have yet to write about it. Adobe has the correct solution in another &lt;a href=&#34;https://helpx.adobe.com/creative-cloud/kb/unknown-server-error-launching-cc.html&#34; target=&#34;_blank&#34;&gt;knowledge base article&lt;/a&gt; however the error messages are different. Since the errors looked to be different I never would have attempted the solution until &lt;a href=&#34;https://twitter.com/Adobe_ITToolkit&#34; target=&#34;_blank&#34;&gt;Karl&lt;/a&gt; gave me a poke.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-05-17/adobecc_oops.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Basically I would launch Adobe&amp;rsquo;s Creative Cloud Packager (CCP) tool and nothing would work. Luckily the fix is really simple:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;rm -rf ~/Library/Application\ Support/Adobe/OOBE
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Links:&lt;br /&gt;
+&lt;a href=&#34;https://helpx.adobe.com/creative-cloud/kb/unknown-server-error-launching-cc.html&#34; target=&#34;_blank&#34;&gt;Adobe Unknown Server Error&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Demystify Office 2016 for Mac</title>
+      <link>https://clburlison.com/demystify-office2016/</link>
+      <pubDate>Thu, 14 Jan 2016 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/demystify-office2016/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;Microsoft Office 2016 for Mac had a &lt;a href=&#34;https://macops.ca/whats-wrong-with-the-office-2016-volume-license-installer/&#34; target=&#34;_blank&#34;&gt;rough&lt;/a&gt; &lt;a href=&#34;https://macops.ca/the-office-for-mac-2016-volume-license-installer-two-months-later/&#34; target=&#34;_blank&#34;&gt;start&lt;/a&gt; &lt;a href=&#34;http://www.richard-purves.com/?p=79&#34; target=&#34;_blank&#34;&gt;for&lt;/a&gt; &lt;a href=&#34;https://derflounder.wordpress.com/2015/08/05/creating-an-office-2016-15-12-3-installer/&#34; target=&#34;_blank&#34;&gt;sure&lt;/a&gt;. With that being said things have gotten better and quite rapidly. This post will focus on where Office 2016 for Mac currently stands, commonly asked questions, best practices, and solutions for updates.&lt;/p&gt;
+
+&lt;p&gt;This post should serve as a overview of the changes to Office 2016 (O2016) for Mac from about November 2015 to Present (January 14th).&lt;/p&gt;
+
+&lt;p&gt;Before we can get too far into this post it needs to be noted that none of this would be possible without the hard work and support of the following individuals. Contact info is in the form of Twitter/Slack handle. William Smith (&lt;a href=&#34;https://twitter.com/meck&#34; target=&#34;_blank&#34;&gt;@meck&lt;/a&gt;/&lt;a href=&#34;https://macadmins.slack.com/team/talkingmoose&#34; target=&#34;_blank&#34;&gt;@talkingmoose&lt;/a&gt;) took it on himself to reach out to the Apple Platform Experience (APEX) Team at Microsoft and helped push them into our community Slack group. Paul Bowden (&lt;a href=&#34;https://twitter.com/mrexchange&#34; target=&#34;_blank&#34;&gt;@mrexchange&lt;/a&gt;/&lt;a href=&#34;https://macadmins.slack.com/team/pbowden&#34; target=&#34;_blank&#34;&gt;@pbowden&lt;/a&gt;) and Erik Schwiebert (&lt;a href=&#34;https://twitter.com/schwieb&#34; target=&#34;_blank&#34;&gt;@schwieb&lt;/a&gt;/&lt;a href=&#34;https://macadmins.slack.com/team/schwieb&#34; target=&#34;_blank&#34;&gt;@schwieb&lt;/a&gt;) are both Software Engineers at Microsoft inside the APEX team. They have been very responsive to feedback from the community.&lt;/p&gt;
+
+&lt;p&gt;And so you don&amp;rsquo;t think I&amp;rsquo;m making up facts I will be supplying quotes from Microsoft&amp;rsquo;s pbowden on almost everything. You will need to join our MacAdmins Slack group if you wish to view the source. Sign up page is &lt;a href=&#34;http://macadmins.org&#34; target=&#34;_blank&#34;&gt;http://macadmins.org&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Video Presentation:&lt;/strong&gt; Paul Bowden gave a presentation, 2016.01.20, at the University of Utah&amp;rsquo;s Mac Managers meeting which can be viewed &lt;a href=&#34;https://stream.lib.utah.edu/index.php?c=details&amp;amp;id=11705&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;. It covers many of the topics from this post in video form.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;office-packages&#34;&gt;Office Packages&lt;/h1&gt;
+
+&lt;p&gt;Five months into Office 2016 being out and there are &lt;s&gt;five&lt;/s&gt; six different kinds of installers/updaters. Plus a bonus serializer package. This table should help clarify what is available and the differences between each package.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;Name&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Type&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Comments&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Requires Live System&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;File Size★&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;SKU-less★★&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Installer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Contains all apps. Good for O365 installations. Can be used in combination with the VL Serializer to create a VL Installer without needing to visit Microsoft&amp;rsquo;s Volume Licensing Service Center (VLSC). &lt;a href=&#34;#method-1---office-365-installation&#34;&gt;Additional info&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~1.3 GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Volume License (VL)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Installer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Contains all apps. Available from VLSC only. Has Serializer package embed. &lt;a href=&#34;#method-2---volume-license-installation&#34;&gt;Additional info&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~1.3 GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Standalone&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Installer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Available from &lt;a href=&#34;http://macadmins.software&#34;&gt;http://macadmins.software&lt;/a&gt;. These install packages can be combined with the VL Serializer below to have a custom install solution of just &amp;ldquo;one&amp;rdquo; or a &amp;ldquo;handful&amp;rdquo; of O2016 apps★★★. These will also work with O365 installs. OneNote standalone not available (obtain from Mac App Store [MAS] if needed).&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;No&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~550 MB per app&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Standalone VL&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Installer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Available from VLSC only. These are standalone install packages that contain your VL serial. They can be used to have a custom install solution of just &amp;ldquo;one&amp;rdquo; or a &amp;ldquo;handful&amp;rdquo; of O2016 apps★★★.&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~1 GB per app&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Combo&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Update&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;These updates can take any previous Office 2016 installed app and make them current. These are per app upgrade packages, a difference from Office 2011&amp;rsquo;s combo update packages.&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~1 GB per app&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;Delta&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Update&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;These were first publicly available with 15.18. These significantly reduce the file size that is required to update an Office app. Also per app upgrade packages. &lt;a href=&#34;#delta-updates&#34;&gt;Additional info&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~780 MB for suite&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;VL Serializer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Serializer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;This is a special package that was released with 15.17. The purpose of this package is to apply the Office serialization process to the SKU-less installations. &lt;a href=&#34;#vl-serializer&#34;&gt;more info&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;~5 MB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;If &lt;strong&gt;Requires Live System&lt;/strong&gt;, is &amp;lsquo;yes&amp;rsquo; these installers must be ran on fully booted Mac. IE - You must see the loginwindow or be logged into the physical Mac that you are installing O2016 on. If this option is &amp;lsquo;no&amp;rsquo; you can bake these installers into a base image using tools like &lt;a href=&#34;https://github.com/MagerValp/AutoDMG&#34; target=&#34;_blank&#34;&gt;AutoDMG&lt;/a&gt;, &lt;a href=&#34;http://www.deploystudio.com/&#34; target=&#34;_blank&#34;&gt;DeployStudio&lt;/a&gt;, or Casper&amp;rsquo;s Image creation process.&lt;/p&gt;
+
+&lt;p&gt;★All file sizes should be considered estimates and subject to change&lt;br /&gt;
+★★This installer is often the most confusing as it is also commonly called: &lt;strong&gt;Full Suite&lt;/strong&gt;, &lt;strong&gt;O365&lt;/strong&gt;, or a &lt;strong&gt;Retail&lt;/strong&gt; installer. They are all the same.&lt;br /&gt;
+★★★This level of customization can also be achieved by using a &lt;a href=&#34;#i-dont-want-to-install-mau-is-that-supported&#34;&gt;choice xml&lt;/a&gt; with the SKU-less and VL installers.&lt;/p&gt;
+
+&lt;h1 id=&#34;how-do-i-install-o2016&#34;&gt;How do I install O2016?&lt;/h1&gt;
+
+&lt;p&gt;You should install the package that Microsoft is giving you. &lt;strong&gt;PERIOD&lt;/strong&gt;. End of story. Stop taking their package apart and &amp;ldquo;fixing things&amp;rdquo;. It is fine to poke your nose under the hood but there is absolutely no reason for you to be re-packaging anything Office 2016 related. This was a common practice with Office 2011 and at the start of Office 2016. All issues that were resolved with re-packaging have been fixed by Microsoft. Microsoft has listened and now it is your turn. STAHP.&lt;/p&gt;
+
+&lt;h2 id=&#34;method-1-office-365-installation&#34;&gt;Method 1 - Office 365 installation&lt;/h2&gt;
+
+&lt;p&gt;You can download a SKU-less installer from your VLSC dashboard or from &lt;a href=&#34;http://macadmins.software&#34; target=&#34;_blank&#34;&gt;http://macadmins.software&lt;/a&gt;. Both locations point to the same file as it a public release. This installer is deployed via Apple&amp;rsquo;s Installer Application (command line &amp;amp; GUI) and can be deployed via:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Apple Remote Desktop&lt;/li&gt;
+&lt;li&gt;Munki&lt;/li&gt;
+&lt;li&gt;Casper&lt;/li&gt;
+&lt;li&gt;While at the loginwindow&lt;/li&gt;
+&lt;li&gt;&lt;s&gt;And can be baked into an image&lt;/s&gt; There is currently a bug in the postflight script such that the correct target drive is not selected.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It all-around should be good to go!&lt;/p&gt;
+
+&lt;h2 id=&#34;method-2-volume-license-installation&#34;&gt;Method 2 - Volume License Installation&lt;/h2&gt;
+
+&lt;p&gt;If you are a Volume License (VL) customer your first step is to log into the VLSC and download the latest Office 2016 for Mac iso file. Inside of this file you will find the latest VL Installer package and the VL Serializer package. At this time, the VLSC has 15.17 however 15.18 has been released. Microsoft is working to sync the development and VLSC teams so that the latest update is available on the VLSC faster.&lt;/p&gt;
+
+&lt;p&gt;This installer is deployed via Apple&amp;rsquo;s Installer Application (command line &amp;amp; GUI) and can be deployed via:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Apple Remote Desktop&lt;/li&gt;
+&lt;li&gt;Munki&lt;/li&gt;
+&lt;li&gt;Casper&lt;/li&gt;
+&lt;li&gt;While at the loginwindow&lt;/li&gt;
+&lt;li&gt;And can &lt;strong&gt;NOT&lt;/strong&gt; be baked into an image. This is due to how the serialization process works.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Your options are to now deploy the VL installer package or you can now download the latest SKU-less installer package (&lt;a href=&#34;http://macadmins.software&#34; target=&#34;_blank&#34;&gt;http://macadmins.software&lt;/a&gt;) to deploy. When you use the second option you are able to deploy the SKU-less installer and then apply your VL Serializer package to create a supported install. This is a kind of &amp;ldquo;future proof&amp;rdquo; solution as you would not have to access the VLSC again to receive updates.&lt;/p&gt;
+
+&lt;p&gt;A &lt;strong&gt;third&lt;/strong&gt;, and slightly less preferred (personal opinion) option would be to download the Standalone Installer(s) from &lt;a href=&#34;http://macadmins.software&#34; target=&#34;_blank&#34;&gt;http://macadmins.software&lt;/a&gt;. After one or more Standalone installs have taken place you can run the VL Serializer in order to properly serialize your computers. This solution looks like it might be the most flexible upfront however, the same can be accomplished by using a &lt;a href=&#34;#i-dont-want-to-install-mau-is-that-supported&#34;&gt;choice xml&lt;/a&gt; (detail later in this post). Plus, after two standalone installers you would be much better off with the SKU-less installer package due to file size. With that said it is supported, I however do not believe it is the correct workflow for 99% of Mac Admins.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;VLSC won’t be updated with the 15.17 build until first week of January. While the portal team is working on getting faster at making new builds available, the underlying reason for releasing the VL Serializer separately is so that you can take the Office 365/Retail (aka SKU-less) installer from future builds (15.18, 15.19, etc), deploy it, run the Serializer, and you have a fully up to date VL install. &lt;u&gt;This is a fully supported mechanism for deployment&lt;/u&gt;.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1449897132003874&#34; target=&#34;_blank&#34;&gt;source link #1&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;munki&#34;&gt;Munki&lt;/h2&gt;
+
+&lt;p&gt;If you are a munki shop pick one of the methods above and run the following to import Office 2016 into your repo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+## VL Installer or SKU-less Installer
+
+$ munkiimport /path/to/Microsoft_Office_2016_Installer.pkg \
+--name=MSOffice2016 \
+--catalog=testing \
+--minimum_os_version=10.10 \
+--developer=Microsoft \
+--category=Productivity \
+--description=&amp;quot;Unmistakably Office, designed for Mac.
+
+The new versions of Word, Excel, PowerPoint, Outlook and OneNote provide the best of both worlds for Mac users - the familiar Office experience paired with the best of Mac.
+
+If you already use Office on a PC or iPad, you will find yourself right at home in Office 2016 for Mac. It works the way you expect, with the familiar ribbon interface and powerful task panes. Mac users will appreciate the modernized Office experience and the integration of Mac capabilities like Full Screen view and Multi-TouchTM gestures. With full Retina display support, your Office documents look sharper and more vibrant than ever.
+
+Office for Mac is cloud-connected, so you can quickly get to the documents you’ve recently used on other devices and pick up where you left off. New, built-in document sharing tools make it easy to invite teammates to work on a document together. When sharing documents, you won’t have to worry about losing content or formatting, as Office for Mac offers unparalleled compatibility with Office on PCs, tablets, phones and online.&amp;quot; \
+--blocking_application=&amp;quot;Microsoft Autoupdate&amp;quot; \
+--blocking_application=&amp;quot;Microsoft Outlook&amp;quot; \
+--blocking_application=&amp;quot;Microsoft Excel&amp;quot; \
+--blocking_application=&amp;quot;Microsoft PowerPoint&amp;quot; \
+--blocking_application=&amp;quot;Microsoft Word&amp;quot; \
+--blocking_application=&amp;quot;Microsoft OneNote&amp;quot; \
+--unattended_install
+
+## VL Installer (only required if using the SKU-less Installer). The preinstall_script is located below.
+$ munkiimport /path/to/Microsoft_Office_2016_VL_Serializer.pkg \
+--name=MSOffice2016_Serializer \
+--catalog=testing \
+--developer=Microsoft \
+--category=Productivity \
+--update_for=MSOffice2016 \
+--preinstall_script=/path/to/preinstall_script \
+--unattended_install
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The VL Serializer should have the following preinstall script. This will help users who incorrectly copied com.microsoft.office.licensingV2.plist to their machine.&lt;br /&gt;
+(&lt;a href=&#34;https://gist.github.com/clburlison/ac182c465ff40429aa1a/archive/e2729d9724fd08ed630e878193f75effc2159aa6.zip&#34; target=&#34;_blank&#34;&gt;download link&lt;/a&gt;)
+&lt;script src=&#34;//gist.github.com/clburlison/ac182c465ff40429aa1a.js?file=preinstall_script&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;If you wish to implement a choice xml file for munki you will want to copy and paste the &lt;code&gt;installer_choices_xml&lt;/code&gt; array from the &lt;code&gt;office2016_munki.xml&lt;/code&gt; file into your Office 2016 pkginfo (&lt;a href=&#34;https://gist.github.com/clburlison/8fd09ae20de4279281f4/archive/89a8735ac42fd634389e89f0f45c80e8f0e3bf3b.zip&#34; target=&#34;_blank&#34;&gt;download link&lt;/a&gt;). Also, if you wish to apply an icon supply the &lt;code&gt;--icon_path=/path/to/MSOffice2016.png&lt;/code&gt; key (the icon I used can be downloaded below).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/MSOffice2016.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Right Click &amp;gt; Save Image As&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Munki - Installs Arrays&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If you are planning on having a hybrid setup with MAU and munki both pushing updates to Office 2016 applications I highly recommend adding an install array to your Office 2016 installer. I also recommend this if your users have admin access and might &amp;ldquo;accidentally&amp;rdquo; delete an office application that you want to make sure doesn&amp;rsquo;t disappear. This can be done two ways, during the &lt;code&gt;munkiimport&lt;/code&gt; of your installer or by running &lt;code&gt;makepkginfo&lt;/code&gt; and manually pasting the install array into your pkginfo:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: In order for the following to work the installer you are importing must be first installed on your admin machine.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+## via munkiimport (appended to the above example)
+
+$ munkiimport /path/to/Microsoft_Office_2016_Installer.pkg \
+...
+--file &amp;quot;/Applications/Microsoft Excel.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft OneNote.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft Outlook.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft PowerPoint.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft Word.app&amp;quot; \
+--file &amp;quot;/Library/Application Support/Microsoft/MAU2.0/Microsoft AutoUpdate.app&amp;quot; \
+...
+--unattended_install
+
+## via makepkginfo
+
+$ makepkginfo \
+--file &amp;quot;/Applications/Microsoft Excel.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft OneNote.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft Outlook.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft PowerPoint.app&amp;quot; \
+--file &amp;quot;/Applications/Microsoft Word.app&amp;quot; \
+--file &amp;quot;/Library/Application Support/Microsoft/MAU2.0/Microsoft AutoUpdate.app&amp;quot;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;casper&#34;&gt;Casper&lt;/h2&gt;
+
+&lt;p&gt;I was going to try and give resources for Casper&amp;hellip;then I realized how completely unqualified for this section. Luckily Rich Trouton &lt;a href=&#34;https://derflounder.wordpress.com/2016/01/14/creating-an-office-2016-15-18-0-installer/&#34; target=&#34;_blank&#34;&gt;has got you covered&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using his method you could add a &lt;a href=&#34;#i-dont-want-to-install-mau-is-that-supported&#34;&gt;choice xml&lt;/a&gt; file if you wanted to customize your installation. Inside of Packages under the &amp;ldquo;Additional Resources&amp;rdquo; tab you would need to copy in your choice xml (&lt;a href=&#34;https://gist.github.com/clburlison/8fd09ae20de4279281f4/archive/89a8735ac42fd634389e89f0f45c80e8f0e3bf3b.zip&#34; target=&#34;_blank&#34;&gt;download link&lt;/a&gt;). This is Step #6 in Rich&amp;rsquo;s guide.&lt;/p&gt;
+
+&lt;p&gt;Then a modified postinstall script would look like:&lt;/p&gt;
+
+&lt;script src=&#34;//gist.github.com/clburlison/8fd09ae20de4279281f4.js?file=postinstall&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;Make sure and walk through the remaining steps in Rich&amp;rsquo;s guide to complete this process.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: Using his method is repackaging the installer however he is making no-modifications to the Office installer 😊.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;faq&#34;&gt;FAQ&lt;/h1&gt;
+
+&lt;p&gt;Due to the shear quantity of content I am attempting to cover the remanding section of this post will be in FAQ format.&lt;/p&gt;
+
+&lt;h2 id=&#34;why-is-o2016-so-different-from-o2011&#34;&gt;Why is O2016 so different from O2011?&lt;/h2&gt;
+
+&lt;p&gt;The main reason why Office 2016 is so different is the fact that each application is now &lt;a href=&#34;https://developer.apple.com/library/mac/documentation/Security/Conceptual/AppSandboxDesignGuide/AboutAppSandbox/AboutAppSandbox.html&#34; target=&#34;_blank&#34;&gt;Sandboxed&lt;/a&gt;. Due to that fact, Microsoft is now just one step away from releasing Office 2016 apps on the Mac App Store (figuratively speaking at least). Obviously time frame for this move would depend greatly on internal policies, process with Apple, and other factors unknown to me. Sandboxing also means it is easier to remove an Application after it has been installed IE - &lt;code&gt;sudo rm -rf &amp;quot;/Applications/Microsoft Word.app&amp;quot;&lt;/code&gt;. However, one downside of Sandboxed applications is the large quantity of duplicated data (mostly Fonts) being stored on the disk in five applications.&lt;/p&gt;
+
+&lt;p&gt;Bonus regarding the MAS:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To add to the optional statement, one of the reasons why MAU is optional is because we don’t/can’t use it for apps that are delivered through the Mac AppStore. Technically, those apps (such as OneNote) are the same regardless of whether you get them from the Mac AppStore vs. Suite installer. MAU does have some additional logic to look for _MASReceipt in the app bundle so that it doesn’t attempt to update an MS app that came through the Mac AppStore.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1447219900000887&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;o2016-takes-up-so-much-more-space&#34;&gt;O2016 takes up so much more space.&lt;/h2&gt;
+
+&lt;p&gt;True. This is due to Sandboxing. This is a limitation is due to Apple&amp;rsquo;s guidelines on how Sandboxing is implemented.&lt;/p&gt;
+
+&lt;p&gt;Nothing can be done about the increased size at this point in time.&lt;/p&gt;
+
+&lt;p&gt;Now is a good time to mention &lt;a href=&#34;https://github.com/goodbest/OfficeThinner&#34; target=&#34;_blank&#34;&gt;OfficeThinner&lt;/a&gt; is bad, will break code signing, and is &lt;strong&gt;not&lt;/strong&gt; supported. If you did this on a personal machine you should revert the changes sooner rather than later (easiest fix is to install latest SKU-less installer).&lt;/p&gt;
+
+&lt;h2 id=&#34;how-do-i-manage-updates-for-office-2016&#34;&gt;How do I manage updates for Office 2016?&lt;/h2&gt;
+
+&lt;p&gt;You&amp;rsquo;re limited to two solutions:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Use MAU&lt;/li&gt;
+&lt;li&gt;Manually apply the updates with management system (munki, casper, etc.)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Technically speaking if you aren&amp;rsquo;t using MAU, you really need to look into &lt;a href=&#34;#autopkg&#34;&gt;AutoPkg&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;autopkg&#34;&gt;AutoPkg&lt;/h2&gt;
+
+&lt;div class=&#34;alert alert-danger&#34;&gt;
+  &lt;p&gt;&lt;b&gt;Unsupported!&lt;/b&gt;
+&lt;p&gt;If you wish to utilize AutoPkg to install the individual applications IE - &lt;code&gt;MSWord2016.{download,install,munki,jss,etc.}&lt;/code&gt;, &lt;code&gt;MSExcel2016.{etc}&lt;/code&gt;, &lt;code&gt;MSPowerPoint2016.{etc}&lt;/code&gt;. &lt;code&gt;MSOutlook2016.{etc}&lt;/code&gt; or &lt;code&gt;MSOneNote2016.{etc}&lt;/code&gt;, on &lt;b&gt;&lt;u&gt;NEW&lt;/u&gt;&lt;/b&gt; machines this is unsupported by Microsoft. These recipes correlate to the &amp;lsquo;Combo&amp;rsquo; update packages (by default) and are not suitable for first time installation. The delta updates are also not suitable for first time installation.
+&lt;br&gt;&lt;br&gt;
+  This means your base installation should be one of the &lt;a href=&#34;#how-do-i-install-o2016&#34;&gt;supported options&lt;/a&gt; above. Afterwards you can utilize AutoPkg to download the combo updates in place of MAU.
+&lt;br&gt;&lt;br&gt;
+  This is a common practice in the community that needs to stop. If you did this in the past to get Office 2016 on your computers simply changing to one of the supported solutions above will get your computers in compliance. I am unable to say for sure but it is very possible that if you did install using this unsupported method the 15.20 update in March might break your installation (purely a guess).&lt;/p&gt;&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;As MAU is the recommended solution for updates, it was important to make that flow as seamless as possible. When you run custom install/update solutions you need to take care of those things yourself.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1452617616007496&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Normally quotes go at the end however that one was important. Go ahead read it again. So AutoPkg users: the importance of that statement is you need to make sure MS applications are closed when installing updates. For munki users this means incorporating &lt;code&gt;blocking_applications&lt;/code&gt; arrays in your pkginfos. When installing &amp;ldquo;update&amp;rdquo; packages (delta or combo) you only need to force one application to be closed per update package. However, if you wish to utilize the &amp;ldquo;SKU-less Installer&amp;rdquo; package for both fresh machine installs and updates your &lt;code&gt;blocking_applications&lt;/code&gt; will need to make sure all five applications plus MAU are closed (the example I listed in the &lt;a href=&#34;#munki&#34;&gt;munki&lt;/a&gt; section covers this).&lt;/p&gt;
+
+&lt;p&gt;EX 1 - Update Packages:&lt;/p&gt;
+
+&lt;p&gt;This applies to the &amp;lsquo;Delta&amp;rsquo; and &amp;lsquo;Combo&amp;rsquo; updates and the &amp;lsquo;Standalone Installer&amp;rsquo; packages. If you wish to deploy one of the &amp;ldquo;updates&amp;rdquo; your end-users will only need to close the application(s) that are being updated. Each update package correlates to one application on the file system. IE - Jane has Outlook open but the other O2016 applications closed. If your management solution supports unattended installs Word, PowerPoint, Excel, &amp;amp; OneNote could all be updated without bothering Jane. However, when it comes time to install Outlook she will need to close the application in order for the installation to properly complete.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: The standalone installer packages currently do not have an AutoPkg recipe. Nor do I personally feel a need for them.&lt;/p&gt;
+
+&lt;p&gt;EX 2 - SKU-less Installer:&lt;/p&gt;
+
+&lt;p&gt;If you go this route new machines will only ever need to install one package to get the latest Office 2016 (two packages if you count the VL Serializer). The down side to this solution is all five apps (Word, Excel, OneNote, PowerPoint, &amp;amp; Outlook plus MAU) will need to be closed prior to starting an update. Due to file size this package will take longer to download from your management system to the client computer, and will take longer to install compared to the update packages.&lt;/p&gt;
+
+&lt;p&gt;If you aren&amp;rsquo;t in the autopkg loop you&amp;rsquo;ll want to add the main recipe repo (combo &amp;amp; delta update packages) and Allister repo (SKU-less &amp;amp; MAU installer packages).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+autopkg repo-add https://github.com/autopkg/recipes
+autopkg repo-add https://github.com/autopkg/arubdesu-recipes
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Using AutoPkg is outside of the scope of this guide.&lt;/p&gt;
+
+&lt;h2 id=&#34;http-macadmins-software&#34;&gt;&lt;a href=&#34;http://macadmins.software&#34; target=&#34;_blank&#34;&gt;http://macadmins.software&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;This is a site that is &lt;em&gt;not&lt;/em&gt; affiliated with Microsoft but ran by a friendly face (&lt;em&gt;cough&lt;/em&gt; pbowden &lt;em&gt;cough&lt;/em&gt;). This website is simple and has one purpose: get current software links/version easier. With that said all of the links are actually redirects to Microsoft&amp;rsquo;s Official CDN so software downloaded from this site is safe. The packages can be verified as they are all signed by Microsoft&amp;rsquo;s developer certs.&lt;/p&gt;
+
+&lt;h2 id=&#34;when-saving-i-get-a-blank-directory&#34;&gt;When saving I get a blank directory!&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/saving_online_default.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;By default the Office 2016 suite of applications have &amp;lsquo;Online Locations&amp;rsquo; selected in the save window. This might be considered confusing to end-users. In addition some environments are not allowed to save files to cloud based storage locations. This is now manageable with a preference, example below:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: This is a user-level setting. This can be ran with &lt;a href=&#34;https://github.com/chilcote/outset&#34; target=&#34;_blank&#34;&gt;outset&lt;/a&gt; or some other scripting solution.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+$ defaults write $HOME/Library/Group\ Containers/UBF8T346G9.Office/com.microsoft.officeprefs.plist DefaultsToLocalOpenSave -bool TRUE
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is not a perfect solution however if you really need to change the default save location we have a solution!&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;And one more from me for &lt;strong&gt;15.18&lt;/strong&gt;, you can now set the following plist preference to force the open/save panel to ‘On my Mac’ instead of &amp;lsquo;Online Locations&amp;rsquo; &amp;ndash; [preference above]. I know it’s a little long, but it’s a single place that will affect the behavior of Word, Excel and PowerPoint 2016.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1450417854005113&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;set-the-user-information&#34;&gt;Set the User Information&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/MeContact.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This was found by &lt;a href=&#34;http://maclovin.org/blog-native/2015/office-2016-where-is-the-name-of-the-user-stored-&#34; target=&#34;_blank&#34;&gt;François Levaux&lt;/a&gt; so I take no credit for the discovery however to make it more readily accessable I will be posting this here. If you wish to automatically populate the User Information fields (Name and Initials) the following script can do so.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This is another user level script and &lt;strong&gt;must&lt;/strong&gt; be ran as the logged in user. Running under any instance of root (IE - sudo, or LaunchDaemon) will result in unfavorable results.&lt;/p&gt;
+
+&lt;script src=&#34;//gist.github.com/clburlison/4552c1036236a22ba829.js?file=Office2016-MeContact.sh&#34;&gt;&lt;/script&gt;
+
+&lt;h2 id=&#34;can-t-i-just-copy-com-microsoft-office-licensingv2-plist&#34;&gt;Can&amp;rsquo;t I just copy com.microsoft.office.licensingV2.plist?&lt;/h2&gt;
+
+&lt;p&gt;No. This was a bug. Microsoft is aware of the issue and this will be fixed in 15.20 which is scheduled to be released in March.&lt;/p&gt;
+
+&lt;p&gt;The first editions of the Volume License installer from Microsoft caused issues with licensing. The Mac Admin Community collectively came to the solution of packaging &lt;code&gt;/Library/Preferences/com.microsoft.office.licensingV2.plist&lt;/code&gt; separately and applying this file to new installations. This was wrong. Do not do it.&lt;/p&gt;
+
+&lt;p&gt;If you did copy the &lt;code&gt;com.microsoft.office.licensingV2.plist&lt;/code&gt; file see &lt;a href=&#34;#vl-serializer&#34;&gt;VL Serializer&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;@reidblondell: bottom line is that if you&amp;rsquo;re copying com.microsoft.office.licensingv2.plist between machines then you are not in a supportable state. The only supportable solution is to have that plist file generated on the machine you intend to use by the Microsoft Office Setup Assistant (MOSA). Up to you how you package this, but MOSA needs to be run&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1447525532000461&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;dialog-prompt-s-ie-what-s-new&#34;&gt;Dialog Prompt(s) - IE What&amp;rsquo;s New&lt;/h2&gt;
+
+&lt;p&gt;Eric Holtam has a great post regarding these dialog prompts and managing them with profiles &lt;a href=&#34;https://osxbytes.wordpress.com/2015/09/17/not-much-whats-new-with-you/&#34; target=&#34;_blank&#34;&gt;located here&lt;/a&gt;. The only part that I didn&amp;rsquo;t understand, initially, was Office is actually providing your with two separate &amp;ldquo;What&amp;rsquo;s New&amp;rdquo; dialog boxes. The first (shown below with Excel) gives you a splash screen and then prompts you to select your colour theme: Classic or Colorful. Along with prompting O365 users to sign-in for activation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/WhatsNew1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The second &amp;ldquo;What&amp;rsquo;s New&amp;rdquo; dialog prompt will only be shown for O365 users. With 15.15 and up VL customers will not see these prompts. It does not matter how you installed O2016, even the SKU-less installer, if you are a VL customer these dialog prompts will not be shown.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/WhatsNew2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Both of these dialog boxes can be disabled, however if you are a O365 customer disabling the first dialog prompt is not recommended (see quote from Eric below).&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;If you&amp;rsquo;re an O365 customer and you suppress the 1507 key your users won&amp;rsquo;t be prompted to authorize the license on first launch.  You&amp;rsquo;ll have to do that from in-app and the dialog that appears makes it sound like it needs to be purchased.  There&amp;rsquo;s a small link to click to specify you already have a license.&lt;/p&gt;
+
+&lt;p&gt;@eholtam &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1452712063008493&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;delta-updates&#34;&gt;Delta Updates&lt;/h2&gt;
+
+&lt;p&gt;With the release of 15.18 Microsoft has released Delta updates. Paul has released a public document that goes over these updates in quite a bit of detail (see below). The biggest note for these delta updates is that they will only work on the current release minus one minor revision (N-1).&lt;/p&gt;
+
+&lt;p&gt;IE - I have Office 15.17 installed when 15.18 was released MAU offered to install the latest 15.18 updates as delta packages. However, if I was on 15.16 I would need the 15.18 combo update packages (quite a bit larger in file size) in order to update to the latest release.&lt;/p&gt;
+
+&lt;p&gt;The nice part about these Delta updates is if you are using MAU these are automatically offered to your users without any intervention on your part.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://clburlison.com/images/2016-01-14/Delta_Updates.pdf&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/pdf-200x200.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;If anyone wants to try out delta updates (we’ve now got them down to 350 MB for the entire suite), just change MAU to the Internal channel&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1452622212007576&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;vl-serializer&#34;&gt;VL Serializer&lt;/h2&gt;
+
+&lt;p&gt;Again, Paul has released a document that will cover more information than I can. The only thing I want to highlight is if you are coming from a known bad install of office (IE - you copied com.microsoft.office.licensingV2.plist) you need to run a &lt;code&gt;rm -f /Library/Preferences/com.microsoft.office.licensingV2.plist&lt;/code&gt; prior to running the VL Serializer package.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://clburlison.com/images/2016-01-14/VL_Serializer.pdf&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/pdf-200x200.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;office-insider&#34;&gt;Office Insider&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The   Office  Insider program is  a   new initiative  to  provide Office  customers   on  all platforms   to  get early   access  to  the very    latest  builds  of  the
+product.    The public  description can be  found   at  &lt;a href=&#34;https://products.office.com/office-insider&#34; target=&#34;_blank&#34;&gt;https://products.office.com/office-insider&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://clburlison.com/images/2016-01-14/Office_Insider.pdf&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/pdf-200x200.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;mau&#34;&gt;MAU&lt;/h1&gt;
+
+&lt;p&gt;Sorry, MAU is a very complex topic. I do not plan on utilizing it in my environment so below are important notes from Paul.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Warning …long paragraph coming up  😉&lt;/p&gt;
+
+&lt;p&gt;Here’s a new feature that I implemented in MAU 3.3 which got released alongside 15.17 yesterday. I was talking to an enterprise customer a couple of months ago, and they had a semi-managed environment where they ‘slow’ pushed updates to Office 2016, but they also wanted to allow users to use MAU and get updates. Problem is that they wanted to control the ‘maximum’ version that MAU would see. For example, even though 15.17 got recently released, they didn’t want users to update to it until IT had a chance to validate it and make sure it didn’t break anything. However, they were happy for users to upgrade to 15.16 even though they hadn’t pushed it out to everyone.&lt;/p&gt;
+
+&lt;p&gt;So, while I was implementing the new ‘channels’ feature in MAU, I allow a ‘Custom’ channel to be set. You can then point MAU at your own HTTPS server that has a copy of the manifests you want to use, instead of the latest ones at &lt;a href=&#34;https://www.microsoft.com/mac/autoupdate&#34; target=&#34;_blank&#34;&gt;https://www.microsoft.com/mac/autoupdate&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The manifests are named as follows, and these are the files you’ll want to copy to your own web server:
+Word 2016 for Mac - &lt;code&gt;0409MSWD15.xml&lt;/code&gt; &amp;amp; &lt;code&gt;0409MSWD15.cat&lt;/code&gt;
+Excel 2016 for Mac - &lt;code&gt;0409XCEL15.xml&lt;/code&gt; &amp;amp; &lt;code&gt;0409XCEL15.cat&lt;/code&gt;
+PowerPoint 2016 for Mac - &lt;code&gt;0409PPT315.xml&lt;/code&gt; &amp;amp; &lt;code&gt;0409PPT315.cat&lt;/code&gt;
+Outlook 2016 for Mac - &lt;code&gt;0409OPIM15.xml&lt;/code&gt; &amp;amp; &lt;code&gt;0409OPIM15.cat&lt;/code&gt;
+OneNote 2016 for Mac - &lt;code&gt;0409ONMC15.xml&lt;/code&gt; &amp;amp; &lt;code&gt;0409ONMC15.cat&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;As MAU is version agnostic, you can also use this same mechanism to control Office 2011 and Lync updates.
+Now, MAU verifies the hash across the CAT and XML, so you can’t tamper with the XML, or try to use your own server for PKGs, but you can at least prevent MAU from ‘seeing’ versions that you don’t support.&lt;/p&gt;
+
+&lt;p&gt;The MAU configuration for this is as follows:
+&lt;code&gt;defaults write com.microsoft.autoupdate2 ChannelName -string &#39;Custom&#39;&lt;/code&gt;
+&lt;code&gt;defaults write com.microsoft.autoupdate2 ManifestServer -string &#39;https://yourwebserver/yourpath/&#39;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;NOTE: That MAU 3.3 will only work with HTTPS servers. In MAU 3.4 which is coming next month, I’ve relaxed this so you can also use HTTP.
+Let me know if you have any questions or comments! When we get closer to end of this month, I’ll talk more about how channels work in MAU 3.4 and how to take advantage of them(edited)&lt;/p&gt;
+
+&lt;p&gt;Also note that it’s important to remember the trailing &lt;code&gt;/&lt;/code&gt; at the end of the ManifestServer path value&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1449904185003906&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;mau-3-4-update&#34;&gt;MAU 3.4 update&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/insider_builds.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Lots of good progress today towards our 15.18 January release that I wanted to share. First up, MAU 3.4 which is scheduled to release on &amp;frac14;. The big change here is support for the new Office Insiders program, and the official release of multiple update channels.&lt;/p&gt;
+
+&lt;p&gt;There’s a new checkbox in the UI which you can see in the screenshot below. If you check this box, it sets the underlying ChannelName key to ‘External’ which means you’ll get new builds roughly 7 days before the rest of the world. Not exposed through the UI, but if you’re feeling super keen, you can manually set the ChannelName key to ‘Internal’ (&lt;code&gt;defaults write com.microsoft.autoupdate2 ChannelName -string &#39;Internal&#39;&lt;/code&gt;) and get new builds roughly 14 days before the rest of the world. It goes without saying that release quality improves as we head toward worldwide release. However, this mechanism of getting early builds means that all of you can enjoy early access and new feature testing without needing special FTP creds - all the PKGs for all channels will be published on our public Office CDN. For those of you who don’t want users opting in to early builds, I’ve added a pref to disable the checkbox (&lt;code&gt;defaults write com.microsoft.autoupdate2 DisableInsiderCheckbox -bool TRUE&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Mainly for @allister, the channel names map to the following URLs:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Internal == &lt;a href=&#34;https://www.microsoft.com/mac/Internal&#34; target=&#34;_blank&#34;&gt;https://www.microsoft.com/mac/Internal&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;External == &lt;a href=&#34;https://www.microsoft.com/mac/External&#34; target=&#34;_blank&#34;&gt;https://www.microsoft.com/mac/External&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/files/pbowden/F0GUKFW4C/pasted_image_at_2015_12_17_09_36_pm.png&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;can-i-disable-mau-from-auto-checking-for-updates&#34;&gt;Can I disable MAU from auto-checking for updates?&lt;/h2&gt;
+
+&lt;p&gt;Sure. This process is the same as it was with Office 2011. My recommended method for making this change is with a profile. Example from Greg Neagle: &lt;a href=&#34;https://github.com/gregneagle/profiles/blob/master/autoupdate_disablers/disable_autoupdates_microsoftautoupdater.mobileconfig&#34; target=&#34;_blank&#34;&gt;disable_autoupdates_microsoftautoupdater.mobileconfig&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The change can also be applied per user with defaults:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+$ defaults write com.microsoft.autoupdate2 HowToCheck -string &#39;Manual&#39;
+$ defaults write com.microsoft.autoupdate2 LastUpdate -date &#39;2001-01-01T00:00:00Z&#39;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;i-don-t-want-to-install-mau-is-that-supported&#34;&gt;I don&amp;rsquo;t want to install MAU, is that supported?&lt;/h2&gt;
+
+&lt;p&gt;Yes, MAU is completely optional. In fact each of the five core MS applications are optional. Just because the installer has all five available does not mean you must install them.&lt;/p&gt;
+
+&lt;p&gt;If you choose to &lt;em&gt;not&lt;/em&gt; install MAU, all updates to the Office suite will be completely on you as the administrator. In my environment MAU is removed when I uninstall Office 2011. During the rollout of Office 2016 I use a choice xml file to disable the installation of MAU from the SKU-less installer.&lt;/p&gt;
+
+&lt;p&gt;In the example below:&lt;/p&gt;
+
+&lt;p&gt;Notice the &lt;code&gt;attributeSetting&lt;/code&gt; setting for &lt;code&gt;com.microsoft.autoupdate&lt;/code&gt; is set to a 0. That is telling the installer to not install MAU. You can modify the example choice xml to customize which applications you do/don&amp;rsquo;t want installed.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1 - install&lt;/li&gt;
+&lt;li&gt;0 - don&amp;rsquo;t install&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script src=&#34;//gist.github.com/clburlison/8fd09ae20de4279281f4.js?file=office2016.xml&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;Lastly, once you make these changes you can install from the command line like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+$ /usr/sbin/installer -applyChoiceChangesXML /path/to/office2016.xml \
+-pkg /path/to/Microsoft_Office_2016_Installer.pkg \
+-target /
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you are interested in how I created the choice xml above please see the following links: &lt;a href=&#34;https://jamfnation.jamfsoftware.com/discussion.html?id=13946#responseChild84049&#34; target=&#34;_blank&#34;&gt;Office 2011 Choices Explained&lt;/a&gt;, &amp;amp; &lt;a href=&#34;https://github.com/munki/munki/wiki/ChoiceChangesXML&#34; target=&#34;_blank&#34;&gt;Munki Wiki ChoiceChangeXML&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Okay, makes sense - thanks for the clarification. MAU is designed to be independent from the apps, so it is considered ​*optional*​ ….you’re fully supported if you want to omit it from your installs. However, the same is not true for the licensing and fonts/frameworks/proofing tools packages - those are required&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1447219794000886&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Following section:&lt;/strong&gt; I debated adding the following section or not. The TL;DR is make sure you are using release 15.17.0 or greater. If you want more details then carry on.
+{: .notice}&lt;/p&gt;
+
+&lt;h1 id=&#34;bugs&#34;&gt;Bugs&lt;/h1&gt;
+
+&lt;p&gt;Oh the bugs that have been squashed. This is not an all encompassing list however &amp;ldquo;big issues&amp;rdquo; should be listed below.&lt;/p&gt;
+
+&lt;h1 id=&#34;15-17-release-log-for-admins&#34;&gt;15.17 Release Log for Admins&lt;/h1&gt;
+
+&lt;p&gt;Included in 15.17 mid-December Release (i.e. work already complete and verified)*​&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Support for ARD installs, and other solutions like Casper, Munki (as verified by your good selves)&lt;/li&gt;
+&lt;li&gt;New package in VL ISO called �Microsoft_Office_2016_VL_Serializer.pkg� which you can use to generate a bona fide licensingv2.plist file on top of a SKU-less install&lt;/li&gt;
+&lt;li&gt;Installer GUI now supports selecting which volume to install on&lt;/li&gt;
+&lt;li&gt;Installer GUI now supports selecting which app packages to install (including MAU)&lt;/li&gt;
+&lt;li&gt;MAU Daemon pop-up now suppressed for unattended installs&lt;/li&gt;
+&lt;li&gt;Word is no longer auto-launched at the end of the GUI install&lt;/li&gt;
+&lt;li&gt;OneNote Sign-in button now works&lt;/li&gt;
+&lt;li&gt;New plist preference to control whether Error Reporting shows the �send additional files� dialog. Will never send additional files or prompt the user if set&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1448495549001887&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;keychain-prompt&#34;&gt;Keychain Prompt&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2016-01-14/bad_mau_daemon.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;FIXED - 15.17&lt;/p&gt;
+
+&lt;p&gt;Issue - MAU (Microsoft Auto Update app) has a background process that would run to see if updates are available. This process would prompt end users for permission to access the keychain which resulted in the picture above. Many end-users had no idea what or why this prompt was being displayed.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Next up, those pesky keychain access errors on first app launch are now a thing of the past. Most of you on VL probably don’t see these, but O365 users see them a lot. I’ve changed the code so that the Office 2016 apps are automatically provisioned with access on keychain creation.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1450417340005109&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;More on the actual fix to this issue. Inside of &lt;code&gt;$HOME/Library/Preferences/com.microsoft.autoupdate2.plist&lt;/code&gt; the following key value is created during a GUI installation:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; In case it isn&amp;rsquo;t clear &lt;em&gt;you&lt;/em&gt; as the admin should &lt;strong&gt;NOT&lt;/strong&gt; be creating or modifying this setting. That is the responsibility of Microsoft and the installer.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;
+&amp;lt;key&amp;gt;StartDaemonOnAppLaunch&amp;lt;/key&amp;gt;
+&amp;lt;true/&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Yep, that’s a new key in MAU 3.3 and 15.17 - it’s how I implemented the fix for the MAU daemon issue. Basically, if this pref exists and set to 1, then the MAU daemon attempts to launch on app boot. The pref is written by the MAU postinstall script for a GUI install, so it won’t exist for unattended installs&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1449899823003896&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;software-not-actually-becoming-licensed&#34;&gt;Software not actually becoming licensed&lt;/h2&gt;
+
+&lt;p&gt;FIXED - 15.14&lt;/p&gt;
+
+&lt;p&gt;Issue - If the VL intall package was installed at the loginwindow, Office 2016 would fail to properly serialize O2016.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;@chrfr no, you won’t break if you manually extracted the VL serializer from 15.14 and run it with a 15.17 install. It’s just that there’s a bug with that VL serializer where it won’t run properly if the user is not logged on. That’s fixed in the 15.17 VL serializer.&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1449897132003874&#34; target=&#34;_blank&#34;&gt;source link #5&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;outlook-resizing-word-crashing-bugs&#34;&gt;Outlook Resizing/Word Crashing Bugs&lt;/h2&gt;
+
+&lt;p&gt;FIXED - 15.17.1&lt;/p&gt;
+
+&lt;p&gt;Issue - A bug that caused issues when resizing Outlook and some bug fixes for Word.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Just a heads-up that Outlook and Word 15.17.1 will release this afternoon. Outlook has a fix for the resizing issue (thanks to everyone that tested the build from yesterday). Word has some targeted fixes for some crashing issues we’ve seen with custom keyboards and invalid document URLs)&lt;/p&gt;
+
+&lt;p&gt;@pbowden &amp;ndash; &lt;a href=&#34;https://macadmins.slack.com/archives/microsoft-office/p1450377975004954&#34; target=&#34;_blank&#34;&gt;source link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;wrap-up&#34;&gt;Wrap up&lt;/h1&gt;
+
+&lt;p&gt;Hopefully that covers all the bits and pieces a Mac Administrator would want to know.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Links:&lt;br /&gt;
+&lt;a href=&#34;https://macops.ca/whats-wrong-with-the-office-2016-volume-license-installer/&#34; target=&#34;_blank&#34;&gt;What&amp;rsquo;s Wrong with Office 2016 VL Installer&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://macops.ca/the-office-for-mac-2016-volume-license-installer-two-months-later/&#34; target=&#34;_blank&#34;&gt;VL Installer two months later&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://www.richard-purves.com/?p=79&#34; target=&#34;_blank&#34;&gt;Office 2016 Packaging&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://jamfnation.jamfsoftware.com/discussion.html?id=16761&#34; target=&#34;_blank&#34;&gt;Office 2016 Volume Installer findings&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://jamfnation.jamfsoftware.com/discussion.html?id=17013&#34; target=&#34;_blank&#34;&gt;JAMF Nation - Suppress this Dialog&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://osxbytes.wordpress.com/2015/09/17/not-much-whats-new-with-you/&#34; target=&#34;_blank&#34;&gt;Not much what&amp;rsquo;s new with you&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://osxbytes.wordpress.com/2015/09/23/office-2016-mac-admin-resource-links/&#34; target=&#34;_blank&#34;&gt;Office 2016 Mac Admin Resource Links&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://support.office.com/en-us/article/What-s-New-and-Improved-in-Office-2016-for-Mac-for-Office-365-44d5a464-3051-41b0-b44e-c6cee569f545&#34; target=&#34;_blank&#34;&gt;What&amp;rsquo;s New and Improved in Office 2016 for Mac for Office 365&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://derflounder.wordpress.com/2016/01/14/creating-an-office-2016-15-18-0-installer/&#34; target=&#34;_blank&#34;&gt;Creating an Office 2016 Installer&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://jamfnation.jamfsoftware.com/discussion.html?id=13946#responseChild84049&#34; target=&#34;_blank&#34;&gt;Office 2011 Choices Explained&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://maclovin.org/blog-native/2015/office-2016-where-is-the-name-of-the-user-stored-&#34; target=&#34;_blank&#34;&gt;Office 2016 where is the name of the user stored&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://github.com/munki/munki/wiki/ChoiceChangesXML&#34; target=&#34;_blank&#34;&gt;Munki Wiki ChoiceChangeXML&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Hack The Mac 2015</title>
+      <link>https://clburlison.com/hack-the-mac-2015/</link>
+      <pubDate>Thu, 19 Nov 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/hack-the-mac-2015/</guid>
+      <description>
+
+&lt;p&gt;I almost missed Hack the Mac this year but luckily Twitter let me know once it had already started. Since I showed up late, I missed the first project overview and needed to go back to the video on demand to review what was said. While I was watching I thought it might be useful for others if I compiled a short overview with video links.&lt;/p&gt;
+
+&lt;p&gt;All three projects were already brought to my attention before the event but here is my take away after watching the event:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;NBICreator can queue build jobs (I&amp;rsquo;ve already build multiple NBIs).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I managed to use Recipe Robot to create a new recipe with little to no effort, output recipe was &lt;a href=&#34;https://github.com/autopkg/clburlison-recipes/tree/master/AutoImagrNBI&#34; target=&#34;_blank&#34;&gt;AutoImagrNBI&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Zentral has also been on my radar for a few weeks but I&amp;rsquo;ve yet to do anything besides read through the docs. Hoping to spin up a docker instance soon™ (eventually). It. Looks. Awesome!&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;vod-links&#34;&gt;VOD Links&lt;/h1&gt;
+
+&lt;h3 id=&#34;nbicreator&#34;&gt;NBICreator&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:09:25&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/2015-10-19/nbi.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;NBICreator is a NetInstall image creation tool for OS X written in Objective-C.&lt;/p&gt;
+
+&lt;p&gt;The following NetInstall images are currently supported:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;NetInstall&lt;/li&gt;
+&lt;li&gt;DeployStudio&lt;/li&gt;
+&lt;li&gt;Imagr&lt;/li&gt;
+&lt;li&gt;Casper (Alpha)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The design and idea of the application is to be able to create different types of NetInstall images in one single application, and to save the configuration in a template to be reused when the NetInstall image need to be updated for newer versions of the OS.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Project Link: &lt;a href=&#34;https://github.com/NBICreator/NBICreator&#34; target=&#34;_blank&#34;&gt;github.com/NBICreator/NBICreator&lt;/a&gt;&lt;br /&gt;
+VOD Link: &lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:09:25&#34; target=&#34;_blank&#34;&gt;click here&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;recipe-robot&#34;&gt;Recipe Robot&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:24:12&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/2015-10-19/robot.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Recipe Robot is the easiest way to create new AutoPkg recipes for simple Mac apps. It consists of two components:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A &lt;a href=&#34;https://github.com/homebysix/recipe-robot#python-script-usage&#34; target=&#34;_blank&#34;&gt;Python script&lt;/a&gt; that takes various types of input and automatically outputs AutoPkg recipes.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A &lt;a href=&#34;https://github.com/homebysix/recipe-robot#mac-app-usage&#34; target=&#34;_blank&#34;&gt;native Mac app&lt;/a&gt; that puts a friendly face on the Python script and makes it as simple as dragging and dropping. You can &lt;a href=&#34;https://github.com/homebysix/recipe-robot/releases/latest&#34; target=&#34;_blank&#34;&gt;download the latest version of the app here&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This two-pronged approach allows AutoPkg novices to easily create recipes that follow community-accepted guidelines, and still provides a command-line tool for more advanced AutoPkg users. Also, using Python for program logic fosters community contribution to this project.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Project Link: &lt;a href=&#34;https://github.com/homebysix/recipe-robot&#34; target=&#34;_blank&#34;&gt;github.com/homebysix/recipe-robot&lt;/a&gt;&lt;br /&gt;
+VOD Link: &lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:24:12&#34; target=&#34;_blank&#34;&gt;click here&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;zentral&#34;&gt;Zentral&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:32:45&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/2015-10-19/zentral.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/zentralopensource/zentral&#34; target=&#34;_blank&#34;&gt;Zentral&lt;/a&gt; is a new open-source project initiated by Apfelwerk in Summer/Fall 2015. Zentral combines &lt;a href=&#34;https://osquery.io/&#34; target=&#34;_blank&#34;&gt;osquery&lt;/a&gt;&amp;rsquo;s powerful endpoint inventory features with a flexible notification and action framework. This enables one to identify and react to changes on OS X and Linux clients. Zentral consolidates the osquery information with inventory data from client management suites, e.g. JAMF Casper Suite and Sal. All details and events stored in a full text search engine.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Project Link: &lt;a href=&#34;https://github.com/zentralopensource/zentral&#34; target=&#34;_blank&#34;&gt;github.com/zentralopensource/zentral&lt;/a&gt;&lt;br /&gt;
+VOD Link: &lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:32:45&#34; target=&#34;_blank&#34;&gt;click here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;For the full event link &lt;a href=&#34;http://www.ustream.tv/recorded/77932147&#34; target=&#34;_blank&#34;&gt;click here&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;winners&#34;&gt;Winners&lt;/h1&gt;
+
+&lt;p&gt;As for the winners, if you feel like seeing what the judges picked you&amp;rsquo;ll need to click the discloser arrows. I didn&amp;rsquo;t want to ruin the experience for anyone.&lt;/p&gt;
+
+&lt;article&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;In 3rd place...&lt;/summary&gt;
+  &lt;p&gt;Zentral&lt;/p&gt;
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;In 2nd place...&lt;/summary&gt;
+  &lt;p&gt;NBICreator&lt;/p&gt;
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;In 1st place...&lt;/summary&gt;
+  &lt;p&gt;Recipe Robot&lt;/p&gt;
+&lt;/details&gt;
+
+
+&lt;/article&gt;
+
+&lt;p&gt;In reality we are all winners. Thanks to Macbrained for hosting the event, the sponsors, and special thanks to the developers for all your hard work.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Links:&lt;br /&gt;
+&lt;a href=&#34;http://macbrained.org/&#34; target=&#34;_blank&#34;&gt;Macbrained.org&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://macbrained.org/event/hack-the-mac-finale-year-end-wrap-up/&#34; target=&#34;_blank&#34;&gt;Hack the Mac Finale &amp;amp; Year End Wrap Up&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Slack rsync</title>
+      <link>https://clburlison.com/slack-rsync/</link>
+      <pubDate>Mon, 16 Nov 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/slack-rsync/</guid>
+      <description>&lt;p&gt;With a little push from &lt;a href=&#34;https://github.com/groob&#34; target=&#34;_blank&#34;&gt;@groob&lt;/a&gt;, I have created a simple python script that runs a rsync command and sends a summary of the run to &lt;a href=&#34;https://slack.com/&#34; target=&#34;_blank&#34;&gt;Slack&lt;/a&gt;. Slack was not created to be a storage vault for server logs however it does great for short sms style messages. If you are using a log collection service like &lt;a href=&#34;https://www.elastic.co/products/logstash&#34; target=&#34;_blank&#34;&gt;logstash&lt;/a&gt; you could extend on this script to include the link to your uploaded log or if an error occurs you could automatically create a helpdesk ticket for you to investigate the issue.&lt;/p&gt;
+
+&lt;p&gt;My use case is simple, every day I sync my munki repo to a separate server (I also have backups don&amp;rsquo;t worry). I only need to know that the task completed successfully. I have little desire to see a verbose output of every single line of an rsync run. With the rsync &lt;code&gt;--stats&lt;/code&gt; flag you can see a summary of the run which is then sent to Slack. The green bar will change to red if an error has occurred, which allows anyone to know if an error has occurred at a glance.&lt;/p&gt;
+
+&lt;p&gt;Sample output:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-10-16/sample.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For this to work you will need to:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;setup &lt;a href=&#34;http://linuxconfig.org/passwordless-ssh&#34; target=&#34;_blank&#34;&gt;ssh passwordless login&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;create a Slack &amp;ldquo;Incoming Webhook&amp;rdquo;
+
+&lt;ul&gt;
+&lt;li&gt;visit &lt;a href=&#34;https://slack.com/services/new/incoming-webhook&#34; target=&#34;_blank&#34;&gt;https://slack.com/services/new/incoming-webhook&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;modify the &lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/slack/sync_slack/sync_slack.py&#34; target=&#34;_blank&#34;&gt;sync_slack.py&lt;/a&gt; as needed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To see the project README and get the script visit: &lt;a href=&#34;https://github.com/clburlison/scripts/tree/master/clburlison_scripts/slack/sync_slack&#34; target=&#34;_blank&#34;&gt;sync_slack&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>iPhone 6S tips</title>
+      <link>https://clburlison.com/iphone-6s-tips/</link>
+      <pubDate>Sun, 04 Oct 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/iphone-6s-tips/</guid>
+      <description>&lt;p&gt;Many users are upgrading phones in light of the new &lt;a href=&#34;http://www.apple.com/shop/iphone/iphone-upgrade-program&#34; target=&#34;_blank&#34;&gt;iPhone Upgrade Program&lt;/a&gt; or because they &lt;em&gt;need&lt;/em&gt; to have the latest and greatest. With a bigger screen comes the issue of how do I use this phone? It&amp;rsquo;s literally too big for my hand! For that I recommend the following links. I&amp;rsquo;m also including the reachability link because it seems many iPhone 6/plus users don&amp;rsquo;t know about this feature. I can&amp;rsquo;t imagine using one of these phones without the reachability function.&lt;/p&gt;
+
+&lt;p&gt;Read more: &lt;a href=&#34;http://www.cultofmac.com/390109/iphone6s-tricks-tips/&#34; target=&#34;_blank&#34;&gt;11 killer iPhone 6s tips everyone needs to know&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://www.tekrevue.com/tip/reachability-iphone-6/&#34; target=&#34;_blank&#34;&gt;How to Enable and Use Reachability with the iPhone 6&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Import Logic Pro X Audio Content</title>
+      <link>https://clburlison.com/import-logic-pro-x/</link>
+      <pubDate>Mon, 24 Aug 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/import-logic-pro-x/</guid>
+      <description>&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Updated for Logic 10.2.0 - September 18th, 2015&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This script has been updated to support Logic Pro 10.2.0. This release included many additional audio libraries for the added Alchemy Plugin. The updated script from Hannes will now download audio content to a &amp;ldquo;__Downloaded Items&amp;rdquo; directory and create hard links to Apple&amp;rsquo;s categories.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;p&gt;Today I needed to import 60 packages (37 GB) of audio content for Logic Pro X into my Munki repo. Hannes Juutilainen did most of the hard work with his &lt;a href=&#34;https://github.com/hjuutilainen/adminscripts/blob/master/download-logicprox-content.py&#34; target=&#34;_blank&#34;&gt;download-logicprox-content.py&lt;/a&gt; script which will download all the packages from Apple.&lt;/p&gt;
+
+&lt;p&gt;Then comes the tedious task of importing all 60 packages. I searched GitHub thinking someone else had already done this and found the following &lt;a href=&#34;https://github.com/portalpie/Logic-Pro-X-Additional-Content-Recipes&#34; target=&#34;_blank&#34;&gt;project&lt;/a&gt; by Morgan Daly which uses &lt;a href=&#34;https://github.com/autopkg/autopkg&#34; target=&#34;_blank&#34;&gt;AutoPkg&lt;/a&gt; in order to download and import the packages into Munki &amp;ndash; o_O. This works but is very much overkill as the audio content does not change frequently.&lt;/p&gt;
+
+&lt;p&gt;The previous script by Hannes will download the audio packages into many sub-directories like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;── Apple Loops
+│   ├── Chillwave
+│   │   └── MAContent10_AppleLoopsChillwave.pkg
+│   ├── Deep House
+│   │   └── MAContent10_AppleLoopsDeepHouse.pkg
+│   ├── Dubstep
+│   │   └── MAContent10_AppleLoopsDubstep.pkg
+│   ├── Electro House
+│   │   └── MAContent10_AppleLoopsElectroHouse.pkg
+│   ├── Hip Hop
+│   │   └── MAContent10_AppleLoopsHipHop.pkg
+│   ├── Modern R&amp;amp;B
+│   │   └── MAContent10_AppleLoopsModernRnB.pkg
+│   └── Tech House
+│       └── MAContent10_AppleLoopsTechHouse.pkg
+├── Bass
+│   └── MAContent10_InstrumentsBass.pkg
+...
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As such I needed to recursively search for the &lt;code&gt;.pkg&lt;/code&gt; extension and import those files into Munki. The result is the following python script: &lt;a href=&#34;https://github.com/clburlison/scripts/tree/master/clburlison_scripts/LogicProX&#34; target=&#34;_blank&#34;&gt;munkiimport_logic_audio.py&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&#34;notice--danger&#34;&gt;
+    &lt;b&gt;10.11 and Logic Audio Content -- November 17th, 2015&lt;/b&gt;
+  &lt;p&gt;Dave Weale found a nice little bug with this approach. &lt;br&gt;&lt;br&gt;&lt;u&gt;TL;DR:&lt;/u&gt; 10.11 has SIP enabled and Apple is writing Receipts for the audio content to &lt;code&gt;/System/Library/Receipts&lt;/code&gt;. When munki imports these packages we are using the package receipts to determine if the content has been installed. When removing the package content Munki is unable to remove the recipe as /System is SIP protected.
+    &lt;br&gt;&lt;br&gt;
+    More info: &lt;a href=&#34;https://groups.google.com/forum/#!topic/munki-discuss/TjeSl39zGVw&#34;&gt;Logic Pro X assets not installing after removal &amp; attempted reinstall&lt;/a&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Imagr in production</title>
+      <link>https://clburlison.com/imagr-in-production/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/imagr-in-production/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;Many have written about Imagr but few have made the claim of dropping their old imaging solution completely. I made the claim in May after extensively testing Imagr with virtual machines however the real test was this week with 90 brand new Macs. That&amp;rsquo;s right the good ol&amp;rsquo; unboxing, labeling, tagging, and prepping. It is the end of the school year and the Audio Video Department was pretty much done with gear, so I made a time lapse of the entire process. Cue nine hours of footage in 60 seconds. It would have been faster had it not been for those pesky MacBook Airs.&lt;/p&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/5ixTdOXNCHo&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;h1 id=&#34;imagr-workflow&#34;&gt;Imagr Workflow&lt;/h1&gt;
+
+&lt;p&gt;These were brand new computers so they already had a perfectly good operating system from Apple. If you are a part of the Munki community you know a recommended approach is to thin image the computer. This means my Imagr workflow had two items to install for all 90 of these computers (or at least that is how it started):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;dict&amp;gt;
+  &amp;lt;key&amp;gt;name&amp;lt;/key&amp;gt;
+  &amp;lt;string&amp;gt;Puppet thin image&amp;lt;/string&amp;gt;
+  &amp;lt;key&amp;gt;restart_action&amp;lt;/key&amp;gt;
+  &amp;lt;string&amp;gt;restart&amp;lt;/string&amp;gt;
+  &amp;lt;key&amp;gt;description&amp;lt;/key&amp;gt;
+  &amp;lt;string&amp;gt;Thin image a computer.&amp;lt;/string&amp;gt;
+  &amp;lt;key&amp;gt;components&amp;lt;/key&amp;gt;
+  &amp;lt;array&amp;gt;
+    &amp;lt;dict&amp;gt;
+        &amp;lt;key&amp;gt;type&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;package&amp;lt;/string&amp;gt;
+        &amp;lt;key&amp;gt;url&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;http://imagrServer/puppet/puppet_run-20150408.pkg&amp;lt;/string&amp;gt;
+    &amp;lt;/dict&amp;gt;
+    &amp;lt;dict&amp;gt;
+        &amp;lt;key&amp;gt;type&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;package&amp;lt;/string&amp;gt;
+        &amp;lt;key&amp;gt;url&amp;lt;/key&amp;gt;
+        &amp;lt;string&amp;gt;http://imagrServer/puppet/puppet_bootstrap-20150603.pkg&amp;lt;/string&amp;gt;
+    &amp;lt;/dict&amp;gt;
+  &amp;lt;/array&amp;gt;
+&amp;lt;/dict&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;These two packages together essentially make up a normal &lt;a href=&#34;https://github.com/rtrouton/rtrouton_scripts/tree/master/rtrouton_scripts/first_boot&#34; target=&#34;_blank&#34;&gt;Firstboot&lt;/a&gt; script that many might be familiar with. Not related to Imagr my bootstrap package installs a few Ruby Gems which sometimes would work and other times not so much. To resolve that issue I created a third package of Ruby Gems which allowed me to move along with my no-image setup.&lt;/p&gt;
+
+&lt;h1 id=&#34;issues&#34;&gt;Issues&lt;/h1&gt;
+
+&lt;p&gt;I prepped all 40 iMacs with only a small visual bug. When the computers would boot I would login to the Imagr applicaiton but the target disk would be blank. This only happened on a handful of computers and Imagr itself kept working. This issue has been logged on Github (&lt;a href=&#34;https://github.com/grahamgilbert/imagr/issues/84&#34; target=&#34;_blank&#34;&gt;#84&lt;/a&gt;) and I plan to do more troubleshooting next week. My first guess it that is has something to do with the Fusion drives but I want to see if I can reproduce the issue.&lt;/p&gt;
+
+&lt;p&gt;The MacBook Airs (MBA) came around and I was really halted. MBA&amp;rsquo;s don&amp;rsquo;t have true ethernet ports so I was using Apple&amp;rsquo;s Thunderbolt Adapters. They would work fine in the NetInstall environment but I would get to the Apple Setup Wizard and no network connectivity. If you click continue on the first setup screen connectivity would work. My initial solution was to install the following script by &lt;a href=&#34;https://github.com/golbiga/Scripts/blob/master/enable_external_network_adapter/enable_external_network_adapter.sh&#34; target=&#34;_blank&#34;&gt;Allen&lt;/a&gt; however when I did my copy/paste failed me. The followup (bandaid) was to install a dummy user account and remove the Setup Wizard. This would get the laptop to the login window were network connectivity started to work. Later that evening &lt;a href=&#34;https://twitter.com/chilcote&#34; target=&#34;_blank&#34;&gt;Joseph Chilcote&lt;/a&gt; reported a similar issue on twitter.&lt;/p&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Found the edgiest of edge cases with Imagr. First-boot doesn&amp;#39;t like it when you swap ethernet adapters.&lt;/p&gt;&amp;mdash; Joseph Chilcote (@chilcote) &lt;a href=&#34;https://twitter.com/chilcote/status/606233511968808960&#34;&gt;June 3, 2015&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;Then the following &lt;a href=&#34;https://github.com/grahamgilbert/imagr/pull/86&#34; target=&#34;_blank&#34;&gt;pull-request&lt;/a&gt; fixed the issue.&lt;/p&gt;
+
+&lt;p&gt;Take-away: It is really nice when you are able to see the code&amp;hellip;&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;On May 14th, I dropped DeployStudio. On June 3rd, I have officially disabled the DeployStudio server components and all DeployStudio NBIs. Imagr honestly takes less time to setup than DeployStudio however it is not an all-in-one GUI application that is going to do everything for you. Imagr works really well, even though the above process was detailing a no-image workflow the imaging component works. If you want to get started go check out the &lt;a href=&#34;https://github.com/grahamgilbert/imagr/wiki/Getting-Started&#34; target=&#34;_blank&#34;&gt;Imagr Wiki&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Configuration Management</title>
+      <link>https://clburlison.com/configuration-management/</link>
+      <pubDate>Wed, 27 May 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/configuration-management/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;This is part one in a four part series on using Puppet on OS X. However to understand my move to Puppet I wanted to share my thoughts on Configuration Management (CM) in general.&lt;/p&gt;
+
+&lt;p&gt;For the last five months, I have been seriously questioning my deployment/management process. Even with Munki&amp;rsquo;s native support for configuration profiles in &lt;a href=&#34;https://github.com/munki/munki/releases/tag/v2.2.4&#34; target=&#34;_blank&#34;&gt;v2.2.4&lt;/a&gt;, it has always seemed like I was creating extra work for myself. This extra work is mainly related to how we need to manage settings on OS X, it is quite the balancing act:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;What settings are required for me to manage?&lt;/li&gt;
+&lt;li&gt;What settings should I apply defaults?&lt;/li&gt;
+&lt;li&gt;What settings should I leave alone?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Many sysadmins have the idea of &amp;ldquo;settings&amp;rdquo; as a user level choice however in education that is not really a fair comparison to private corporations. Students and teachers should have an easy transition to using the OS X platform. If that means I add all the &amp;ldquo;Program specific&amp;rdquo; applications to the dock, then so be it I will add them all. This is were I started to run into a major road block with Munki. It was designed to manage software installs. Even though I can package specific settings to work for 18+ different classrooms it is error prone  and quite a royal pain to manage.&lt;/p&gt;
+
+&lt;p&gt;In comes Configuration Management to the rescue. Obligatory CM definition below.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Configuration management (CM) is a systems engineering process for establishing and maintaining consistency of a product&amp;rsquo;s performance, functional and physical attributes with its requirements, design and operational information throughout its life.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;en.wikipedia.org/wiki/Configuration_management&#34; target=&#34;_blank&#34;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;pain-prior-to-cm&#34;&gt;Pain prior to CM&lt;/h1&gt;
+
+&lt;p&gt;Before using CM, I was required to maintain many different scripts for prod, testing, classroomA, classroomB, classroomC, etc. In conjunction add on firstboot scripts as those &lt;a href=&#34;https://github.com/rtrouton/rtrouton_scripts/tree/master/rtrouton_scripts/first_boot&#34; target=&#34;_blank&#34;&gt;rarely change&lt;/a&gt; &lt;em&gt;{sarcasm}&lt;/em&gt;. Firstboot scripts are great in getting a system setup however after initial setup everything goes the way of the Dodo bird. Configuration Management allows one to apply settings to their entire fleet, sub sections of the fleet, and effectively say &amp;ldquo;Be this way until I say otherwise.&amp;rdquo; It&amp;rsquo;s great but a huge change in the way of thinking if you are use to the &amp;ldquo;Apply this now&amp;rdquo; mentality which is effectively how many use Munki (myself included).&lt;/p&gt;
+
+&lt;p&gt;But doesn&amp;rsquo;t Munki have check a &lt;code&gt;installcheck_script&lt;/code&gt;? Yes, that feature is available but it does not replace the services that many CM products provide.&lt;/p&gt;
+
+&lt;p&gt;Tim Sutton explained this recently on the munki-dev googlegroup. A relevant quote is below however the specific thread is of value related to this idea of CM and Munki.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;More and more of these CM &amp;lsquo;tasks&amp;rsquo; are best handled using Configuration&lt;br /&gt;
+Profiles, and Munki actually has good built-in support for these. I&amp;rsquo;ve&lt;br /&gt;
+been able to get by using Munki as my &amp;ldquo;configuration management&amp;rdquo;&lt;br /&gt;
+system instead of implementing another tool, just because the things I&lt;br /&gt;
+would use Puppet for only account for about 5% of the items in my&lt;br /&gt;
+repository - the rest are installers for software, updates,&lt;br /&gt;
+configuration profiles and supporting LaunchAgents/LaunchDaemons.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://twitter.com/tvsutton&#34; target=&#34;_blank&#34;&gt;Tim Sutton&lt;/a&gt; - &lt;a href=&#34;https://groups.google.com/d/msg/munki-dev/l_T_aZM9TGU/yb-CWZAv7UQJ&#34; target=&#34;_blank&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;What Tim says above is absolutely true. However when that 5% is the most time consuming to &amp;ldquo;manage&amp;rdquo; and update you might want to look into a different solution. I have gotten away with using Munki as an all-in-one solution for over three years however when you need something custom&amp;hellip;you have to write something custom. Also, don&amp;rsquo;t forget to verify that custom something you just wrote works on all machines, with the logic in place to work with older operating systems.&lt;/p&gt;
+
+&lt;h1 id=&#34;how-to-use-cm&#34;&gt;How to use CM?&lt;/h1&gt;
+
+&lt;p&gt;I am still relatively new to using configuration management. However I have been working on a functional approach that fills the gap for me. The best advice I can give is to use CM for settings. Use a software solution, like Munki, for all packages. When you start making your CM product install software things can get complicated very quickly.&lt;/p&gt;
+
+&lt;p&gt;For a list of items I believe a CM product excels at managing:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Admin account&lt;/li&gt;
+&lt;li&gt;All profiles (Wi-fi, Safari, Finder, Office2011, Chrome, iCloud, LoginWindow, etc.)&lt;/li&gt;
+&lt;li&gt;Management scripts (dockutil, BigHonkingText, Exchange Setup, etc.)&lt;/li&gt;
+&lt;li&gt;Remote Management settings&lt;/li&gt;
+&lt;li&gt;Remote Login&lt;/li&gt;
+&lt;li&gt;Sudoers file&lt;/li&gt;
+&lt;li&gt;etc.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;puppet&#34;&gt;Puppet&lt;/h1&gt;
+
+&lt;p&gt;After looking around at the many options for CM I decided on using Puppet. But don&amp;rsquo;t let me stop you from checking out the &lt;a href=&#34;http://en.wikipedia.org/wiki/Comparison_of_open-source_configuration_management_software&#34; target=&#34;_blank&#34;&gt;competition&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I had already used Puppet personally but had always hated the idea of yet another server to maintain for yet another service. Puppet has had the ability to use a masterless setup, via &lt;code&gt;puppet apply&lt;/code&gt;, however usage of a masterless setup always seemed even more unlikely for me. After revisiting the issues again in February of 2015 using this solution finally started to seem more feasible.&lt;/p&gt;
+
+&lt;p&gt;Puppet takes a huge change in thinking. Puppet code defines a state that you want clients to be in&amp;hellip;not how to be in that state. This will be touched on later but I wanted to plant that seed prior to getting into the full setup later. I found getting started with Puppet was relatively easy however starting to manage specific parts of the OS X client leaves tons of room for issues to arise. With the assistance mainly the &lt;a href=&#34;https://github.com/dayglojesus/managedmac&#34; target=&#34;_blank&#34;&gt;managedmac&lt;/a&gt; module from Brian Warsing it becomes much easier to work with OS X clients using puppet.&lt;/p&gt;
+
+&lt;h2 id=&#34;example-code&#34;&gt;Example code&lt;/h2&gt;
+
+&lt;p&gt;The hiera code below is used to create a local admin account and make sure that account is always present:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;managedmac::users::accounts:
+  ladmin:
+    uid: 999
+    gid: 80
+    ensure: present
+    iterations: 36630
+    password: 92d2d837084ac329006a16d67f8c87fdba141b6665c2d4910aee72e3ce777bd58cc7170fe266201ddc8bfc79ca78ab6ba85824019429e8f37072dc0cc26cf7b726d78f8d7543eb72c7be2db6483c3027d77e0eb8146d6dc03e10e5650d7c2560a97b86b287e945dbcf112edde5f3c61b07ee80615e0ada5ac11278651f9eef4b
+    salt: 2562f7a1bde6eac36352ec1a4621ee945e663a2180bb90fab0f9cdd98b202d3e
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;Note:&lt;/em&gt; the above password is &lt;code&gt;temp&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To allow that admin account to have ssh and remote management access:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;managedmac::remotemanagement::enable: true
+managedmac::remotemanagement::users:
+  techsupport: -1073741569
+
+managedmac::sshd::enable: true
+managedmac::sshd::users:
+   - techsupport
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The syntax is easy to read. Even without knowing anything about Puppet or how Hiera works the above lines should make sense. Unfortunately, the above code on its own does nothing. The computer needs to know how to use that code which I will detail in a later post.&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;Although using CM is not needed everywhere it can become quite handy. Using check scripts and creating multiple packages for closely related settings can be time consuming plus they are prone to error. In using Puppet, I am able to apply settings for multiple different groups however I only write the code once. The main advantage is when change is needed all 18+ versions look to one &amp;ldquo;master code&amp;rdquo; allowing me to make my updated change once.&lt;/p&gt;
+
+&lt;p&gt;In following posts I will describe the setup process and specifics on how to use Puppet in a masterless workflow.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:
+&lt;a href=&#34;https://groups.google.com/d/msg/munki-dev/l_T_aZM9TGU/yb-CWZAv7UQJ&#34; target=&#34;_blank&#34;&gt;Tim&amp;rsquo;s comment on googlegroups/munki-dev&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Automator is not dead yet</title>
+      <link>https://clburlison.com/automator-is-not-dead-yet/</link>
+      <pubDate>Sat, 16 May 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/automator-is-not-dead-yet/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;Automator is unique in its ability of creating &amp;ldquo;automation&amp;rdquo; via the usage of a graphical tasked based workflow. Most other tools that I use for automation are command line driven. So what can you do that&amp;rsquo;s so amazing?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create applications. No really Automator has the ability to create a &lt;code&gt;.app&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Create services. The ability to directly apply changes inside of applications.&lt;/li&gt;
+&lt;li&gt;It is easy! No advanced computer skills are needed, however scripting languages are a great addition.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;services&#34;&gt;Services&lt;/h1&gt;
+
+&lt;p&gt;Creating a service is relatively simple. Below is the process of creating a service that removes spaces from files. When working with web servers the space character is encoded as &amp;ldquo;%20&amp;rdquo;. This annoys me and looks ugly. As such, I remove all spaces and replace them with underscores prior to uploading to a web site.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Open Automator.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Create a new Service.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-new.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Change the &amp;ldquo;Service receives selected&amp;rdquo; to &amp;ldquo;files or folders&amp;rdquo; and leave &amp;ldquo;any application&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-received.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Search for &amp;ldquo;Rename&amp;rdquo; in the Library. Drag &amp;ldquo;Rename Finder Items&amp;rdquo; into the workflow.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-rename.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If you see the following pop-up select &amp;ldquo;Don&amp;rsquo;t Add&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-popup.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Modify the workflow to match the following settings. The Find field has a single space character typed.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-rename-workflow.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Save and name your service. This service will live in &lt;code&gt;~/Library/Services/&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;To run a service simply right click on a single file or group of files and select the service. This will work on Folders as well.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/finder-service.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;my-services&#34;&gt;My Services&lt;/h2&gt;
+
+&lt;p&gt;Below are the services that I use frequently. To install these simply downloading, unzip, and double click on the &lt;code&gt;.workflow&lt;/code&gt; file. A prompt to install will be be presented.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Add_Prefix.workflow.zip&#34;&gt;Add_Prefix.workflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Print_Selection.workflow.zip&#34;&gt;Print_Selection.workflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Remove_Prefix.workflow.zip&#34;&gt;Remove_Prefix.workflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Remove_spaces.workflow.zip&#34;&gt;Remove_spaces.workflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;Services are quite powerful and can end up saving quite a bit of time. Services are not only limited to Finder and can be expanded to pretty much all applications.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Oracle on Omega at UTA</title>
+      <link>https://clburlison.com/oracle-on-omega-at-uta/</link>
+      <pubDate>Mon, 30 Mar 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/oracle-on-omega-at-uta/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;The University of Texas at Arlington (UTA) has some articles that are quite outdated regarding using their Oracle database server. On top of that no information is given to users that have Macintosh computers. If you happen to be taking an Information System class like Database Management Systems (INSY 3304) then good luck when it comes to remotely connecting to the Oracle server. To make-up for the lack of documentation I am creating the following guide.&lt;/p&gt;
+
+&lt;p&gt;All information should be up-to-date at the time of writing. I however cannot ensure that years or even months from now that UTA&amp;rsquo;s system will be the same. This is mostly targeted at classmates in my current section that expressed an overall sound of confusion when my professor attempted to demonstrate the process in class using a Windows computer.&lt;/p&gt;
+
+&lt;h1 id=&#34;requirements&#34;&gt;Requirements&lt;/h1&gt;
+
+&lt;p&gt;Before you are able to connect to the Oracle application. You need to make sure you have the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A Oracle Database account&lt;/li&gt;
+&lt;li&gt;A active connection at UTA or a VPN connection&lt;/li&gt;
+&lt;li&gt;Access to the Omega server&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;setup-instructions&#34;&gt;Setup Instructions&lt;/h1&gt;
+
+&lt;p&gt;Since each section below is heavily reliant on the setup from the previous section being complete please do not skip any steps. Sorry if you hear background noise during any of the videos below. I was slightly rushed to get the videos created so the volume of my voice might also be a little low.&lt;/p&gt;
+
+&lt;h2 id=&#34;oracle-account&#34;&gt;Oracle account&lt;/h2&gt;
+
+&lt;p&gt;This was the most time consuming step as it seems like a UTA helpdesk staff member has to manually create the account for each request. If you have homework due in the future please do &lt;em&gt;not&lt;/em&gt; wait on getting your account created.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Oracle accounts are available to everyone with a current Omega account. You can request an Oracle account by emailing Help Desk at &lt;a href=&#34;mailto:helpdesk@uta.edu&#34; target=&#34;_blank&#34;&gt;helpdesk@uta.edu&lt;/a&gt;. Additionally, instructors may request Oracle accounts for all students in a particular session.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash; &lt;a href=&#34;http://www.uta.edu/oit/cs/unix/applications/oracle/Using-Oracle-on-Omega.php&#34; target=&#34;_blank&#34;&gt;Using Oracle on Omega&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As of the 2015 Fall semester my Omega account was created automatically. To get my Oracle account created I sent an email to the helpdesk. Make sure and include that you need an &amp;ldquo;Oracle database account created on the Omega server&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;In short, Omega is a server that UTA maintains. On that server they have Oracle&amp;rsquo;s Database application installed. You as a student need access to both Omega (should use your NetID username/password) and an Oracle account which will have the same username as your NetID but the password will be sent to you via the Helpdesk once an account has been created.&lt;/p&gt;
+
+&lt;h2 id=&#34;vpn-connection&#34;&gt;VPN connection&lt;/h2&gt;
+
+&lt;p&gt;Since most students will want to work on their homework while at home I highly recommend setting up the VPN connection now. This VPN connection is needed to access the Omega server. The setup should be very similar on Windows.&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; If you are currently on the UTA campus the VPN connection does not need to be active.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;p&gt;You will need to download and install the Cisco AnyConnect application from &lt;a href=&#34;https://vpn.uta.edu&#34; target=&#34;_blank&#34;&gt;https://vpn.uta.edu&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The server address for the VPN application is: &lt;strong&gt;vpn.uta.edu&lt;/strong&gt;&lt;/p&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/y5Tj9-oMJuI&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;h2 id=&#34;cyberduck&#34;&gt;Cyberduck&lt;/h2&gt;
+
+&lt;p&gt;I highly recommend using Cyberduck to copy files from your computer to the Omega server. The graphical interface is much easier to use for individuals that are new the command line.&lt;/p&gt;
+
+&lt;p&gt;Download Cyberduck from &lt;a href=&#34;https://cyberduck.io&#34; target=&#34;_blank&#34;&gt;https://cyberduck.io&lt;/a&gt;.&lt;/p&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/U2te9s3zkZI&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;h2 id=&#34;ssh-setup&#34;&gt;SSH setup&lt;/h2&gt;
+
+&lt;p&gt;Make sure you are still connected to the UTA VPN for the following.&lt;/p&gt;
+
+&lt;p&gt;Run the following commands on your Mac:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;mkdir -p ~/.ssh
+nano ~/.ssh/config
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;~/.ssh/config&lt;/strong&gt; file contents:&lt;br /&gt;
+Change the &lt;code&gt;User&lt;/code&gt; field to your UTA NetID.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;Host omega
+    User clb4596
+    HostName omega.uta.edu
+    Port 22
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/PQPaXi7mZGA&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;h2 id=&#34;sqlplus&#34;&gt;Sqlplus&lt;/h2&gt;
+
+&lt;p&gt;Type the following commands when connected to the Omega Server:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sqlplus
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;@PERFECTPETS.SQL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all tables owned by you:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;SELECT * FROM cat;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Clear screen in SQLPlus&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;SQL &amp;gt; host clear
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Exit Prompt&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;SQL &amp;gt; exit
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/MNEvtmSJj6Y&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+
+&lt;p&gt;The UTA helpdesk does provide some useful documentation at this point on using the Oracle database. I highly recommend changing your default password using the following instructions:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To change your Oracle password. In sqlplus, type:&lt;/p&gt;
+
+&lt;p&gt;SQL&amp;gt; ALTER USER username IDENTIFIED BY newpassword;&lt;/p&gt;
+
+&lt;p&gt;Replace username with your NetID.&lt;/p&gt;
+
+&lt;p&gt;Replace newpassword with the new password that want to create.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash; &lt;a href=&#34;http://www.uta.edu/oit/cs/unix/applications/oracle/Using-Oracle-on-Omega.php&#34; target=&#34;_blank&#34;&gt;Using Oracle on Omega&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;Hopefully these instructions help clear up any confusion on using the Omega server and Oracle application provided by UTA.&lt;/p&gt;
+
+&lt;p&gt;As always feel free to drop a comment below or on Twitter. Feedback is always appreciated.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:&lt;br /&gt;
+&lt;a href=&#34;http://www.uta.edu/oit/cs/software/vpn/&#34; target=&#34;_blank&#34;&gt;UTA VPN&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://www.uta.edu/oit/cs/software/ssh/ssh-secure-shell-for-workstations-3/index.php&#34; target=&#34;_blank&#34;&gt;SSH application for Windows&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://www.uta.edu/oit/cs/unix/applications/oracle/Using-Oracle-on-Omega.php&#34; target=&#34;_blank&#34;&gt;Using Oracle on Omega&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://crystal.uta.edu/~elmasri/db2/usingOracleOnOmega.html&#34; target=&#34;_blank&#34;&gt;More Oracle tips&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

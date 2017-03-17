@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Zendesk Automation for Mail  &middot; clburlison</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="osx, Apple, Mail, Zendesk, automation, api, automator, helpdesk, support, ">
+
+
+<meta property="og:title" content="Zendesk Automation for Mail  &middot; clburlison ">
+<meta property="og:site_name" content="clburlison"/>
+<meta property="og:url" content="https://clburlison.com/zendesk-automation-for-mail/" />
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2017-01-18T00:00:00Z" />
+<meta property="og:article:modified_time" content="2017-01-18T00:00:00Z" />
+
+  
+    
+<meta property="og:article:tag" content="osx">
+    
+<meta property="og:article:tag" content="Apple">
+    
+<meta property="og:article:tag" content="Mail">
+    
+<meta property="og:article:tag" content="Zendesk">
+    
+<meta property="og:article:tag" content="automation">
+    
+<meta property="og:article:tag" content="api">
+    
+<meta property="og:article:tag" content="automator">
+    
+<meta property="og:article:tag" content="helpdesk">
+    
+<meta property="og:article:tag" content="support">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@clburlison" />
+<meta name="twitter:creator" content="@clburlison" />
+<meta name="twitter:title" content="Zendesk Automation for Mail" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://clburlison.com/zendesk-automation-for-mail/" />
+<meta name="twitter:domain" content="https://clburlison.com/">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Zendesk Automation for Mail",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2017-01-18",
+    "description": "",
+    "wordCount": 755
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://clburlison.com/zendesk-automation-for-mail/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://clburlison.com/touch-icon-144-precomposed.png">
+<link href="https://clburlison.com/favicon.png" rel="icon">
+
+<meta name="generator" content="Hugo 0.19" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://clburlison.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://clburlison.com/css/style.css">
+<link rel="stylesheet" href="https://clburlison.com/css/highlight/default.css">
+
+  
+  
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-49614309-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://clburlison.com/">
+  clburlison
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  A Mac sysadmin, documenting useful code, ideas, &amp; guides.
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+<a class="homelink" href="https://clburlison.com/">Home</a>
+
+
+  
+<a href="https://clburlison.com/about">About</a>
+
+<a href="https://clburlison.com/post" title="Show list of posts">Posts</a>
+
+<a href="https://clburlison.com/resources">Resources</a>
+
+<a href="https://clburlison.com/tags" title="Show list of tags">Tags</a>
+
+<a href="https://clburlison.com/talks">Talks</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:clburlison@gmail.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/clburlison">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+<a id="contact-link-linkedin" class="contact_link" href="https://www.linkedin.com/in/clburlison">
+  <span class="fa fa-linkedin-square"></span><span>linkedin</span></a>
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/clburlison">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Zendesk Automation for Mail
+</h1>
+
+  <div class="metas">
+<time datetime="2017-01-18">Jan 18, 2017</time>
+
+
+  
+  &middot; Read in about 4 min
+  &middot; (755 Words)
+  <br>
+  
+<a class="label" href="https://clburlison.com/tags/automation">automation</a>
+
+<a class="label" href="https://clburlison.com/tags/osx">osx</a>
+
+
+
+</div>
+
+</header>
+
+  
+
+
+
+
+  <div class="container content">
+  
+
+<h1 id="intro">Intro</h1>
+
+<p>Before I get into the material of this post I want to refer you to an article written last week by Sal Soghoian, <a href="https://www.macstories.net/stories/app-extensions-are-not-a-replacement-for-user-automation/" target="_blank">click here</a>. The information that he provides regarding user automation is exactly what makes the process described in this post possible.</p>
+
+<p>In case you are not aware, Zendesk is a web-based helpdesk application that is cloud hosted and quite popular. They have an email API that allows agents to create a ticket with a simple email. The power behind this API starts to show when you are an agent that happens to get many emails that could be tickets. <em>cough</em>.</p>
+
+<p>Now with that out of the way let&rsquo;s look at some automation for Zendesk.</p>
+
+<!---
+# Apple Mail Stationary
+
+This was the method I attempted first however it turned out to be a big flop. Mail Stationary can only be applied to new emails.
+
+The Mail Stationary is great for creating new tickets. However what is a use has emailed you the issue directly. The simple solution is, use Zendesk's same email API commands. The only problem is stationary emails are only allowed for new emails in Apple mail.
+
+1. Download stationary
+  This step is given because no matter how you create your stationary it won't work. It's actually much easier to just start with this temporary file rather than using Apple's Mail to start the creation process.
+
+  [[ INSERT ZIP DONWLOAD HERE ]]
+
+
+1. Double click the .mailstationery file to load it into Apple Mail.
+1. Close Mail.app if you have it open
+
+Now lets modify the file.
+
+1. Open the stationary directory `~/Library/Containers/com.apple.mail/Data/Library/Application Support/Mail/Stationery/Apple/Contents/Resources/Custom/Contents/Resources`
+1. Rename your temp.mailstationery to whatever name you wish your stationery to have (don't include spaces)
+1. Right click your stationary and click "Show Package Contents"
+1. Go down the directory Contents > Resources and open 'content.html' in a text editor
+1. Replace the text with whatever you wish to message to say. Make sure and include the break (`<br>`) tag after every space. Apple's Mail.app is actually reading this file as an html file. However for Zendesk to read your meta-data these must be plain text. Also, make sure and include your email signature here if you wish to do so. Stationary emails will **NOT** include your default signature.
+1. Save the file when finished
+1. Now modify your 'Description.plist' changing your Display Name, Folder Name, and TO address accordingly.
+1. Save your file when finished
+1. Open Apple Mail
+1. Create a new message
+1. Click on the Stationary button (VERIFY this button is enabled by default)
+1. Scroll down to 'Custom'
+1. Select your template
+
+At this point if you wish to add the stationary to your favorites just drag it up to the favorites folder. This gives you an easy way to create ticket all from your email. Just make sure and modify any of the command tags.
+--->
+
+<h1 id="automator">Automator</h1>
+
+<p>Zendesk has a great article on <a href="https://support.zendesk.com/hc/en-us/articles/203691006-Updating-ticket-properties-from-your-inbox" target="_blank">Updating Ticket Properties from You Inbox</a> that gives an overview of what the mail API does and how it works. This post will extend on the API to help automate the process. We are going to use an Automator service to type all of the metadata fields. It should be noted that this process will work in Outlook and Apple Mail for macOS. An example of the output can be seen below:</p>
+
+
+<figure >
+    
+        <img src="/images/2017-01-18/mail_api_example_2.png" alt="Example api metadata" />
+    
+    
+    <figcaption>
+        <h4>Example metadata for the email API. Image credit Zendesk.</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<ol>
+<li>You can download a template service from <a href="https://github.com/clburlison/automator_services/archive/master.zip" target="_blank">github.com/clburlison/automator_services</a>.</li>
+<li>Unzip the archive file and double-click on the <code>_AssignZendeskTicket.workflow</code> file.</li>
+
+<li><p>When you see the following popup select &ldquo;Open in Automator&rdquo;</p>
+
+<p><img src="/images/2017-01-18/automator_prompt.png" alt="automator prompt" /></p></li>
+
+<li><p>You will see the following AppleScript action:</p>
+
+<pre><code class="language-bash">on run {input, parameters}
+tell application &quot;System Events&quot;
+  keystroke &quot;support@example.zendesk.com&quot;
+  keystroke tab
+  keystroke tab
+  keystroke tab
+  keystroke tab
+  #keystroke &quot;#requester&quot;
+  #keystroke space
+  #keystroke return
+  keystroke &quot;#assignee jane.doe@example.com&quot;
+  keystroke return
+  keystroke &quot;#location Some location&quot;
+  keystroke return
+  keystroke &quot;#group IT Staff&quot;
+  keystroke return
+  keystroke &quot;#status open&quot;
+  keystroke return
+  keystroke &quot;#priority normal&quot;
+  keystroke return
+  keystroke &quot;#type incident&quot;
+  keystroke return
+  keystroke &quot;#public false&quot;
+  keystroke return
+  #keystroke return
+  #keystroke &quot;Hi ___ENTER_NAME_HERE,&quot;
+  #keystroke return
+  #keystroke return
+  #keystroke &quot;MESSAGE_HERE.&quot;
+  #keystroke return
+  keystroke return
+end tell
+end run
+</code></pre></li>
+
+<li><p>You will want to modify many of the lines to match your location, group, default status, etc.</p>
+
+<ul>
+<li>Notice that I have the <code>#requester</code> metadata field commented out with a hash (<code>#</code>), this is due to a Zendesk setting that we have enabled (you might need to uncomment this)</li>
+<li>I also have a few additional lines at the end for comments if you want to add to the ticket on creation.</li>
+<li>Lastly, I have four (4) <code>keystroke tab</code> lines this is due to me enabling the &ldquo;Bcc&rdquo; field so delete one of the tabs if you don&rsquo;t have this enabled.</li>
+</ul></li>
+
+<li><p>Once you have made all the changes that you want you will want to save and close the file.</p></li>
+
+<li><p>Now double click on the <code>_AssignZendeskTicket.workflow</code> file once again, this time selecting &ldquo;Install&rdquo;</p>
+
+<p><img src="/images/2017-01-18/automator_prompt.png" alt="automator prompt" /></p></li>
+</ol>
+
+<p>After the service has been installed the workflow will be copied to <code>~/Library/Services/</code>. In case you need to locate the service to make changes in the future.</p>
+
+<p>To use the service start a new email (or forward an existing email) in Apple Mail or Outlook. Go to the application name in the menu bar » Services » select <code>AssignZendeskTicket</code>.</p>
+
+<p><img src="/images/2017-01-18/assign_ticket.png" alt="Assign ticket" /></p>
+
+<p>If you wish to add a keyboard shortcut</p>
+
+<ol>
+<li>Open <strong>System Preferences</strong></li>
+<li>Go to <strong>Keyboard » Shortcuts » Services</strong></li>
+<li>Now assign your service a keyboard shortcut. I used Command + Option + H (⌘ + ⌥ + H)
+<img src="/images/2017-01-18/services.png" alt="Services" /></li>
+</ol>
+
+<hr />
+
+<p>Resources:<br />
+<a href="https://support.zendesk.com/hc/en-us/articles/203691006-Updating-ticket-properties-from-your-inbox" target="_blank">Updating Ticket Properties from You Inbox</a>,<br />
+<a href="http://apple.stackexchange.com/a/87989" target="_blank">Automatically Inserting Text Globally</a>,<br />
+<a href="http://alvinalexander.com/blog/post/mac-os-x/applescript-simulating-enter-key" target="_blank">applescript-simulating-enter-key</a>,<br />
+<a href="http://eastmanreference.com/complete-list-of-applescript-key-codes/" target="_blank">Complete list of AppleScript key codes</a>,<br />
+<a href="https://support.apple.com/kb/PH13916?locale=en_US" target="_blank">OS X Mavericks: Create keyboard shortcuts for apps</a></p>
+
+</div>
+
+
+  <footer class="container">
+  <div class="container navigation no-print">
+  <h2>Navigation</h2>
+  
+  
+
+    
+    <a class="prev" href="https://clburlison.com/autowake/" title="AutoWake">
+      Previous
+    </a>
+    
+
+    
+    <a class="next" href="https://clburlison.com/xcode-dynamic-bundleversion/" title="Xcode Dynamic BundleVersion">
+      Next
+    </a>
+    
+
+  
+
+
+</div>
+
+  <div class="container comments">
+  <h2>Comments</h2>
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+  powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>.
+
+
+</div>
+
+
+  
+<div class="container copyright">
+  
+  &copy; 2014 - 2017 Clayton Burlison
+
+
+</div>
+
+
+</div>
+
+</footer>
+
+    </main>
+    
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+<script src="https://clburlison.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+  </body>
+</html>
+

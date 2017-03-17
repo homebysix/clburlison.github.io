@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Setup Munkireport on Ubuntu 14.04 - Part 3  &middot; clburlison</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="munki, ubuntu, munkireport, ">
+
+
+<meta property="og:title" content="Setup Munkireport on Ubuntu 14.04 - Part 3  &middot; clburlison ">
+<meta property="og:site_name" content="clburlison"/>
+<meta property="og:url" content="https://clburlison.com/munkirepo-guide-part-3/" />
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2014-10-23T00:00:00Z" />
+<meta property="og:article:modified_time" content="2014-10-23T00:00:00Z" />
+
+  
+    
+<meta property="og:article:tag" content="munki">
+    
+<meta property="og:article:tag" content="ubuntu">
+    
+<meta property="og:article:tag" content="munkireport">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@clburlison" />
+<meta name="twitter:creator" content="@clburlison" />
+<meta name="twitter:title" content="Setup Munkireport on Ubuntu 14.04 - Part 3" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://clburlison.com/munkirepo-guide-part-3/" />
+<meta name="twitter:domain" content="https://clburlison.com/">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Setup Munkireport on Ubuntu 14.04 - Part 3",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2014-10-23",
+    "description": "",
+    "wordCount": 1688
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://clburlison.com/munkirepo-guide-part-3/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://clburlison.com/touch-icon-144-precomposed.png">
+<link href="https://clburlison.com/favicon.png" rel="icon">
+
+<meta name="generator" content="Hugo 0.19" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://clburlison.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://clburlison.com/css/style.css">
+<link rel="stylesheet" href="https://clburlison.com/css/highlight/default.css">
+
+  
+  
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-49614309-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://clburlison.com/">
+  clburlison
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  A Mac sysadmin, documenting useful code, ideas, &amp; guides.
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+<a class="homelink" href="https://clburlison.com/">Home</a>
+
+
+  
+<a href="https://clburlison.com/about">About</a>
+
+<a href="https://clburlison.com/post" title="Show list of posts">Posts</a>
+
+<a href="https://clburlison.com/resources">Resources</a>
+
+<a href="https://clburlison.com/tags" title="Show list of tags">Tags</a>
+
+<a href="https://clburlison.com/talks">Talks</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:clburlison@gmail.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/clburlison">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+<a id="contact-link-linkedin" class="contact_link" href="https://www.linkedin.com/in/clburlison">
+  <span class="fa fa-linkedin-square"></span><span>linkedin</span></a>
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/clburlison">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Setup Munkireport on Ubuntu 14.04 - Part 3
+</h1>
+
+  <div class="metas">
+<time datetime="2014-10-23">Oct 23, 2014</time>
+
+
+  
+  &middot; Read in about 8 min
+  &middot; (1688 Words)
+  <br>
+  
+<a class="label" href="https://clburlison.com/tags/munki">munki</a>
+
+<a class="label" href="https://clburlison.com/tags/ubuntu">ubuntu</a>
+
+<a class="label" href="https://clburlison.com/tags/munkireport">munkireport</a>
+
+
+
+</div>
+
+</header>
+
+  
+
+<nav class="toc">
+<input id="ac-toc" name="accordion-toc" type="checkbox">
+<label for="ac-toc">Table of Contents</label>
+<div id="toc" class="toc__menu">
+<nav id="TableOfContents">
+<ul>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#the-install">The Install</a>
+<ul>
+<li><a href="#installing-required-software">Installing Required Software</a></li>
+<li><a href="#setup-mysql">Setup MySQL</a>
+<ul>
+<li><a href="#creating-the-database">Creating the database</a></li>
+</ul></li>
+<li><a href="#configure-php">Configure php</a></li>
+<li><a href="#downloading-munkireport">Downloading MunkiReport</a></li>
+<li><a href="#configure-nginx-for-munkireport">Configure nginx for MunkiReport</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#apendium-1-connecting-a-client-to-munkireport">Apendium 1 - connecting a client to MunkiReport</a></li>
+<li><a href="#apendium-2-adding-munkireport-to-your-munki-repo">Apendium 2 - adding MunkiReport to your munki_repo</a></li>
+</ul>
+</nav>
+</div>
+</input>
+</nav>
+
+
+
+  <div class="container content">
+  
+
+<div class="alert alert-info">
+  <p><strong>Ubuntu 16.04/ PHP 7:</strong> Lucas Hall has created an updated guide based off of this one that uses Ubuntu 16.04 with PHP 7, which can be viewed <a href="https://lucasjhall.com/2016/08/06/munkireport-ubuntu-sql/" target="_blank">here</a>.</p>
+
+</div>
+
+
+<h1 id="intro">Intro</h1>
+
+<p>Welcome to the third part in our munki server setup series. In this section, we will download and configure <a href="https://github.com/munkireport/munkireport-php" target="_blank">Munkireport-php</a> on our munki server.</p>
+
+<p>Before we get to far you might want to head over to <a href="/munkirepo-guide-part-1/">Part 1 - Setting up the munki repo</a> or <a href="/munkirepo-guide-part-2/">Part 2 - Setting up mandrill</a>. Parts 1 and 2 are not technically required for MunkiReport by you will want to have an understanding of how the other components of your munki server work before setting up the reporting server.</p>
+
+<p><img src="/images/2014-10-23/mr.png" alt="" /></p>
+
+<h1 id="the-install">The Install</h1>
+
+<p>Munkireport is a web application written in php that displays useful stats about your munki fleet. The resources taken up by MunkiReport are quite small but like all web apps if you client base grows very large you will want to make sure the database can keep up. With that you can install MunkiReport on any compatible web-server (IIS, apache, or nginx) for this guide we will be using our munki server from Parts 1 &amp; 2 as our reporting server.</p>
+
+<p>Part of this installation includes setting up MySQL as our database backend. SQLite is the default database but I highly recommend setting my MySQL since the <a href="https://github.com/munkireport/munkireport-php/wiki/Performance" target="_blank">performance</a> gains are high and setup only takes a few more steps, not to mention SQLite will start to choke when higher volumes of clients start to check-in with the reporting server.</p>
+
+<p>It is also important to note, I like MunkiReport to be hosted on a sub-directory. This means when connecting to MuniReport you will type [<a href="http://yourserver.example.com/report/](" target="_blank">http://yourserver.example.com/report/](</a>) to access the site. If you want a different setup, you will need to make the necessary changes.</p>
+
+<h2 id="installing-required-software">Installing Required Software</h2>
+
+<pre><code class="language-bash">sudo apt-get update
+sudo apt-get -y install nginx git php5-fpm php5-mysql php5-ldap
+</code></pre>
+
+<div class="alert alert-info">
+  <p><strong>Note:</strong> The <code>php5-ldap</code> package is only needed if you are planning on connecting to an Active Directory or LDAP directory for authenticating to MunkiReport.</p>
+
+</div>
+
+
+<h2 id="setup-mysql">Setup MySQL</h2>
+
+<p>Lets install MySQL</p>
+
+<pre><code class="language-bash">sudo apt-get install mysql-client mysql-server
+</code></pre>
+
+<p><strong>This will prompt you to create the root mysql database account. Do not forget the password you set.</strong></p>
+
+<p>Now, we need to tell MySQL to generate the directory structure it needs to store its databases and information. We can do this by typing:</p>
+
+<pre><code class="language-bash">sudo mysql_install_db
+</code></pre>
+
+<p>Next, you can optionally run a simple security script that will prompt you to modify some insecure defaults (this is highly recommended on production servers). Begin the script by typing:</p>
+
+<pre><code class="language-bash">sudo mysql_secure_installation
+</code></pre>
+
+<p>You will need to enter the MySQL root password that you selected during installation.</p>
+
+<p>During the secure installation script it will ask if you want to change the root password. If you are happy with your MySQL root password, type &ldquo;N&rdquo; for no and hit &ldquo;ENTER&rdquo;. Afterwards, you will be prompted to remove some test users and databases. You should choice &ldquo;Y&rdquo; and hit &ldquo;enter&rdquo; through these prompts to remove the &ldquo;unsafe&rdquo; defaults from installation.</p>
+
+<p>Once the script has been run, MySQL is ready to go.</p>
+
+<h3 id="creating-the-database">Creating the database</h3>
+
+<p>Lets create our MunkiReport database with the name of <code>munkireport</code>. We will also create a database user and password. Change <em>USERNAME</em> and <em>PASSWORD</em> to your preference. Note the database username that is created below is what you will enter into your config.php in the following steps. It is bad practice to use the root account for database entry.</p>
+
+<pre><code class="language-bash">
+echo &quot;CREATE DATABASE munkireport CHARACTER SET utf8 COLLATE utf8_bin;&quot; | mysql -u root -p
+echo &quot;CREATE USER 'USERNAME'@'localhost' IDENTIFIED BY 'PASSWORD';&quot; | mysql -u root -p
+echo &quot;GRANT ALL PRIVILEGES ON munkireport.* TO 'USERNAME'@'localhost' IDENTIFIED BY 'PASSWORD';&quot; | mysql -u root -p
+echo &quot;FLUSH PRIVILEGES;&quot; | mysql -u root -p
+
+</code></pre>
+
+<h2 id="configure-php">Configure php</h2>
+
+<p>Lets make one small change to the default php configuration.</p>
+
+<pre><code class="language-bash">sudo nano /etc/php5/fpm/php.ini
+</code></pre>
+
+<p>Find the line, <strong>cgi.fix_pathinfo=1</strong>, and change the <strong>1 to 0</strong>. Also, uncomment this line to enable this security setting. The file should now look like the below excerpt:</p>
+
+<pre><code class="language-bash">&lt;---------------
+
+; cgi.fix_pathinfo provides *real* PATH_INFO/PATH_TRANSLATED support for CGI.  PHP's
+; previous behaviour was to set PATH_TRANSLATED to SCRIPT_FILENAME, and to not grok
+; what PATH_INFO is.  For more information on PATH_INFO, see the cgi specs.  Setting
+; this to 1 will cause PHP CGI to fix its paths to conform to the spec.  A setting
+; of zero causes PHP to behave as before.  Default is 1.  You should fix your scripts
+; to use SCRIPT_FILENAME rather than PATH_TRANSLATED.
+; http://php.net/cgi.fix-pathinfo
+cgi.fix_pathinfo=0
+
+---------------&gt;
+</code></pre>
+
+<p>If this number is kept as 1, the php interpreter will do its best to process the file that is as near to the requested file as possible. This is a possible security risk. If this number is set to 0, conversely, the interpreter will only process the exact file path—a much safer alternative. Save and Exit.</p>
+
+<p>Now, restart php-fpm for the change to take affect:</p>
+
+<pre><code class="language-bash">sudo service php5-fpm restart
+</code></pre>
+
+<h2 id="downloading-munkireport">Downloading MunkiReport</h2>
+
+<p>We are finally to the point that we can start getting MunkiReport setup.</p>
+
+<pre><code class="language-bash">sudo git clone https://github.com/munkireport/munkireport-php /usr/share/nginx/html/report
+</code></pre>
+
+<p>At this point, lets create a link to our report folder for our local Ubuntu admin, this allows us to make modifications easier in the future.</p>
+
+<pre><code class="language-bash">sudo ln -s /usr/share/nginx/html/report ~/report
+</code></pre>
+
+<p>MunkiReport requires a config.php, this is your settings for MunkiReport. Below are some defaults that I think most users will want. For a full list of options please visit <a href="https://github.com/munkireport/munkireport-php/blob/master/config_default.php" target="_blank">here</a>.</p>
+
+<p>You will want to change  the following in your config.php file:</p>
+
+<ul>
+<li>sitename = change Company to something useful</li>
+<li>allow_migrations = you will want to change this to true for MunkiReport updates</li>
+<li>debug = change this to false if you don&rsquo;t need debugging</li>
+<li>timezone = for your <a href="http://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="_blank">timezone</a></li>
+<li>ssh = change <em>ladmin</em> to your company local mac admin account</li>
+<li>locale = change to location</li>
+<li>lang = change to your language</li>
+</ul>
+
+<p>The root account is created for you, for testing purposes. You will want to create your own admin account by visiting <a href="http://yourserver.example.com/report/index.php?/auth/generate" target="_blank">http://yourserver.example.com/report/index.php?/auth/generate</a>.</p>
+
+<p>Let&rsquo;s create a new <code>config.php</code> file that stores our settings.</p>
+
+<pre><code class="language-bash">sudo nano /usr/share/nginx/html/report/config.php
+</code></pre>
+
+<p>You&rsquo;ll want to copy/paste the entire section below, making changes where necessary. The last section of the config file deals with our MySQL database. You will want to change the username and password to match what you created in the previous step.</p>
+
+<pre><code class="language-php">&lt;?php if ( ! defined( 'KISS' ) ) exit;
+
+$conf['index_page'] = 'index.php?';
+$conf['sitename'] = 'Company - MunkiReport';
+$conf['allow_migrations'] = FALSE;
+$conf['debug'] = TRUE;
+$conf['timezone'] = @date_default_timezone_get(America/Chicago);
+$conf['vnc_link'] = &quot;vnc://%s:5900&quot;;
+$conf['ssh_link'] = &quot;ssh://ladmin@%s&quot;;
+ini_set('session.cookie_lifetime', 43200);
+$conf['locale'] = 'en_US';
+$conf['lang'] = 'en';
+$conf['keep_previous_displays'] = TRUE;
+
+/*
+|===============================================
+| Authorized Users of Munki Report
+|===============================================
+| Visit http://yourserver.example.com/report/index.php?/auth/generate to generate additional local values
+*/
+$auth_config['root'] = '$P$BUqxGuzR2VfbSvOtjxlwsHTLIMTmuw0'; // Password is root
+
+/*
+|===============================================
+| PDO Datasource
+|===============================================
+*/
+$conf['pdo_dsn'] = 'mysql:host=localhost;dbname=munkireport';
+$conf['pdo_user'] = 'munki';
+$conf['pdo_pass'] = 'munki';
+$conf['pdo_opts'] = array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; 'SET NAMES utf8');
+</code></pre>
+
+<p>We are an Active Directory shop at my work place and for that reason I really like the ability for MunkiReport to pull an AD group and give access (remember the php5-ldap package we installed earlier). Unfortunately, in my current testing this function is slightly broken at the moment. When attempting to login to MunkiReport using AD Group Authorization you will be presented a white screen. A refresh on the blank screen along with a &ldquo;Resend form data&rdquo; will get you to the dashboard. This is a pretty annoying inconvenience, so at this moment I have simply added our report administrators into the &lsquo;allowed_users&rsquo; line in my config.php.</p>
+
+<p>Below are the additional settings need to make Active Directory work with MunkiReport:</p>
+
+<pre><code class="language-bash">
+// Below are the options for Active Directory user authorization
+$conf['auth']['auth_AD']['account_suffix'] = '@example.com';
+$conf['auth']['auth_AD']['base_dn'] = 'dc=example,dc=come'; //set to NULL to auto-detect
+$conf['auth']['auth_AD']['domain_controllers'] = array('server1.example.com','server2.example.com'); //can be an array of servers
+$conf['auth']['auth_AD']['admin_username'] = 'admin'; //if needed to perform the search
+$conf['auth']['auth_AD']['admin_password'] = 'munki_is_cool'; //if needed to perform the search
+$conf['auth']['auth_AD']['mr_allowed_users'] = array('userA','userB','userC');
+$conf['auth']['auth_AD']['mr_allowed_groups'] = array('MunkiReportAdmins'); //case sensitive
+
+</code></pre>
+
+<h2 id="configure-nginx-for-munkireport">Configure nginx for MunkiReport</h2>
+
+<p>Lets configure nginx to use <a href="http://yourserver.example.com/report" target="_blank">http://yourserver.example.com/report</a></p>
+
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-enabled/default
+</code></pre>
+
+<div class="alert alert-info">
+  <p><strong>Note:</strong> Make sure and change your <code>server_name</code>. This file also takes care of our munki_repo from <a href="/munkirepo-guide-part-1/">Part 1</a>.</p>
+
+</div>
+
+
+<pre><code class="language-bash">server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    root /usr/share/nginx/html;
+    index index.php index.html index.htm;
+
+    server_name munki;
+
+    error_page 404 /404.html;
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+
+    location /report {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+    }
+
+    location /munki_repo/ {
+      alias /usr/local/munki_repo/;
+      autoindex off;
+      auth_basic &quot;Restricted&quot;;
+      auth_basic_user_file /etc/nginx/.htpasswd;
+  }
+}
+</code></pre>
+
+<p>We must change our nginx default settings for php to work.</p>
+
+<pre><code class="language-bash">sudo nano /etc/nginx/nginx.conf
+</code></pre>
+
+<p>Look for <code>default_type  application/octet-stream;</code> and comment this line out. Check out the below excerpt:</p>
+
+<pre><code class="language-bash">&lt;---------------
+
+# server_names_hash_bucket_size 64;
+        # server_name_in_redirect off;
+
+        include /etc/nginx/mime.types;
+        #default_type application/octet-stream; //comment me out for MunkiReport to work
+
+        ##
+        # Logging Settings
+        ##
+
+---------------&gt;
+</code></pre>
+
+<p>To test your nginx configuration run the following command. This will make sure that you have no errors.</p>
+
+<pre><code class="language-bash">sudo nginx -c /etc/nginx/nginx.conf -t
+</code></pre>
+
+<p>Restart Nginx to make the necessary changes:</p>
+
+<pre><code class="language-bash">sudo service nginx restart
+</code></pre>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>You should now have a basic MunkiReport configuration up and running. Double check that everything is working by visiting <a href="http://youserver.example.com/report/" target="_blank">http://youserver.example.com/report/</a>. Remember the default username and password, <code>root</code>. For more settings and additional information please visit the Wiki for <a href="https://github.com/munkireport/munkireport-php/wiki" target="_blank">MunkiReport</a>.</p>
+
+<p>As always feel free to drop a comment below or on Twitter. Feedback is always appreciated.</p>
+
+<div class="alert alert-info">
+  <p><strong>Congrats!</strong> You made it this far. Unfortunately you&rsquo;re not done yet. You will likely run into an issue with request size on your munki clients as such please go read <a href="https://clburlison.com/munkireport-error-fix/" target="_blank">this</a>.</p>
+
+</div>
+
+
+<hr />
+
+<h1 id="apendium-1-connecting-a-client-to-munkireport">Apendium 1 - connecting a client to MunkiReport</h1>
+
+<p>If you would like to connect a single munki client to MunkiReport you can use the following command:</p>
+
+<pre><code class="language-bash">sudo /bin/bash -c &quot;$(curl -s http://yourserver.example.com/report/index.php?/install)&quot;
+</code></pre>
+
+<h1 id="apendium-2-adding-munkireport-to-your-munki-repo">Apendium 2 - adding MunkiReport to your munki_repo</h1>
+
+<p>To add multiple Munki clients to MunkiReport we should use munki. To get a generated plist file that you can drop into your _munki<em>repo/pkginfo</em> directory run the following command.</p>
+
+<pre><code class="language-bash">curl -s https://yourserver.example.com/report/index.php?/install/plist -o \
+~/Desktop/MunkiReport.plist
+</code></pre>
+
+<p>The output file will end up on your Desktop for easy transfer to your repo.</p>
+
+<hr />
+
+<p>Articles:<br />
+<a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04" target="_blank">Install LEMP stack on Ubuntu 14.04</a>,<br />
+<a href="https://github.com/munkireport/munkireport-php/wiki" target="_blank">Munkireport Wiki</a>,<br />
+<a href="http://www.nbalonso.com/new-munkireport-php-2/" target="_blank">nbalonso Munkireport-php</a>,</p>
+
+</div>
+
+
+  <footer class="container">
+  <div class="container navigation no-print">
+  <h2>Navigation</h2>
+  
+  
+
+    
+    <a class="prev" href="https://clburlison.com/munkirepo-guide-part-2/" title="Setup Mandrill on Ubuntu 14.04 - Part 2">
+      Previous
+    </a>
+    
+
+    
+    <a class="next" href="https://clburlison.com/preview-files-from-terminal/" title="Preview files from terminal">
+      Next
+    </a>
+    
+
+  
+
+
+</div>
+
+  <div class="container comments">
+  <h2>Comments</h2>
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+  powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>.
+
+
+</div>
+
+
+  
+<div class="container copyright">
+  
+  &copy; 2014 - 2017 Clayton Burlison
+
+
+</div>
+
+
+</div>
+
+</footer>
+
+    </main>
+    
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+<script src="https://clburlison.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+  </body>
+</html>
+

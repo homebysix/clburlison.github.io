@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Backup on clburlison</title>
+    <link>https://clburlison.com/tags/backup/feed/index.xml</link>
+    <description>Recent content in Backup on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/tags/backup/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Bender</title>
+      <link>https://clburlison.com/bender/</link>
+      <pubDate>Fri, 11 Jul 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/bender/</guid>
+      <description>&lt;p&gt;Many administrators use OS X Server. In my opinion the server OS has always lacked choices when it comes to backing up the server services data. Until I found Bender&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2014-07-11/bendericon_display.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Bender is a utility written by Forget Computers to automate the backup of OS X Server settings to provide easy restoration of services should they become corrupt, and for importing server settings after a migration or server upgrade.&lt;/p&gt;
+
+&lt;p&gt;Bender Home Page&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Sure you have TimeMachine but some of the postgresql databases have been known to not backup property with TimeMachine. Honestly, I had given up on a backup solution that just gets the data I need for OS X Server. While reading though the &lt;a href=&#34;https://groups.google.com/d/msg/macenterprise/MxLssCqR72Y/J1qFuALErMwJ&#34; target=&#34;_blank&#34;&gt;macenterprise list&lt;/a&gt; I found someone recommended Bender. Once I got to work I realized what a gem I had been missing out on. I have only used Bender on Mavericks (10.9) but it should work on Lion and up. It will daily backup the following:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;An Open Directory archive if the server is running as an Open Directory master.&lt;/li&gt;
+&lt;li&gt;A single backup file of all the server settings found in either Server Admin or Server.&lt;/li&gt;
+&lt;li&gt;A series of individual backup files of each server setting, so restoration or import of select settings is possible.&lt;/li&gt;
+&lt;li&gt;And postgres database used by Profile Manager and Wiki services.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The last one was the true winner for me. I had been researching what I needed to do to backup my wiki. Over the past few months the wiki service has become an invaluable documentation tool for me. After finding little to none in the way of Apple documentation/release notes I finally gave up. Bender in combination with TimeMachine makes for a much more complete backup solution for OS X Server.&lt;/p&gt;
+
+&lt;p&gt;Hopefully you find it as invaluable as I did or at least a nice utility to have in your tool-belt.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles: &lt;a href=&#34;http://robotcloud.screenstepslive.com/s/2459/m/5322/l/94467-bender-automated-backup-of-os-x-server-settings&#34; target=&#34;_blank&#34;&gt;Bender Home Page&lt;/a&gt;, &lt;a href=&#34;https://groups.google.com/d/msg/macenterprise/MxLssCqR72Y/J1qFuALErMwJ&#34; target=&#34;_blank&#34;&gt;macenterprise list&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Octopress on clburlison</title>
+    <link>https://clburlison.com/tags/octopress/feed/index.xml</link>
+    <description>Recent content in Octopress on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/tags/octopress/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Setting up octopress</title>
+      <link>https://clburlison.com/setting-up-octopress/</link>
+      <pubDate>Tue, 15 Apr 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/setting-up-octopress/</guid>
+      <description>
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Notice:&lt;/strong&gt; This site is no created using Octopress. I have since moved to a plain Jekyll setup. Content exists mostly for reference and will not be updated in the future.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;hr /&gt;
+
+&lt;p&gt;Setting up a blog can be a time consuming task. Setting up a blog that is created from static (markdown) files can be much more time consuming. In this post, I list references to most of the custom changes that were made to this site.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;this-is-not-a-setup-guide&#34;&gt;This is not a setup guide&amp;hellip;&lt;/h2&gt;
+
+&lt;p&gt;&amp;hellip;the internet has many really well outlined guides that do walk you through setting up Octopress. Since that is the case, I will instead list a few of the most helpful resources that I have found while attempting to setup Ocotpress. Please also note that the Octopress &lt;a href=&#34;http://octopress.org/docs/&#34; target=&#34;_blank&#34;&gt;Documentation&lt;/a&gt; is the best source of information but it might not be the easiest to understand at first glance.&lt;/p&gt;
+
+&lt;p&gt;**&lt;em&gt;Disclaimer what works for me might not work for you. At the time of this writing release v3.0.0.rc.7 all of the following references do work. This is definitely not the faint of heart. Something down the line will break and you will have to troubleshoot the error.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;getting-started&#34;&gt;Getting Started&lt;/h3&gt;
+
+&lt;p&gt;The most important reference, a get started guide that will walk you through the initial installation.&lt;br /&gt;
+Article: &lt;a href=&#34;http://webdesign.tutsplus.com/tutorials/getting-started-with-octopress--webdesign-11442&#34; target=&#34;_blank&#34;&gt;Getting Started with Octopress&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;changing-the-color&#34;&gt;Changing the color&lt;/h3&gt;
+
+&lt;p&gt;I did not find any themes that I liked so I used this article to change the colors. This article establishes the easiest way to customize Octopress with the main drawback being the least amount of visual change.&lt;br /&gt;
+Article: &lt;a href=&#34;http://aijazansari.com/2012/08/27/how-to-customize-octopress-theme/index.html&#34; target=&#34;_blank&#34;&gt;How to Customize Your Octopress Theme&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;plugins&#34;&gt;Plugins&lt;/h2&gt;
+
+&lt;h3 id=&#34;monthly-archive-sidebar&#34;&gt;Monthly Archive Sidebar&lt;/h3&gt;
+
+&lt;p&gt;The setup for this plugin is really well done in the help file for the repo so I shall direct you there.&lt;br /&gt;
+&lt;img src=&#34;https://clburlison.com/images/2014-04-15/monthly_archives.png&#34; alt=&#34;Monthly Archives&#34; /&gt;&lt;br /&gt;
+Article: &lt;a href=&#34;https://github.com/rcmdnk/monthly-archive&#34; target=&#34;_blank&#34;&gt;Github-Plugin&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;categories&#34;&gt;Categories&lt;/h3&gt;
+
+&lt;p&gt;The setup for this plugin is really well done in the help file for the repo so I shall direct you there.
+Article: &lt;a href=&#34;https://github.com/matthiasbeyer/jekyll_group_categories&#34; target=&#34;_blank&#34;&gt;Github-Plugin&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;tag-cloud-sidebar&#34;&gt;Tag Cloud (sidebar)&lt;/h3&gt;
+
+&lt;p&gt;The setup for this plugin is really well done in the help file for the repo so I shall direct you there.&lt;br /&gt;
+&lt;img src=&#34;https://clburlison.com/images/2014-04-15/tag_cloud.png&#34; alt=&#34;Tag Cloud&#34; /&gt;&lt;br /&gt;
+Article: &lt;a href=&#34;https://github.com/tokkonopapa/octopress-tagcloud&#34; target=&#34;_blank&#34;&gt;Github-Plugin&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;If you would like your tags to show up in a vertical view visit the following link.&lt;br /&gt;
+Article: &lt;a href=&#34;http://www.narga.net/improve-octopress-advanced-tweaks-tips/&#34; target=&#34;_blank&#34;&gt;Tags vertical view&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;custom-404-page&#34;&gt;Custom 404 Page&lt;/h2&gt;
+
+&lt;p&gt;I was unable to find much information about 404 Errors for Octopress. After some googling, I found out it is super easy to add a custom 404 page to Octopress. In your config.ru file, you add the following code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;not_found do
+  send_sinatra_file(&#39;404.html&#39;) {&amp;quot;Sorry, I cannot find #{request.path}&amp;quot;}
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To create the page, make a new file named 404.markdown in your /sources directory. Now, write your own 404 Error Page then deploy your website.&lt;br /&gt;
+Article: &lt;a href=&#34;http://www.narga.net/improve-octopress-advanced-tweaks-tips/&#34; target=&#34;_blank&#34;&gt;Custom 404 Page&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Resources:
+&lt;a href=&#34;http://warpedvisions.org/projects/markdown-cheat-sheet.md&#34; target=&#34;_blank&#34;&gt;Markdown Cheat Sheet&lt;/a&gt; ,
+&lt;a href=&#34;http://biancarelli.org/blog/2013/05/14/octopress-cheat-sheet&#34; target=&#34;_blank&#34;&gt;Octopress Cheat Sheet&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Deploying Octopress to Amazon S3</title>
+      <link>https://clburlison.com/deploying-octopress-to-amazon-s3/</link>
+      <pubDate>Fri, 04 Apr 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/deploying-octopress-to-amazon-s3/</guid>
+      <description>
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Notice:&lt;/strong&gt; This site is no created using Octopress. I have since moved to a plain Jekyll setup. Content exists mostly for reference and will not be updated in the future.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;hr /&gt;
+
+&lt;p&gt;This post will go over how I upload my octopress site from my computer to Amazon s3 cloud service using s3cmd.&lt;/p&gt;
+
+&lt;p&gt;Firstly, you will need to sign up for an &lt;a href=&#34;http://aws.amazon.com/s3/&#34; target=&#34;_blank&#34;&gt;Amazon AWS account&lt;/a&gt; if you do not have one already. It is quite cheap and you only pay for what you use.&lt;/p&gt;
+
+&lt;h2 id=&#34;installing-s3tools&#34;&gt;Installing s3tools&lt;/h2&gt;
+
+&lt;p&gt;This is available in most Linux distributions, via Homebrew, directly from &lt;a href=&#34;http://s3tools.org/download&#34; target=&#34;_blank&#34;&gt;s3tools.org&lt;/a&gt;, or the source directory on &lt;a href=&#34;https://github.com/s3tools/s3cmd/releases&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;. Run the following commands on the tar ball. (use at least version 1.0.X)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;tar xzvf s3cmd-1.5.0-alpha1.tar.gz
+cd s3cmd-1.5.0-alpha1
+python setup.py install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You will need to copy &amp;amp; paste &lt;code&gt;access_key&lt;/code&gt; and &lt;code&gt;secret_key&lt;/code&gt; from the &lt;em&gt;Security Credentials&lt;/em&gt; page of Amazon AWS into s3cmd’s configuration wizard. Use this &lt;a href=&#34;http://www.cloudberrylab.com/blog/how-to-find-your-aws-access-key-id-and-secret-access-key-and-register-with-cloudberry-s3-explorer/&#34; target=&#34;_blank&#34;&gt;article&lt;/a&gt; if you need help looking for keys. Then you will need to configure the c3cmd command with the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;s3cmd --configure         # Begin interactive configuration
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When finished, your ~/.s3cfg file should end up looking something like this.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;[default]
+# ...snip...
+access_key = ALRJCALDDZUDEGNSSIPE
+secret_key = 9DJWHga1Y+uBAFXntDM1Ujd6FrnnUZb/9dLMOqzn
+# ...snip...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;creating-your-s3-bucket&#34;&gt;Creating your s3 bucket&lt;/h2&gt;
+
+&lt;p&gt;You will have to create your s3 bucket with in the &lt;a href=&#34;https://console.aws.amazon.com/s3/home&#34; target=&#34;_blank&#34;&gt;Amazon AWS console&lt;/a&gt;. Create a bucket using the fully-qualified domain name of your blog &lt;code&gt;(e.g., www.example.com)&lt;/code&gt;. Open the Properties pane for your bucket, and then enable &amp;ldquo;Static web hosting&amp;rdquo;. Make note of the “endpoint”, something like &lt;code&gt;example.com.s3-website-us-east-1.amazonaws.com&lt;/code&gt;. You can use this directly, but most people will create a DNS CNAME pointing to it instead.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2014-04-04/amazon_aws.png&#34; alt=&#34;Amazon AWS&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;modifying-your-rakefile&#34;&gt;Modifying your Rakefile&lt;/h2&gt;
+
+&lt;p&gt;Inside your octopress directory, you have a file &lt;code&gt;Rakefile&lt;/code&gt; that we need to make a few modifications to so that we can upload to Amazon s3. Start by editing the &lt;code&gt;deploy_default&lt;/code&gt; variable to be &lt;code&gt;s3&lt;/code&gt;. Next establish a new variable by adding this line into the file &lt;code&gt;s3_bucket = &amp;quot;www.mywebsite.com&amp;quot;&lt;/code&gt; modifying the website name.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;## -- Rsync Deploy config -- ##
+# Be sure your public key is listed in your server&#39;s ~/.ssh/authorized_keys file
+ssh_user       = &amp;quot;user@domain.com&amp;quot;
+ssh_port       = &amp;quot;22&amp;quot;
+document_root  = &amp;quot;~/website.com/&amp;quot;
+rsync_delete   = false
+rsync_args     = &amp;quot;&amp;quot;  # Any extra arguments to pass to rsync
+deploy_default = &amp;quot;s3&amp;quot;
+s3_bucket = &amp;quot;www.clburlison.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lastly, you need to make a new task in the &lt;code&gt;Rakefile&lt;/code&gt;. Add the following text lines to the end of your file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;desc &amp;quot;Deploy website via s3cmd&amp;quot;
+task :s3 do
+  puts &amp;quot;## Deploying website via s3cmd&amp;quot;
+  ok_failed system(&amp;quot;s3cmd sync --acl-public --reduced-redundancy public/* s3://#{s3_bucket}/&amp;quot;)
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Deployment is now only a matter of running the usual command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;rake deploy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles: &lt;a href=&#34;http://blog.jacobelder.com/2012/03/deploying-octopress-to-amazon-s3/&#34; target=&#34;_blank&#34;&gt;Jacob Elder&lt;/a&gt;, &lt;a href=&#34;http://www.jerome-bernard.com/blog/2011/08/20/quick-tip-for-easily-deploying-octopress-blog-on-amazon-s3/&#34; target=&#34;_blank&#34;&gt;Jerome Bernard&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>First post</title>
+      <link>https://clburlison.com/first-post/</link>
+      <pubDate>Mon, 31 Mar 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/first-post/</guid>
+      <description>&lt;p&gt;This blog is setup as a personal resource for myself. Eventually, I will grow the information on this blog so that others can gain some educational value.&lt;/p&gt;
+
+&lt;p&gt;The site originally was hosted on Amazon&amp;rsquo;s S3 backend with the content being created through &lt;a href=&#34;http://octopress.org/&#34; target=&#34;_blank&#34;&gt;Octopress&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

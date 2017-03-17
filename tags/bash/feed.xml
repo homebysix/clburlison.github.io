@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bash on clburlison</title>
+    <link>https://clburlison.com/tags/bash/feed/index.xml</link>
+    <description>Recent content in Bash on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <atom:link href="https://clburlison.com/tags/bash/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>AD Account Change</title>
+      <link>https://clburlison.com/adacctchange/</link>
+      <pubDate>Sat, 28 Mar 2015 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/adacctchange/</guid>
+      <description>
+
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+
+&lt;p&gt;Changing user account logons in a deployed environment can cause some issues. Doing so with OS X clients that are bound to Active Directory can cause even more issues. Below is how I overcame some of the pitfalls of the built-in OS X Active Directory plugin. This article expands on the basic project Readme instructions located &lt;a href=&#34;https://github.com/clburlison/scripts/tree/master/clburlison_scripts/ADacctChange&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-03-28/opening_header.png&#34; alt=&#34;acct&#34; /&gt;&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The above picture is for reference purposes only. All data has been modified.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;h1 id=&#34;why-would-you-do-that&#34;&gt;Why would you do that?&lt;/h1&gt;
+
+&lt;p&gt;We had two differing username structures for active employees:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;An older format of first initial followed by last name &lt;em&gt;(cburlison)&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;A newer format of employee ID number &lt;em&gt;(12345)&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Both of these structures have pros and cons but our goal was to use one structure with all employees both current and future.&lt;/p&gt;
+
+&lt;p&gt;We decided on a new structure of &amp;ldquo;b&amp;rdquo; followed by employee ID number &lt;em&gt;(b12345)&lt;/em&gt;. At the time, this was found to be the most compatible structure for our organization.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-03-28/ad_acct_structure.png&#34; alt=&#34;acct&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;down-side&#34;&gt;Down-side&lt;/h2&gt;
+
+&lt;p&gt;Unfortunately, when you change the &amp;ldquo;User Logon Name&amp;rdquo; in Active Directory funky things start to happen to Cached Mobile Accounts on OS X clients.&lt;/p&gt;
+
+&lt;p&gt;Most notably:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;unable to login with the updated name structure (10.7 &amp;amp; 10.9)&lt;/li&gt;
+&lt;li&gt;broken Kerberos for the affected Cached Accounts
+
+&lt;ul&gt;
+&lt;li&gt;broken Single-Sign-On&lt;/li&gt;
+&lt;li&gt;manually change the OS X &lt;code&gt;shortname&lt;/code&gt; when connecting to file-shares&lt;/li&gt;
+&lt;li&gt;likely more issues I did not find&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;unable to sign-in from the loginwindow (only affects 10.10)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We needed to find a solution that allowed our Domain Administrators to move forward with the Account Policy change while allowing users to still &lt;strong&gt;use&lt;/strong&gt; their Macintosh computers.&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; On Windows a simple reboot of the client computer will allow users to login with the new name structure. Windows has the polices in place to deal with this type of change. Good job Microsoft!&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
+
+&lt;p&gt;To solve the issues described above you can delete the Cached Accounts from any affected OS X computer. This will of course allow the employee to log in using their newly structured account name with the one minor set-back of having all their files deleted (or located in the old path). It does fix all the Kerberos issues. I however had no intentions of copying files for hundreds of employees throughout my organization.&lt;/p&gt;
+
+&lt;p&gt;What I needed to do was modify the Cached User Accounts already present on our OS X computers. It also needed to meet the following requirements:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Don&amp;rsquo;t run until we intact the new user account structure. (Default: April 6th, 2015 at 6am)&lt;/li&gt;
+&lt;li&gt;Only affect Cached Accounts that have their AD User Logon Name changed. Our student accounts were not being modified.&lt;/li&gt;
+&lt;li&gt;Don&amp;rsquo;t modify any Local account present.&lt;/li&gt;
+&lt;li&gt;Display text for our end users if they are present while the change is taking place. We have a reboot at the end.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;the-code&#34;&gt;The Code&lt;/h2&gt;
+
+&lt;p&gt;Below is a walk-through of the important lines of the &lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh&#34; target=&#34;_blank&#34;&gt;ADacctChange.sh&lt;/a&gt; script, along with a description. The purpose is to have additional information that does not really &amp;ldquo;belong&amp;rdquo; in the code comments.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L55-58&#34; target=&#34;_blank&#34;&gt;Variables L55-58&lt;/a&gt;&lt;br /&gt;
+These should be the only lines that need modification if you wish to adapt this script for a different environment. Variables named appropriately.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;DCSERVER=&amp;quot;bisd.k12&amp;quot;
+DOMAIN=&amp;quot;BISD&amp;quot;
+setTime=1504060600
+msg=&amp;quot;Currently applying a Critical patch. The system will reboot when finished.&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L73-84&#34; target=&#34;_blank&#34;&gt;Run script as root L73-84&lt;/a&gt;&lt;br /&gt;
+We are making system level changes which require root access. The following lines will prompt you for authentication if running the &lt;code&gt;ADacctChange.sh&lt;/code&gt; manually without elevated permissions.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;RunAsRoot()
+{
+        ## Pass in the full path to the executable as $1
+        if [[ &amp;quot;${USER}&amp;quot; != &amp;quot;root&amp;quot; ]] ; then
+echo
+echo &amp;quot;*** This application must be run as root. Please authenticate below. ***&amp;quot;
+                echo
+sudo &amp;quot;${1}&amp;quot; &amp;amp;&amp;amp; exit 0
+        fi
+}
+
+RunAsRoot &amp;quot;${0}&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L92-103&#34; target=&#34;_blank&#34;&gt;Check Data/Time L92-103&lt;/a&gt;&lt;br /&gt;
+The following lines were to solve a very specific need of my environment. We needed to install a LaunchDaemon along with the ADacctChange script to client computers early. Since the Account Policy change was going to be automated and ran over the weekend, I needed a way for computers to know &amp;ldquo;when&amp;rdquo; to start checking for changes to Active Directory Accounts. This date check solves that issue. Essentically checks the current system time and compares it to the &lt;code&gt;setTime&lt;/code&gt; variable from above.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;curTime=`date +%y%m%d%H%M`
+if [ &amp;quot;$setTime&amp;quot; -gt &amp;quot;$curTime&amp;quot; ]
+    then
+        echo &amp;quot;It is not time to run this script. Now exiting.&amp;quot;
+        exit 0
+elif [ &amp;quot;$setTime&amp;quot; -lt &amp;quot;$curTime&amp;quot; ]
+    then
+        echo &amp;quot;It is time to change the Active Directory Cached User Accounts on this system.&amp;quot;
+else
+        echo &amp;quot;Date/Time value is invalid. Now exiting.&amp;quot;
+        exit 0
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L112-118&#34; target=&#34;_blank&#34;&gt;Check if computer is bound to AD L112-118&lt;/a&gt;&lt;br /&gt;
+A simple check to make sure the client computer is bound to Active Directory. Sometimes computers are kicked off the domain, or never joined for special use cases. If this script is ran on one of those computers we will delete the script and LaunchDeamon.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# If the machine is not bound to AD, then there&#39;s no purpose going any further.
+check4AD=`/usr/bin/dscl localhost -list . | grep &amp;quot;Active Directory&amp;quot;`
+if [ &amp;quot;${check4AD}&amp;quot; != &amp;quot;Active Directory&amp;quot; ]; then
+	echo &amp;quot;This machine is not bound to Active Directory.\nPlease bind to AD first. &amp;quot;;
+    /bin/rm /Library/LaunchDaemons/com.github.clburlison.ADacctChange.plist
+    /bin/rm $0
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L120-140&#34; target=&#34;_blank&#34;&gt;Check for active network connection L120-140&lt;/a&gt;&lt;br /&gt;
+This check step is to make sure that an active network connection is present. When this script is launched via a LaunchDaemon we need to give the system time to talk with DNS and DHCP. This in theory can create an infinite loop if a connection is never made. The logic is not perfect so edge cases be warned.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Determine if the network is up by looking for any non-loopback internet network interfaces.
+CheckForNetwork()
+{
+	local test
+	if [ -z &amp;quot;${NETWORKUP:=}&amp;quot; ]; then
+		test=$(ifconfig -a inet 2&amp;gt;/dev/null | sed -n -e &#39;/127.0.0.1/d&#39; -e &#39;/0.0.0.0/d&#39; -e &#39;/inet/p&#39; | wc -l)
+		if [ &amp;quot;${test}&amp;quot; -gt 0 ]; then
+			NETWORKUP=&amp;quot;-YES-&amp;quot;
+		else
+			NETWORKUP=&amp;quot;-NO-&amp;quot;
+		fi
+	fi
+}
+
+# If the network never becomes active this could run indefinitely
+while [ &amp;quot;${NETWORKUP}&amp;quot; != &amp;quot;-YES-&amp;quot; ]
+do
+        sleep 5
+        NETWORKUP=
+        CheckForNetwork
+done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L142-152&#34; target=&#34;_blank&#34;&gt;Check for connection to an Active Directory Server L142-152&lt;/a&gt;&lt;br /&gt;
+Another networking check to make sure the client computer is able to ping an Active Directory server, using the &lt;code&gt;DCSERVER&lt;/code&gt; variable.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# abort if we&#39;re not able to contact a configured directory server
+ping -c 1 -t 1 $DCSERVER  &amp;gt; /dev/null 2&amp;gt;&amp;amp;1
+if [ $? -eq 0 ]; then
+ 		ONLOCALNETWORK=YES
+	echo &amp;quot;Computer is on the network: $ONLOCALNETWORK&amp;quot;
+else
+ 		ONLOCALNETWORK=NO
+	echo &amp;quot;Computer is on the network: $ONLOCALNETWORK&amp;quot;
+	echo &amp;quot;Exiting. We cannot talk to the domain controller.&amp;quot;
+	exit 1
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L162-165&#34; target=&#34;_blank&#34;&gt;Check for BigHonkingText L162-165&lt;/a&gt;&lt;br /&gt;
+The &lt;code&gt;BigHonkingText&lt;/code&gt; binary is present if you use luggage to create a package for deployment. However, if running this script without &lt;code&gt;BigHonkingText&lt;/code&gt; this check will skipping outputting text for the end user.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;if [ -e &amp;quot;/usr/local/bin/BigHonkingText&amp;quot; ]; then
+  echo &amp;quot;BigHonkingText is on this system.&amp;quot;
+  /usr/local/bin/BigHonkingText -w 90% -h 20% -m -p 120 $msg &amp;gt;&amp;gt;/dev/null 2&amp;gt;&amp;amp;1 &amp;amp;
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L175-222&#34; target=&#34;_blank&#34;&gt;Check for Cached Accounts and modify if needed L175-222&lt;/a&gt;&lt;br /&gt;
+This is the meat of the script. This searches through /Users/ for all accounts. Then loops through each account to check for the following:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Don&amp;rsquo;t modify the /Users/Shared folder.&lt;/li&gt;
+&lt;li&gt;Don&amp;rsquo;t modify local accounts. We do this by looking for accounts present on the computer between uid 500 and 1000. This makes an assumption that all local accounts use Apple&amp;rsquo;s Default uid range.&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;uniqueIDAD&lt;/code&gt; does a search against the domain for each user in /Users/ to see what the Active Directory UniqueID is. All accounts that have not changed will output some string number. All accounts that have been changed will output an error message since the User Logon Name has changed and can no longer be found in Active Directory. This error results in the &lt;code&gt;uniqueIDAD&lt;/code&gt; variable being null and displaying the following error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;dscl_cmd&amp;gt; DS Error: -14136 (eDSRecordNotFound)
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;We then search for the new account name using the Cached Accounts UniqueID (these values should be the same).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once we have the new account name we move the old user account plist to a new user account plist modifying the &lt;code&gt;RecordName&lt;/code&gt; and &lt;code&gt;NFSHomeDirectory&lt;/code&gt; values.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Lastly, we move the old home directory to the new home directory path.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The &lt;code&gt;sleep&lt;/code&gt; commands slow the loop to make sure requests from computers do not slam a domain server all at one time.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;USERLIST=`find /Users -type d -maxdepth 1 -mindepth 1 -not -name &amp;quot;.&amp;quot;`
+for a in $USERLIST ; do
+    [[ &amp;quot;$a&amp;quot; == &amp;quot;/Users/Shared&amp;quot; ]] &amp;amp;&amp;amp; continue # Do not modify the Shared Folder
+
+    # Do not modify any local account with UID between 500-1000
+    prefix=&amp;quot;/Users/&amp;quot;
+    old=${a#$prefix}
+    OldID=`id -u $old`
+    [ &amp;quot;$OldID&amp;quot; -ge 500 -a &amp;quot;$OldID&amp;quot; -le 1000 ] &amp;amp;&amp;amp; continue
+
+    uniqueIDAD=`/usr/bin/dscl /Active\ Directory/$DOMAIN/All\ Domains -read $a UniqueID | awk &#39;{ print $2 }&#39;`
+    if [ &amp;quot;$uniqueIDAD&amp;quot; == &amp;quot;source&amp;quot; ]; then
+        echo &amp;quot;We have received bad data from dscl. Now exiting.&amp;quot;
+        exit 0
+    elif [ -z &amp;quot;$uniqueIDAD&amp;quot; ]; then
+        # The varraible is null. We need to modify the current Cached User:
+        # the following will be changed &amp;quot;Account Name&amp;quot; and &amp;quot;Home Directory&amp;quot;.
+        echo &amp;quot;Old username is: &amp;quot; $old
+        CachedUID=`/usr/bin/id -u $old`
+        echo &amp;quot;Cached UID is: &amp;quot; $CachedUID
+
+        # Get new username as a variable from the Domain
+        new=`/usr/bin/dscl /Active\ Directory/$DOMAIN/All\ Domains -search /Users UniqueID $CachedUID | awk &#39;NR==1{print $1; exit}&#39;`
+        echo &amp;quot;New username is: &amp;quot; $new
+
+        # Move the old AD account to the new Account name. Essentially creating a new user account.
+        /bin/mv /var/db/dslocal/nodes/Default/users/$old.plist /var/db/dslocal/nodes/Default/users/$new.plist
+        /usr/bin/killall opendirectoryd
+        sleep 10
+
+        # edit new user attributes, using same passwd hash
+        /usr/bin/dscl . -change /Users/$old RecordName $old $new
+        sleep 3
+        /usr/bin/dscl . -change /Users/$new NFSHomeDirectory /Users/$old /Users/$new
+        sleep 3
+        /usr/bin/killall opendirectoryd
+
+        # Move Home Directory. Check if there&#39;s a home folder there already, if there is, exit before we wipe it
+        if [ -f /Users/$new ]; then
+            echo &amp;quot;Oops, theres a home folder there already for $new.\nIf you don&#39;t want that one, delete it in the Finder first,\nthen run this script again.&amp;quot;
+        else
+            /bin/mv /Users/$old /Users/$new
+            /usr/sbin/chown -R ${new} /Users/$new
+            #/usr/bin/dscl . -append /Users/$new RecordName $old
+            echo &amp;quot;Home for $new now located at /Users/$new&amp;quot;
+        fi
+    fi
+done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L231-234&#34; target=&#34;_blank&#34;&gt;Cleanup and reboot L231-234&lt;/a&gt;&lt;br /&gt;
+This preforms a cleanup of files, deleting the LaunchDaemon and script. The reboot is to force users to obtain a new Kerberos ticket when they login with the new Username structure.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;/bin/rm /Library/LaunchDaemons/com.github.clburlison.ADacctChange.plist
+/bin/rm $0
+
+/sbin/reboot
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;special-thanks&#34;&gt;Special thanks&lt;/h1&gt;
+
+&lt;p&gt;The following individuals had valuable code that I used while putting this project together.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Rich Trouton - &lt;a href=&#34;https://derflounder.wordpress.com/&#34; target=&#34;_blank&#34;&gt;https://derflounder.wordpress.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Charles Edge - &lt;a href=&#34;http://krypted.com/&#34; target=&#34;_blank&#34;&gt;http://krypted.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Jeff Kelley - &lt;a href=&#34;http://blog.slaunchaman.com/&#34; target=&#34;_blank&#34;&gt;http://blog.slaunchaman.com/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;The result was a package that is installable via &lt;a href=&#34;https://github.com/unixorn/luggage&#34; target=&#34;_blank&#34;&gt;Luggage&lt;/a&gt; and hosted on Github &lt;a href=&#34;https://github.com/clburlison/scripts/tree/master/clburlison_scripts/ADacctChange&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;As always feel free to drop a comment below or on Twitter. Feedback is always appreciated.&lt;/p&gt;
+
+&lt;h1 id=&#34;aftermath&#34;&gt;Aftermath&lt;/h1&gt;
+
+&lt;p&gt;For the most part our migration went smoothly in my environment. We installed this package a week prior to our Active Directory change and instructed our Mac users to reboot the morning after the change took place. For some users that did not reboot like we asked this script took over and forced a reboot. They had plenty of prior knowledge and at least received a nice popup using BigHonkingText explaining the reboot.&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-danger&#34;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; If you are using Dropbox in your environment this process will mess up Dropbox settings. Inside of &lt;code&gt;/Users/$HOME/.dropbox&lt;/code&gt; there is a setting that is hard coded to the users home directory path. I found the easiest solution is to run a &lt;code&gt;rm ~/.dropbox&lt;/code&gt; on the affected users profile. Followed by having the user re-sign in via the Dropbox application. Obviously this solution does not scale very well.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:&lt;br /&gt;
+&lt;a href=&#34;https://github.com/clburlison/scripts/tree/master/clburlison_scripts/ADacctChange&#34; target=&#34;_blank&#34;&gt;ADacctChange on Github&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Preview files from terminal</title>
+      <link>https://clburlison.com/preview-files-from-terminal/</link>
+      <pubDate>Mon, 10 Nov 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/preview-files-from-terminal/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;QuickLook scans file contents before you open those files. Usually this just lets you view a file quickly. But you can also use this same technology from the command line to bring about a change to the Finder without actually opening a file. To access QuickLook from the command line, use qlmanage.&lt;/p&gt;
+
+&lt;p&gt;qlmanage -p ~/Desktop/MyTowel42.pdf&lt;/p&gt;
+
+&lt;p&gt;&amp;mdash;Charles Edge&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;I highly recommend adding an alias to your either your .bashrc or .bash_profile. This will make accessing the command faster, plus you have the added benefit of not seeing all the debug information in your current terminal session.&lt;/p&gt;
+
+&lt;p&gt;Below is the command I use:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ql () { qlmanage -p &amp;quot;$*&amp;quot; &amp;gt;&amp;amp; /dev/null; }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you can preview a file from Terminal by using &lt;code&gt;ql&lt;/code&gt; plus the path to a file.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Shellshock</title>
+      <link>https://clburlison.com/shellshock/</link>
+      <pubDate>Mon, 29 Sep 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/shellshock/</guid>
+      <description>
+
+&lt;p&gt;On September 24, 2014, a security vulnerability was publicly announced that affects a large percentage of Internet connected devices. This vulnerability, known as Shellshock, affects the Unix command shell Bash. Bash, the bourne again shell, is one of the most common applications on Unix based systems. Many devices running Mac OS X or Linux are affected by this serious exploit.&lt;/p&gt;
+
+&lt;p&gt;It is important to understand that this vulnerability could allow unauthorized access of your computer. Although this exploit has been around for over two decades do not underestimate the seriousness, immediate patching should be deployed when possible.&lt;/p&gt;
+
+&lt;h2 id=&#34;patch&#34;&gt;Patch&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;OS X bash Update 1.0 may be obtained from the following webpages:&lt;/strong&gt;&lt;br /&gt;
+&lt;a href=&#34;http://support.apple.com/kb/DL1767&#34; target=&#34;_blank&#34;&gt;http://support.apple.com/kb/DL1767&lt;/a&gt; – OS X Lion&lt;br /&gt;
+&lt;a href=&#34;http://support.apple.com/kb/DL1768&#34; target=&#34;_blank&#34;&gt;http://support.apple.com/kb/DL1768&lt;/a&gt; – OS X Mountain Lion&lt;br /&gt;
+&lt;a href=&#34;http://support.apple.com/kb/DL1769&#34; target=&#34;_blank&#34;&gt;http://support.apple.com/kb/DL1769&lt;/a&gt; – OS X Mavericks&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;released:&lt;/em&gt; September 29th, 2014&lt;/p&gt;
+
+&lt;h2 id=&#34;future&#34;&gt;Future&lt;/h2&gt;
+
+&lt;p&gt;So if you install the patch you might think, &amp;ldquo;Great I&amp;rsquo;m done&amp;rdquo;, crisis adverted. False! Since the original Shellshock exploit (CVE-2014-6271) at least four additional exploits have been found. If you would like to test your Mac to see if you are vulnerable you can use the following &lt;a href=&#34;https://github.com/hannob/bashcheck&#34; target=&#34;_blank&#34;&gt;script&lt;/a&gt; to help identify exploits that you are susceptible to.&lt;/p&gt;
+
+&lt;p&gt;Additional bugs related to Shellshock:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CVE-2014-6271 (original shellshock)&lt;/li&gt;
+&lt;li&gt;CVE-2014-7169 (taviso bug)&lt;/li&gt;
+&lt;li&gt;CVE-2014-7186 (redir_stack bug)&lt;/li&gt;
+&lt;li&gt;CVE-2014-7187 (nested loops off by one)&lt;/li&gt;
+&lt;li&gt;CVE-2014-6277 (lcamtuf bug)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You can use the following website if you would like to see the official reports &lt;a href=&#34;https://cve.mitre.org&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;At this point, the worst might be behind us. Pay attention to Apple updates, as future issues are reported, another patch for Bash will be most likely be released by Apple.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:&lt;br /&gt;
+&lt;a href=&#34;http://apple.stackexchange.com/questions/146849/how-do-i-recompile-bash-to-avoid-shellshock-the-remote-exploit-cve-2014-6271-an/146851#146851&#34; target=&#34;_blank&#34;&gt;Apple Stack Exchange&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://www.imore.com/apple-working-quickly-protect-os-x-against-shellshock-exploit&#34; target=&#34;_blank&#34;&gt;Apple working to protect OS X against shellshock&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://twitter.com/harryfike/status/516767315636285440&#34; target=&#34;_blank&#34;&gt;Bash fix not in SUS&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://github.com/hannob/bashcheck&#34; target=&#34;_blank&#34;&gt;Github bashcheck script&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;https://groups.google.com/forum/?fromgroups#!topic/macenterprise/o26UYKc2JvM&#34; target=&#34;_blank&#34;&gt;Remote exploit vulnerability in bash&lt;/a&gt;,&lt;br /&gt;
+&lt;a href=&#34;http://www.pcworld.com/article/2688672/two-scenarios-that-would-make-os-x-vulnerable-to-the-shellshock-bug.html&#34; target=&#34;_blank&#34;&gt;What is Shellshock&lt;/a&gt;,&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Bash if then cheat sheet</title>
+      <link>https://clburlison.com/bash-if-then-cheat-sheet/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/bash-if-then-cheat-sheet/</guid>
+      <description>
+
+&lt;p&gt;I always find myself looking for a good resource when writing if/then statements in bash scripts. It&amp;rsquo;s hard to remember all the combinations when you simply do not use most of them frequently. Below is my personal cheat sheet&amp;hellip;copied here because I was tired of having to look for a good resource.&lt;/p&gt;
+
+&lt;p&gt;Examples on usage can be found in the &lt;a href=&#34;http://tldp.org/LDP/abs/html/comparison-ops.html&#34; target=&#34;_blank&#34;&gt;original article&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;integer-comparison&#34;&gt;integer comparison&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+	# The following are for number values only.
+	-eq
+		is equal to
+		if [ &amp;quot;$a&amp;quot; -eq &amp;quot;$b&amp;quot; ]
+	-ne
+		is not equal to
+		if [ &amp;quot;$a&amp;quot; -ne &amp;quot;$b&amp;quot; ]
+
+	-gt
+		is greater than
+		if [ &amp;quot;$a&amp;quot; -gt &amp;quot;$b&amp;quot; ]
+
+	-ge
+		is greater than or equal to
+		if [ &amp;quot;$a&amp;quot; -ge &amp;quot;$b&amp;quot; ]
+
+	-lt
+		is less than
+		if [ &amp;quot;$a&amp;quot; -lt &amp;quot;$b&amp;quot; ]
+
+	-le
+		is less than or equal to
+		if [ &amp;quot;$a&amp;quot; -le &amp;quot;$b&amp;quot; ]
+
+	&amp;lt;
+		is less than (within double parentheses)
+		((&amp;quot;$a&amp;quot; &amp;lt; &amp;quot;$b&amp;quot;))
+
+	&amp;lt;=
+		is less than or equal to (within double parentheses)
+		((&amp;quot;$a&amp;quot; &amp;lt;= &amp;quot;$b&amp;quot;))
+
+	&amp;gt;
+		is greater than (within double parentheses)
+		((&amp;quot;$a&amp;quot; &amp;gt; &amp;quot;$b&amp;quot;))
+
+	&amp;gt;=
+		is greater than or equal to (within double parentheses)
+		((&amp;quot;$a&amp;quot; &amp;gt;= &amp;quot;$b&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;string-comparison&#34;&gt;string comparison&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+	# The following are for strings of data.
+	=
+		is equal to
+		if [ &amp;quot;$a&amp;quot; = &amp;quot;$b&amp;quot; ]
+
+	Caution:
+		Note the whitespace framing the =
+		if [ &amp;quot;$a&amp;quot;=&amp;quot;$b&amp;quot; ] is not equivalent to the above.
+
+	==
+		is equal to
+		if [ &amp;quot;$a&amp;quot; == &amp;quot;$b&amp;quot; ]
+
+	This is a synonym for =
+	Note:
+		The == comparison operator behaves differently
+		within a double-brackets test than within single brackets.
+		[[ $a == z* ]]   # True if $a starts with an &amp;quot;z&amp;quot; (pattern matching).
+		[[ $a == &amp;quot;z*&amp;quot; ]] # True if $a is equal to z* (literal matching).
+		[ $a == z* ]     # File globbing and word splitting take place.
+		[ &amp;quot;$a&amp;quot; == &amp;quot;z*&amp;quot; ] # True if $a is equal to z* (literal matching).
+		# Thanks, Stéphane Chazelas
+
+	!=
+		is not equal to
+		if [ &amp;quot;$a&amp;quot; != &amp;quot;$b&amp;quot; ]
+
+	This operator uses pattern matching within a [[ ... ]] construct.
+
+	&amp;lt;
+		is less than, in ASCII alphabetical order
+		if [[ &amp;quot;$a&amp;quot; &amp;lt; &amp;quot;$b&amp;quot; ]]
+		if [ &amp;quot;$a&amp;quot; \&amp;lt; &amp;quot;$b&amp;quot; ]
+
+	Note: that the &amp;quot;&amp;lt;&amp;quot; needs to be escaped within a [ ] construct.
+
+	&amp;gt;
+		is greater than, in ASCII alphabetical order
+		if [[ &amp;quot;$a&amp;quot; &amp;gt; &amp;quot;$b&amp;quot; ]]
+		if [ &amp;quot;$a&amp;quot; \&amp;gt; &amp;quot;$b&amp;quot; ]
+
+	Note that the &amp;quot;&amp;gt;&amp;quot; needs to be escaped within a [ ] construct.
+
+	-z
+		string is null, that is, has zero length
+
+	String=&#39;&#39;   # Zero-length (&amp;quot;null&amp;quot;) string variable.
+		if [ -z &amp;quot;$String&amp;quot; ]
+		then
+		  echo &amp;quot;\$String is null.&amp;quot;
+		else
+		  echo &amp;quot;\$String is NOT null.&amp;quot;
+		fi     # $String is null.
+
+	-n
+		string is not null.
+
+	Caution:
+		The -n test requires that the string be quoted within the test brackets.
+		Using an unquoted string with ! -z, or even just the unquoted string a
+		lone within test brackets (see Example 7-6) normally works, however,
+		this is an unsafe practice. Always quote a tested string. [1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;examples&#34;&gt;Examples&lt;/h1&gt;
+
+&lt;p&gt;To check if a directory exists in a shell script you can use the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;if [ -d &amp;quot;$DIRECTORY&amp;quot; ]; then
+  # Control will enter here if $DIRECTORY exists.
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Or to check if a directory doesn&amp;rsquo;t exist:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;if [ ! -d &amp;quot;$DIRECTORY&amp;quot; ]; then
+  # Control will enter here if $DIRECTORY doesn&#39;t exist.
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;credit&#34;&gt;Credit&lt;/h1&gt;
+
+&lt;p&gt;Special Thanks to the The Linux Documentation Project for outlining the information in such a usable format. They also include great examples on their website.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Articles:
+&lt;a href=&#34;http://tldp.org/LDP/abs/html/comparison-ops.html&#34; target=&#34;_blank&#34;&gt;Advanced Bash-Scripting Guide&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
