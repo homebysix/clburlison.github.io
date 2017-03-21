@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Chef Grocery Delivery Setup  &middot; clburlison</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="chef, ubuntu, ">
+
+
+<meta property="og:title" content="Chef Grocery Delivery Setup  &middot; clburlison ">
+<meta property="og:site_name" content="clburlison"/>
+<meta property="og:url" content="https://clburlison.com/chef-grocery-delivery-setup/" />
+<meta property="og:locale" content="en-EN">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2017-03-21T10:21:13-05:00" />
+<meta property="og:article:modified_time" content="2017-03-21T10:21:13-05:00" />
+
+  
+    
+<meta property="og:article:tag" content="chef">
+    
+<meta property="og:article:tag" content="ubuntu">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@clburlison" />
+<meta name="twitter:creator" content="@clburlison" />
+<meta name="twitter:title" content="Chef Grocery Delivery Setup" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://clburlison.com/chef-grocery-delivery-setup/" />
+<meta name="twitter:domain" content="https://clburlison.com/">
+  
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Chef Grocery Delivery Setup",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/+?rel=author"
+    },
+    "datePublished": "2017-03-21",
+    "description": "",
+    "wordCount": 797
+  }
+</script>
+
+
+
+<link rel="canonical" href="https://clburlison.com/chef-grocery-delivery-setup/" />
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://clburlison.com/touch-icon-144-precomposed.png">
+<link href="https://clburlison.com/favicon.png" rel="icon">
+
+<meta name="generator" content="Hugo 0.19" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href='https://fonts.googleapis.com/css?family=Merriweather:300%7CRaleway%7COpen+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://clburlison.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://clburlison.com/css/style.css">
+<link rel="stylesheet" href="https://clburlison.com/css/highlight/default.css">
+
+  
+  
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-49614309-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+</head>
+<body>
+  <main id="main-wrapper" class="container main_wrapper has-sidebar">
+    <header id="main-header" class="container main_header">
+  <div class="container brand">
+  <div class="container title h1-like">
+  <a class="baselink" href="https://clburlison.com/">
+  clburlison
+
+</a>
+
+</div>
+
+  
+<div class="container topline">
+  
+  A Mac sysadmin, documenting useful code, ideas, &amp; guides.
+
+
+</div>
+
+
+</div>
+
+  <nav class="container nav primary no-print">
+  
+
+<a class="homelink" href="https://clburlison.com/">Home</a>
+
+
+  
+<a href="https://clburlison.com/about">About</a>
+
+<a href="https://clburlison.com/post" title="Show list of posts">Posts</a>
+
+<a href="https://clburlison.com/resources">Resources</a>
+
+<a href="https://clburlison.com/tags" title="Show list of tags">Tags</a>
+
+<a href="https://clburlison.com/talks">Talks</a>
+
+
+</nav>
+
+<div class="container nav secondary no-print">
+  
+<a id="contact-link-email" class="contact_link" href="mailto:clburlison@gmail.com">
+  <span class="fa fa-envelope-square"></span><span>email</span></a>
+
+
+
+<a id="contact-link-github" class="contact_link" href="https://github.com/clburlison">
+  <span class="fa fa-github-square"></span><span>github</span></a>
+
+
+
+
+
+<a id="contact-link-linkedin" class="contact_link" href="https://www.linkedin.com/in/clburlison">
+  <span class="fa fa-linkedin-square"></span><span>linkedin</span></a>
+
+
+
+
+
+
+
+<a id="contact-link-twitter" class="contact_link" href="https://twitter.com/clburlison">
+  <span class="fa fa-twitter-square"></span><span>twitter</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+
+</header>
+
+
+<article id="main-content" class="container main_content single">
+  <header class="container hat">
+  <h1>Chef Grocery Delivery Setup
+</h1>
+
+  <div class="metas">
+<time datetime="2017-03-21">Mar 21, 2017</time>
+
+
+  
+  &middot; Read in about 4 min
+  &middot; (797 Words)
+  <br>
+  
+<a class="label" href="https://clburlison.com/tags/chef">chef</a>
+
+<a class="label" href="https://clburlison.com/tags/ubuntu">ubuntu</a>
+
+
+
+</div>
+
+</header>
+
+  
+
+
+
+
+  <div class="container content">
+  
+
+<h1 id="introduction">Introduction</h1>
+
+<p><a href="https://github.com/facebook/grocery-delivery" target="_blank">Grocery Delivery</a> (GD) is a ruby gem that helps keep cookbooks, roles, and data bags in sync between a source control repo and your chef server. This allows administrators to keep their entire chef code in source control with continuous integration, peer reviews, and any other checks they can think of. Once the code has been checked and merged into the <code>master</code> branch the <code>grocery-delivery</code> binary takes the place of <code>knife upload</code>. This can be ran on a cron job, or event based using web-hooks to verify that the latest code is on your chef server. This also means your server is safer from someone accidentally pushing breaking code to production.</p>
+
+<p>So lets get started on setting up GD using a ubuntu 16.04 host that already has the chef server configured. You could technically run this on a separate box but keeping it on the chef server is easier to troubleshoot/maintain in my opinion.</p>
+
+<h1 id="requirements">Requirements</h1>
+
+<p>In case it wasn&rsquo;t clear your chef server needs to already be setup, if not go to chef docs on <a href="https://docs.chef.io/install_server.html" target="_blank">installing the server</a>. Plus:</p>
+
+<ul>
+<li>access to a user key</li>
+<li>access to a validator key</li>
+<li>ssh access to the chef server</li>
+<li>your chef repo in source control</li>
+</ul>
+
+<h1 id="setup">Setup</h1>
+
+<p>If you want a sample chef repo to fork I recommend forking my example repo:</p>
+
+<p><a href="https://github.com/clburlison/example-chef-repo" target="_blank">https://github.com/clburlison/example-chef-repo</a></p>
+
+<p>Run the following commands as root:</p>
+
+<pre><code>sudo su
+</code></pre>
+
+<p>Install the following packages so we can build dependencies for GD:</p>
+
+<pre><code>apt-get update
+apt-get upgrade
+apt-get install cmake pkg-config
+</code></pre>
+
+<p>Install the GD gem into the chef server ruby path. The path is not a strict requirement but it is nice to have locked version of ruby:</p>
+
+<pre><code>/opt/opscode/embedded/bin/gem install grocery_delivery
+</code></pre>
+
+<p>Create the config file for GD using the default path.</p>
+
+<div class="alert alert-info">
+  <p>NOTE: you will need to change the git <code>repo_url</code> and potentially the <code>cookbook_paths</code>, <code>role_path</code>, and <code>databag_path</code>.</p>
+
+</div>
+
+
+<pre><code>vi /etc/gd-config.rb
+</code></pre>
+
+<p>Paste the following:</p>
+
+<pre><code>stdout          true
+repo_url        'git@github.com:clburlison/chef-repo.git'
+reponame        'cpe'
+cookbook_paths  ['cookbooks']
+role_path       'roles'
+databag_path    'data_bags'
+rev_checkpoint  'gd_revision'
+knife_config    '/root/.chef/knife.rb'
+knife_bin       '/opt/opscode/bin/knife'
+vcs_type        'git'
+berks           false
+berks_bin       '/opt/opscode/embedded/bin/berks'
+</code></pre>
+
+<p>Create a hidden chef folder for the root user:</p>
+
+<pre><code>mkdir /root/.chef
+</code></pre>
+
+<p>Create the knife config:</p>
+
+<pre><code>vi /root/.chef/knife.rb
+</code></pre>
+
+<p>Paste the following:</p>
+
+<div class="alert alert-info">
+  <p>NOTE: make sure and update the <code>node_name</code>, <code>client_key</code>, <code>validation_client_name</code>, and <code>chef_server_url</code> keys</p>
+
+</div>
+
+
+<pre><code>log_level               :info
+log_location            STDOUT
+node_name               'gd'
+client_key              'gd.pem'
+validation_client_name  'clburlison-validator'
+validation_key          'clburlison-validator.pem'
+chef_server_url         'https://chef.example.com/organizations/clburlison'
+cookbook_path [
+  '/var/chef/grocery_delivery_work/cpe/cookbooks/',
+]
+</code></pre>
+
+<p>Copy the copy the two pem files (<code>gd.pem</code> and <code>clburlison-validator.pem</code> from my example) from your admin workstation to the chef server under <code>/root/.chef</code>.</p>
+
+<h1 id="ssh-deploy-key">SSH deploy key</h1>
+
+<p>The following can be ran on your workstation or chef server.</p>
+
+<p>Create a ssh deploy key so the Chef server can access your chef git repo:</p>
+
+<pre><code>ssh-keygen -t rsa -b 4096 -C &quot;gd-deploy@example.com&quot;
+</code></pre>
+
+<p>Change the save location if you wish. Full output below:</p>
+
+<pre><code class="language-bash">Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/clburlison/.ssh/id_rsa): /Users/clburlison/.ssh/gd_deploy
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /Users/clburlison/.ssh/gd_deploy.
+Your public key has been saved in /Users/clburlison/.ssh/gd_deploy.pub.
+The key fingerprint is:
+SHA256:4OIJ40Lncc7cwfAGY1UoBtutBDpKLoYwlOQDL8o9GkE chef-admin@clburlison.com
+The key's randomart image is:
++---[RSA 4096]----+
+|oE.o.  .o.       |
+|=o. +oo.         |
+|+B...Bo.         |
+|Oo= o.B.         |
+|=*o=.o.=S        |
+|+.=+Boo .        |
+|....o+ .         |
+| .               |
+|                 |
++----[SHA256]-----+
+</code></pre>
+
+<p>Create the .ssh directory for the root user if it doesn&rsquo;t exist:</p>
+
+<pre><code>mkdir -p /root/.ssh/
+</code></pre>
+
+<p>Copy the <code>gd_deploy</code> private key to your chef server under <code>/root/.ssh/id_rsa</code>. Make sure the file permissions are correct:</p>
+
+<pre><code>chmod 0600 /root/.ssh/id_rsa
+</code></pre>
+
+<p>Then add the key to your ssh agent:</p>
+
+<pre><code>eval &quot;$(ssh-agent -s)&quot;
+ssh-add /root/.ssh/id_rsa
+</code></pre>
+
+<p>Now copy the <code>gd_deploy.pub</code> public key to your chef repo deploy key section. For Github the url will be:</p>
+
+<p><a href="https://github.com/USERNAME/example-chef-repo/settings/keys" target="_blank">https://github.com/USERNAME/example-chef-repo/settings/keys</a></p>
+
+<div class="alert alert-info">
+  <p>NOTE: that this key should <em>not</em> have write access to the git repo.</p>
+
+</div>
+
+
+<p>Make a test connection to github to add the RSA fingerprint.</p>
+
+<pre><code>ssh -T git@github.com
+</code></pre>
+
+<p>You should get the following as output:</p>
+
+<pre><code class="language-bash">root@chef:~$ ssh -T git@github.com
+The authenticity of host 'github.com (192.30.253.113)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'github.com,192.30.253.113' (RSA) to the list of known hosts.
+Hi clburlison/example-chef-repo! You've successfully authenticated, but GitHub does not provide shell access.
+</code></pre>
+
+<h1 id="run-gd">Run GD</h1>
+
+<p>Great now if we did everything correctly the following command should add our code to the chef server:</p>
+
+<pre><code>/opt/opscode/embedded/bin/grocery-delivery -vv
+</code></pre>
+
+<p>If all works you&rsquo;ll likely want to run this script on a cron job without the verbose flag:</p>
+
+<pre><code>vi /etc/cron.d/gd
+</code></pre>
+
+<p>Paste the following to run every 5 minutes. Obviously modify to taste:</p>
+
+<pre><code>SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+*/5 * * * * root /opt/opscode/embedded/bin/grocery-delivery
+</code></pre>
+
+<p>Cron hates me so lets be safe and force a reload.</p>
+
+<pre><code>/etc/init.d/cron reload
+</code></pre>
+
+<p>If you are having cron issues add <code>&amp;&gt;&gt; /tmp/gd.log</code> to the end of your command and reload to write debug info to a log file.</p>
+
+<h1 id="bonus">Bonus</h1>
+
+<p>If you wish to delete all cookbooks run:</p>
+
+<pre><code>knife cookbook bulk delete &quot;/*&quot;
+</code></pre>
+
+</div>
+
+
+  <footer class="container">
+  <div class="container navigation no-print">
+  <h2>Navigation</h2>
+  
+  
+
+    
+    <a class="prev" href="https://clburlison.com/python2-and-tls/" title="python2 and tls">
+      Previous
+    </a>
+    
+
+    
+
+  
+
+
+</div>
+
+  <div class="container comments">
+  <h2>Comments</h2>
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+</article>
+      <footer id="main-footer" class="container main_footer">
+  
+
+  <div class="container nav foot no-print">
+  
+
+  <a class="toplink" href="#">back to top</a>
+
+</div>
+
+  <div class="container credits">
+  
+<div class="container footline">
+  
+  powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>.
+
+
+</div>
+
+
+  
+<div class="container copyright">
+  
+  &copy; 2014 - 2017 Clayton Burlison
+
+
+</div>
+
+
+</div>
+
+</footer>
+
+    </main>
+    
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//clburlison.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+<script src="https://clburlison.com/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+  </body>
+</html>
+

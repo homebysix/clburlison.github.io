@@ -12,6 +12,222 @@
     <atom:link href="https://clburlison.com/categories/tech/feed/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Chef Grocery Delivery Setup</title>
+      <link>https://clburlison.com/chef-grocery-delivery-setup/</link>
+      <pubDate>Tue, 21 Mar 2017 10:21:13 -0500</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/chef-grocery-delivery-setup/</guid>
+      <description>
+
+&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/facebook/grocery-delivery&#34; target=&#34;_blank&#34;&gt;Grocery Delivery&lt;/a&gt; (GD) is a ruby gem that helps keep cookbooks, roles, and data bags in sync between a source control repo and your chef server. This allows administrators to keep their entire chef code in source control with continuous integration, peer reviews, and any other checks they can think of. Once the code has been checked and merged into the &lt;code&gt;master&lt;/code&gt; branch the &lt;code&gt;grocery-delivery&lt;/code&gt; binary takes the place of &lt;code&gt;knife upload&lt;/code&gt;. This can be ran on a cron job, or event based using web-hooks to verify that the latest code is on your chef server. This also means your server is safer from someone accidentally pushing breaking code to production.&lt;/p&gt;
+
+&lt;p&gt;So lets get started on setting up GD using a ubuntu 16.04 host that already has the chef server configured. You could technically run this on a separate box but keeping it on the chef server is easier to troubleshoot/maintain in my opinion.&lt;/p&gt;
+
+&lt;h1 id=&#34;requirements&#34;&gt;Requirements&lt;/h1&gt;
+
+&lt;p&gt;In case it wasn&amp;rsquo;t clear your chef server needs to already be setup, if not go to chef docs on &lt;a href=&#34;https://docs.chef.io/install_server.html&#34; target=&#34;_blank&#34;&gt;installing the server&lt;/a&gt;. Plus:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;access to a user key&lt;/li&gt;
+&lt;li&gt;access to a validator key&lt;/li&gt;
+&lt;li&gt;ssh access to the chef server&lt;/li&gt;
+&lt;li&gt;your chef repo in source control&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;setup&#34;&gt;Setup&lt;/h1&gt;
+
+&lt;p&gt;If you want a sample chef repo to fork I recommend forking my example repo:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/example-chef-repo&#34; target=&#34;_blank&#34;&gt;https://github.com/clburlison/example-chef-repo&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Run the following commands as root:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo su
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install the following packages so we can build dependencies for GD:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;apt-get update
+apt-get upgrade
+apt-get install cmake pkg-config
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install the GD gem into the chef server ruby path. The path is not a strict requirement but it is nice to have locked version of ruby:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/opt/opscode/embedded/bin/gem install grocery_delivery
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create the config file for GD using the default path.&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;NOTE: you will need to change the git &lt;code&gt;repo_url&lt;/code&gt; and potentially the &lt;code&gt;cookbook_paths&lt;/code&gt;, &lt;code&gt;role_path&lt;/code&gt;, and &lt;code&gt;databag_path&lt;/code&gt;.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;pre&gt;&lt;code&gt;vi /etc/gd-config.rb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Paste the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stdout          true
+repo_url        &#39;git@github.com:clburlison/chef-repo.git&#39;
+reponame        &#39;cpe&#39;
+cookbook_paths  [&#39;cookbooks&#39;]
+role_path       &#39;roles&#39;
+databag_path    &#39;data_bags&#39;
+rev_checkpoint  &#39;gd_revision&#39;
+knife_config    &#39;/root/.chef/knife.rb&#39;
+knife_bin       &#39;/opt/opscode/bin/knife&#39;
+vcs_type        &#39;git&#39;
+berks           false
+berks_bin       &#39;/opt/opscode/embedded/bin/berks&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a hidden chef folder for the root user:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir /root/.chef
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create the knife config:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi /root/.chef/knife.rb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Paste the following:&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;NOTE: make sure and update the &lt;code&gt;node_name&lt;/code&gt;, &lt;code&gt;client_key&lt;/code&gt;, &lt;code&gt;validation_client_name&lt;/code&gt;, and &lt;code&gt;chef_server_url&lt;/code&gt; keys&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;pre&gt;&lt;code&gt;log_level               :info
+log_location            STDOUT
+node_name               &#39;gd&#39;
+client_key              &#39;gd.pem&#39;
+validation_client_name  &#39;clburlison-validator&#39;
+validation_key          &#39;clburlison-validator.pem&#39;
+chef_server_url         &#39;https://chef.example.com/organizations/clburlison&#39;
+cookbook_path [
+  &#39;/var/chef/grocery_delivery_work/cpe/cookbooks/&#39;,
+]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Copy the copy the two pem files (&lt;code&gt;gd.pem&lt;/code&gt; and &lt;code&gt;clburlison-validator.pem&lt;/code&gt; from my example) from your admin workstation to the chef server under &lt;code&gt;/root/.chef&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;ssh-deploy-key&#34;&gt;SSH deploy key&lt;/h1&gt;
+
+&lt;p&gt;The following can be ran on your workstation or chef server.&lt;/p&gt;
+
+&lt;p&gt;Create a ssh deploy key so the Chef server can access your chef git repo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ssh-keygen -t rsa -b 4096 -C &amp;quot;gd-deploy@example.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Change the save location if you wish. Full output below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/clburlison/.ssh/id_rsa): /Users/clburlison/.ssh/gd_deploy
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /Users/clburlison/.ssh/gd_deploy.
+Your public key has been saved in /Users/clburlison/.ssh/gd_deploy.pub.
+The key fingerprint is:
+SHA256:4OIJ40Lncc7cwfAGY1UoBtutBDpKLoYwlOQDL8o9GkE chef-admin@clburlison.com
+The key&#39;s randomart image is:
++---[RSA 4096]----+
+|oE.o.  .o.       |
+|=o. +oo.         |
+|+B...Bo.         |
+|Oo= o.B.         |
+|=*o=.o.=S        |
+|+.=+Boo .        |
+|....o+ .         |
+| .               |
+|                 |
++----[SHA256]-----+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create the .ssh directory for the root user if it doesn&amp;rsquo;t exist:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir -p /root/.ssh/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Copy the &lt;code&gt;gd_deploy&lt;/code&gt; private key to your chef server under &lt;code&gt;/root/.ssh/id_rsa&lt;/code&gt;. Make sure the file permissions are correct:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;chmod 0600 /root/.ssh/id_rsa
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then add the key to your ssh agent:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eval &amp;quot;$(ssh-agent -s)&amp;quot;
+ssh-add /root/.ssh/id_rsa
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now copy the &lt;code&gt;gd_deploy.pub&lt;/code&gt; public key to your chef repo deploy key section. For Github the url will be:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/USERNAME/example-chef-repo/settings/keys&#34; target=&#34;_blank&#34;&gt;https://github.com/USERNAME/example-chef-repo/settings/keys&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34;&gt;
+  &lt;p&gt;NOTE: that this key should &lt;em&gt;not&lt;/em&gt; have write access to the git repo.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;p&gt;Make a test connection to github to add the RSA fingerprint.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ssh -T git@github.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You should get the following as output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;root@chef:~$ ssh -T git@github.com
+The authenticity of host &#39;github.com (192.30.253.113)&#39; can&#39;t be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &#39;github.com,192.30.253.113&#39; (RSA) to the list of known hosts.
+Hi clburlison/example-chef-repo! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;run-gd&#34;&gt;Run GD&lt;/h1&gt;
+
+&lt;p&gt;Great now if we did everything correctly the following command should add our code to the chef server:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/opt/opscode/embedded/bin/grocery-delivery -vv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If all works you&amp;rsquo;ll likely want to run this script on a cron job without the verbose flag:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi /etc/cron.d/gd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Paste the following to run every 5 minutes. Obviously modify to taste:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+*/5 * * * * root /opt/opscode/embedded/bin/grocery-delivery
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cron hates me so lets be safe and force a reload.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/etc/init.d/cron reload
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you are having cron issues add &lt;code&gt;&amp;amp;&amp;gt;&amp;gt; /tmp/gd.log&lt;/code&gt; to the end of your command and reload to write debug info to a log file.&lt;/p&gt;
+
+&lt;h1 id=&#34;bonus&#34;&gt;Bonus&lt;/h1&gt;
+
+&lt;p&gt;If you wish to delete all cookbooks run:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;knife cookbook bulk delete &amp;quot;/*&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>python2 and tls</title>
       <link>https://clburlison.com/python2-and-tls/</link>
       <pubDate>Fri, 10 Mar 2017 00:00:00 +0000</pubDate>
@@ -1668,303 +1884,6 @@ managedmac::sshd::users:
 &lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
 
 &lt;p&gt;Services are quite powerful and can end up saving quite a bit of time. Services are not only limited to Finder and can be expanded to pretty much all applications.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>AD Account Change</title>
-      <link>https://clburlison.com/adacctchange/</link>
-      <pubDate>Sat, 28 Mar 2015 00:00:00 +0000</pubDate>
-      <author>clburlison@gmail.com (Clayton Burlison)</author>
-      <guid>https://clburlison.com/adacctchange/</guid>
-      <description>
-
-&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
-
-&lt;p&gt;Changing user account logons in a deployed environment can cause some issues. Doing so with OS X clients that are bound to Active Directory can cause even more issues. Below is how I overcame some of the pitfalls of the built-in OS X Active Directory plugin. This article expands on the basic project Readme instructions located &lt;a href=&#34;https://github.com/clburlison/scripts/tree/master/clburlison_scripts/ADacctChange&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-03-28/opening_header.png&#34; alt=&#34;acct&#34; /&gt;&lt;/p&gt;
-
-&lt;div class=&#34;alert alert-info&#34;&gt;
-  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The above picture is for reference purposes only. All data has been modified.&lt;/p&gt;
-
-&lt;/div&gt;
-
-
-&lt;h1 id=&#34;why-would-you-do-that&#34;&gt;Why would you do that?&lt;/h1&gt;
-
-&lt;p&gt;We had two differing username structures for active employees:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;An older format of first initial followed by last name &lt;em&gt;(cburlison)&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;A newer format of employee ID number &lt;em&gt;(12345)&lt;/em&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Both of these structures have pros and cons but our goal was to use one structure with all employees both current and future.&lt;/p&gt;
-
-&lt;p&gt;We decided on a new structure of &amp;ldquo;b&amp;rdquo; followed by employee ID number &lt;em&gt;(b12345)&lt;/em&gt;. At the time, this was found to be the most compatible structure for our organization.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-03-28/ad_acct_structure.png&#34; alt=&#34;acct&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;down-side&#34;&gt;Down-side&lt;/h2&gt;
-
-&lt;p&gt;Unfortunately, when you change the &amp;ldquo;User Logon Name&amp;rdquo; in Active Directory funky things start to happen to Cached Mobile Accounts on OS X clients.&lt;/p&gt;
-
-&lt;p&gt;Most notably:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;unable to login with the updated name structure (10.7 &amp;amp; 10.9)&lt;/li&gt;
-&lt;li&gt;broken Kerberos for the affected Cached Accounts
-
-&lt;ul&gt;
-&lt;li&gt;broken Single-Sign-On&lt;/li&gt;
-&lt;li&gt;manually change the OS X &lt;code&gt;shortname&lt;/code&gt; when connecting to file-shares&lt;/li&gt;
-&lt;li&gt;likely more issues I did not find&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;unable to sign-in from the loginwindow (only affects 10.10)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;We needed to find a solution that allowed our Domain Administrators to move forward with the Account Policy change while allowing users to still &lt;strong&gt;use&lt;/strong&gt; their Macintosh computers.&lt;/p&gt;
-
-&lt;div class=&#34;alert alert-info&#34;&gt;
-  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; On Windows a simple reboot of the client computer will allow users to login with the new name structure. Windows has the polices in place to deal with this type of change. Good job Microsoft!&lt;/p&gt;
-
-&lt;/div&gt;
-
-
-&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
-
-&lt;p&gt;To solve the issues described above you can delete the Cached Accounts from any affected OS X computer. This will of course allow the employee to log in using their newly structured account name with the one minor set-back of having all their files deleted (or located in the old path). It does fix all the Kerberos issues. I however had no intentions of copying files for hundreds of employees throughout my organization.&lt;/p&gt;
-
-&lt;p&gt;What I needed to do was modify the Cached User Accounts already present on our OS X computers. It also needed to meet the following requirements:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Don&amp;rsquo;t run until we intact the new user account structure. (Default: April 6th, 2015 at 6am)&lt;/li&gt;
-&lt;li&gt;Only affect Cached Accounts that have their AD User Logon Name changed. Our student accounts were not being modified.&lt;/li&gt;
-&lt;li&gt;Don&amp;rsquo;t modify any Local account present.&lt;/li&gt;
-&lt;li&gt;Display text for our end users if they are present while the change is taking place. We have a reboot at the end.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;the-code&#34;&gt;The Code&lt;/h2&gt;
-
-&lt;p&gt;Below is a walk-through of the important lines of the &lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh&#34; target=&#34;_blank&#34;&gt;ADacctChange.sh&lt;/a&gt; script, along with a description. The purpose is to have additional information that does not really &amp;ldquo;belong&amp;rdquo; in the code comments.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L55-58&#34; target=&#34;_blank&#34;&gt;Variables L55-58&lt;/a&gt;&lt;br /&gt;
-These should be the only lines that need modification if you wish to adapt this script for a different environment. Variables named appropriately.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;DCSERVER=&amp;quot;bisd.k12&amp;quot;
-DOMAIN=&amp;quot;BISD&amp;quot;
-setTime=1504060600
-msg=&amp;quot;Currently applying a Critical patch. The system will reboot when finished.&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L73-84&#34; target=&#34;_blank&#34;&gt;Run script as root L73-84&lt;/a&gt;&lt;br /&gt;
-We are making system level changes which require root access. The following lines will prompt you for authentication if running the &lt;code&gt;ADacctChange.sh&lt;/code&gt; manually without elevated permissions.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;RunAsRoot()
-{
-        ## Pass in the full path to the executable as $1
-        if [[ &amp;quot;${USER}&amp;quot; != &amp;quot;root&amp;quot; ]] ; then
-echo
-echo &amp;quot;*** This application must be run as root. Please authenticate below. ***&amp;quot;
-                echo
-sudo &amp;quot;${1}&amp;quot; &amp;amp;&amp;amp; exit 0
-        fi
-}
-
-RunAsRoot &amp;quot;${0}&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L92-103&#34; target=&#34;_blank&#34;&gt;Check Data/Time L92-103&lt;/a&gt;&lt;br /&gt;
-The following lines were to solve a very specific need of my environment. We needed to install a LaunchDaemon along with the ADacctChange script to client computers early. Since the Account Policy change was going to be automated and ran over the weekend, I needed a way for computers to know &amp;ldquo;when&amp;rdquo; to start checking for changes to Active Directory Accounts. This date check solves that issue. Essentically checks the current system time and compares it to the &lt;code&gt;setTime&lt;/code&gt; variable from above.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;curTime=`date +%y%m%d%H%M`
-if [ &amp;quot;$setTime&amp;quot; -gt &amp;quot;$curTime&amp;quot; ]
-    then
-        echo &amp;quot;It is not time to run this script. Now exiting.&amp;quot;
-        exit 0
-elif [ &amp;quot;$setTime&amp;quot; -lt &amp;quot;$curTime&amp;quot; ]
-    then
-        echo &amp;quot;It is time to change the Active Directory Cached User Accounts on this system.&amp;quot;
-else
-        echo &amp;quot;Date/Time value is invalid. Now exiting.&amp;quot;
-        exit 0
-fi
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L112-118&#34; target=&#34;_blank&#34;&gt;Check if computer is bound to AD L112-118&lt;/a&gt;&lt;br /&gt;
-A simple check to make sure the client computer is bound to Active Directory. Sometimes computers are kicked off the domain, or never joined for special use cases. If this script is ran on one of those computers we will delete the script and LaunchDeamon.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# If the machine is not bound to AD, then there&#39;s no purpose going any further.
-check4AD=`/usr/bin/dscl localhost -list . | grep &amp;quot;Active Directory&amp;quot;`
-if [ &amp;quot;${check4AD}&amp;quot; != &amp;quot;Active Directory&amp;quot; ]; then
-	echo &amp;quot;This machine is not bound to Active Directory.\nPlease bind to AD first. &amp;quot;;
-    /bin/rm /Library/LaunchDaemons/com.github.clburlison.ADacctChange.plist
-    /bin/rm $0
-fi
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L120-140&#34; target=&#34;_blank&#34;&gt;Check for active network connection L120-140&lt;/a&gt;&lt;br /&gt;
-This check step is to make sure that an active network connection is present. When this script is launched via a LaunchDaemon we need to give the system time to talk with DNS and DHCP. This in theory can create an infinite loop if a connection is never made. The logic is not perfect so edge cases be warned.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Determine if the network is up by looking for any non-loopback internet network interfaces.
-CheckForNetwork()
-{
-	local test
-	if [ -z &amp;quot;${NETWORKUP:=}&amp;quot; ]; then
-		test=$(ifconfig -a inet 2&amp;gt;/dev/null | sed -n -e &#39;/127.0.0.1/d&#39; -e &#39;/0.0.0.0/d&#39; -e &#39;/inet/p&#39; | wc -l)
-		if [ &amp;quot;${test}&amp;quot; -gt 0 ]; then
-			NETWORKUP=&amp;quot;-YES-&amp;quot;
-		else
-			NETWORKUP=&amp;quot;-NO-&amp;quot;
-		fi
-	fi
-}
-
-# If the network never becomes active this could run indefinitely
-while [ &amp;quot;${NETWORKUP}&amp;quot; != &amp;quot;-YES-&amp;quot; ]
-do
-        sleep 5
-        NETWORKUP=
-        CheckForNetwork
-done
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L142-152&#34; target=&#34;_blank&#34;&gt;Check for connection to an Active Directory Server L142-152&lt;/a&gt;&lt;br /&gt;
-Another networking check to make sure the client computer is able to ping an Active Directory server, using the &lt;code&gt;DCSERVER&lt;/code&gt; variable.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# abort if we&#39;re not able to contact a configured directory server
-ping -c 1 -t 1 $DCSERVER  &amp;gt; /dev/null 2&amp;gt;&amp;amp;1
-if [ $? -eq 0 ]; then
- 		ONLOCALNETWORK=YES
-	echo &amp;quot;Computer is on the network: $ONLOCALNETWORK&amp;quot;
-else
- 		ONLOCALNETWORK=NO
-	echo &amp;quot;Computer is on the network: $ONLOCALNETWORK&amp;quot;
-	echo &amp;quot;Exiting. We cannot talk to the domain controller.&amp;quot;
-	exit 1
-fi
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L162-165&#34; target=&#34;_blank&#34;&gt;Check for BigHonkingText L162-165&lt;/a&gt;&lt;br /&gt;
-The &lt;code&gt;BigHonkingText&lt;/code&gt; binary is present if you use luggage to create a package for deployment. However, if running this script without &lt;code&gt;BigHonkingText&lt;/code&gt; this check will skipping outputting text for the end user.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;if [ -e &amp;quot;/usr/local/bin/BigHonkingText&amp;quot; ]; then
-  echo &amp;quot;BigHonkingText is on this system.&amp;quot;
-  /usr/local/bin/BigHonkingText -w 90% -h 20% -m -p 120 $msg &amp;gt;&amp;gt;/dev/null 2&amp;gt;&amp;amp;1 &amp;amp;
-fi
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L175-222&#34; target=&#34;_blank&#34;&gt;Check for Cached Accounts and modify if needed L175-222&lt;/a&gt;&lt;br /&gt;
-This is the meat of the script. This searches through /Users/ for all accounts. Then loops through each account to check for the following:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Don&amp;rsquo;t modify the /Users/Shared folder.&lt;/li&gt;
-&lt;li&gt;Don&amp;rsquo;t modify local accounts. We do this by looking for accounts present on the computer between uid 500 and 1000. This makes an assumption that all local accounts use Apple&amp;rsquo;s Default uid range.&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;code&gt;uniqueIDAD&lt;/code&gt; does a search against the domain for each user in /Users/ to see what the Active Directory UniqueID is. All accounts that have not changed will output some string number. All accounts that have been changed will output an error message since the User Logon Name has changed and can no longer be found in Active Directory. This error results in the &lt;code&gt;uniqueIDAD&lt;/code&gt; variable being null and displaying the following error:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;dscl_cmd&amp;gt; DS Error: -14136 (eDSRecordNotFound)
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;We then search for the new account name using the Cached Accounts UniqueID (these values should be the same).&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Once we have the new account name we move the old user account plist to a new user account plist modifying the &lt;code&gt;RecordName&lt;/code&gt; and &lt;code&gt;NFSHomeDirectory&lt;/code&gt; values.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Lastly, we move the old home directory to the new home directory path.&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;The &lt;code&gt;sleep&lt;/code&gt; commands slow the loop to make sure requests from computers do not slam a domain server all at one time.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;USERLIST=`find /Users -type d -maxdepth 1 -mindepth 1 -not -name &amp;quot;.&amp;quot;`
-for a in $USERLIST ; do
-    [[ &amp;quot;$a&amp;quot; == &amp;quot;/Users/Shared&amp;quot; ]] &amp;amp;&amp;amp; continue # Do not modify the Shared Folder
-
-    # Do not modify any local account with UID between 500-1000
-    prefix=&amp;quot;/Users/&amp;quot;
-    old=${a#$prefix}
-    OldID=`id -u $old`
-    [ &amp;quot;$OldID&amp;quot; -ge 500 -a &amp;quot;$OldID&amp;quot; -le 1000 ] &amp;amp;&amp;amp; continue
-
-    uniqueIDAD=`/usr/bin/dscl /Active\ Directory/$DOMAIN/All\ Domains -read $a UniqueID | awk &#39;{ print $2 }&#39;`
-    if [ &amp;quot;$uniqueIDAD&amp;quot; == &amp;quot;source&amp;quot; ]; then
-        echo &amp;quot;We have received bad data from dscl. Now exiting.&amp;quot;
-        exit 0
-    elif [ -z &amp;quot;$uniqueIDAD&amp;quot; ]; then
-        # The varraible is null. We need to modify the current Cached User:
-        # the following will be changed &amp;quot;Account Name&amp;quot; and &amp;quot;Home Directory&amp;quot;.
-        echo &amp;quot;Old username is: &amp;quot; $old
-        CachedUID=`/usr/bin/id -u $old`
-        echo &amp;quot;Cached UID is: &amp;quot; $CachedUID
-
-        # Get new username as a variable from the Domain
-        new=`/usr/bin/dscl /Active\ Directory/$DOMAIN/All\ Domains -search /Users UniqueID $CachedUID | awk &#39;NR==1{print $1; exit}&#39;`
-        echo &amp;quot;New username is: &amp;quot; $new
-
-        # Move the old AD account to the new Account name. Essentially creating a new user account.
-        /bin/mv /var/db/dslocal/nodes/Default/users/$old.plist /var/db/dslocal/nodes/Default/users/$new.plist
-        /usr/bin/killall opendirectoryd
-        sleep 10
-
-        # edit new user attributes, using same passwd hash
-        /usr/bin/dscl . -change /Users/$old RecordName $old $new
-        sleep 3
-        /usr/bin/dscl . -change /Users/$new NFSHomeDirectory /Users/$old /Users/$new
-        sleep 3
-        /usr/bin/killall opendirectoryd
-
-        # Move Home Directory. Check if there&#39;s a home folder there already, if there is, exit before we wipe it
-        if [ -f /Users/$new ]; then
-            echo &amp;quot;Oops, theres a home folder there already for $new.\nIf you don&#39;t want that one, delete it in the Finder first,\nthen run this script again.&amp;quot;
-        else
-            /bin/mv /Users/$old /Users/$new
-            /usr/sbin/chown -R ${new} /Users/$new
-            #/usr/bin/dscl . -append /Users/$new RecordName $old
-            echo &amp;quot;Home for $new now located at /Users/$new&amp;quot;
-        fi
-    fi
-done
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/ADacctChange/ADacctChange.sh#L231-234&#34; target=&#34;_blank&#34;&gt;Cleanup and reboot L231-234&lt;/a&gt;&lt;br /&gt;
-This preforms a cleanup of files, deleting the LaunchDaemon and script. The reboot is to force users to obtain a new Kerberos ticket when they login with the new Username structure.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;/bin/rm /Library/LaunchDaemons/com.github.clburlison.ADacctChange.plist
-/bin/rm $0
-
-/sbin/reboot
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;special-thanks&#34;&gt;Special thanks&lt;/h1&gt;
-
-&lt;p&gt;The following individuals had valuable code that I used while putting this project together.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Rich Trouton - &lt;a href=&#34;https://derflounder.wordpress.com/&#34; target=&#34;_blank&#34;&gt;https://derflounder.wordpress.com/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Charles Edge - &lt;a href=&#34;http://krypted.com/&#34; target=&#34;_blank&#34;&gt;http://krypted.com/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Jeff Kelley - &lt;a href=&#34;http://blog.slaunchaman.com/&#34; target=&#34;_blank&#34;&gt;http://blog.slaunchaman.com/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
-
-&lt;p&gt;The result was a package that is installable via &lt;a href=&#34;https://github.com/unixorn/luggage&#34; target=&#34;_blank&#34;&gt;Luggage&lt;/a&gt; and hosted on Github &lt;a href=&#34;https://github.com/clburlison/scripts/tree/master/clburlison_scripts/ADacctChange&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;As always feel free to drop a comment below or on Twitter. Feedback is always appreciated.&lt;/p&gt;
-
-&lt;h1 id=&#34;aftermath&#34;&gt;Aftermath&lt;/h1&gt;
-
-&lt;p&gt;For the most part our migration went smoothly in my environment. We installed this package a week prior to our Active Directory change and instructed our Mac users to reboot the morning after the change took place. For some users that did not reboot like we asked this script took over and forced a reboot. They had plenty of prior knowledge and at least received a nice popup using BigHonkingText explaining the reboot.&lt;/p&gt;
-
-&lt;div class=&#34;alert alert-danger&#34;&gt;
-  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; If you are using Dropbox in your environment this process will mess up Dropbox settings. Inside of &lt;code&gt;/Users/$HOME/.dropbox&lt;/code&gt; there is a setting that is hard coded to the users home directory path. I found the easiest solution is to run a &lt;code&gt;rm ~/.dropbox&lt;/code&gt; on the affected users profile. Followed by having the user re-sign in via the Dropbox application. Obviously this solution does not scale very well.&lt;/p&gt;
-
-&lt;/div&gt;
-
-
-&lt;hr /&gt;
-
-&lt;p&gt;Articles:&lt;br /&gt;
-&lt;a href=&#34;https://github.com/clburlison/scripts/tree/master/clburlison_scripts/ADacctChange&#34; target=&#34;_blank&#34;&gt;ADacctChange on Github&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
