@@ -9,8 +9,56 @@
     <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
     <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
     <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
-    <lastBuildDate>Tue, 21 Mar 2017 10:21:13 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 03 Apr 2017 09:12:44 -0500</lastBuildDate>
     <atom:link href="https://clburlison.com/post/feed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>10.12.4 locationd</title>
+      <link>https://clburlison.com/10.12.4-locationd/</link>
+      <pubDate>Mon, 03 Apr 2017 09:12:44 -0500</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/10.12.4-locationd/</guid>
+      <description>&lt;p&gt;New with 10.12.4, Apple has decided to protect the locationd LaunchDaemon with System Integrity Protection (SIP).&lt;/p&gt;
+
+&lt;p&gt;If you are not aware the locationd daemon is used for Location Services. This is the process that drives: FindMyMac, &amp;ldquo;Set time zone automatically using current location&amp;rdquo;, it allows applications to locate your computer, and more.&lt;/p&gt;
+
+&lt;p&gt;Some points to take away from this change:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;this modification happened during a point release&lt;/li&gt;
+&lt;li&gt;this path is not in &lt;code&gt;/System/Library/Sandbox/rootless.conf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;this restricts the ability to load and unload the daemon in any automated fashion&lt;/li&gt;
+&lt;li&gt;this breaks many of the bash scripts floating around that are used to enable the auto time zone feature&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You can verify this change with the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ls -laO /System/Library/LaunchDaemons/com.apple.locationd.plist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice &lt;code&gt;restricted&lt;/code&gt; in the output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;-rw-r--r--  1 root  wheel  restricted,compressed 573 Aug 29  2016 /System/Library/LaunchDaemons/com.apple.locationd.plist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This means you are no longer able to unload the daemon with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo launchctl unload /System/Library/LaunchDaemons/com.apple.locationd.plist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you try you will receive the following error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;/System/Library/LaunchDaemons/com.apple.locationd.plist: Operation not permitted while System Integrity Protection is engaged
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can verify that the service is indeed running with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo launchctl list | grep locationd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Seeing as how you might want to make changes to location services you work around this restriction with a &lt;code&gt;killall -9 locationd&lt;/code&gt;. At least for now&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Chef Grocery Delivery Setup</title>
@@ -1816,75 +1864,6 @@ managedmac::sshd::users:
 
 &lt;p&gt;Articles:
 &lt;a href=&#34;https://groups.google.com/d/msg/munki-dev/l_T_aZM9TGU/yb-CWZAv7UQJ&#34; target=&#34;_blank&#34;&gt;Tim&amp;rsquo;s comment on googlegroups/munki-dev&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Automator is not dead yet</title>
-      <link>https://clburlison.com/automator-is-not-dead-yet/</link>
-      <pubDate>Sat, 16 May 2015 00:00:00 +0000</pubDate>
-      <author>clburlison@gmail.com (Clayton Burlison)</author>
-      <guid>https://clburlison.com/automator-is-not-dead-yet/</guid>
-      <description>
-
-&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
-
-&lt;p&gt;Automator is unique in its ability of creating &amp;ldquo;automation&amp;rdquo; via the usage of a graphical tasked based workflow. Most other tools that I use for automation are command line driven. So what can you do that&amp;rsquo;s so amazing?&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Create applications. No really Automator has the ability to create a &lt;code&gt;.app&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Create services. The ability to directly apply changes inside of applications.&lt;/li&gt;
-&lt;li&gt;It is easy! No advanced computer skills are needed, however scripting languages are a great addition.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;services&#34;&gt;Services&lt;/h1&gt;
-
-&lt;p&gt;Creating a service is relatively simple. Below is the process of creating a service that removes spaces from files. When working with web servers the space character is encoded as &amp;ldquo;%20&amp;rdquo;. This annoys me and looks ugly. As such, I remove all spaces and replace them with underscores prior to uploading to a web site.&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Open Automator.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Create a new Service.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-new.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Change the &amp;ldquo;Service receives selected&amp;rdquo; to &amp;ldquo;files or folders&amp;rdquo; and leave &amp;ldquo;any application&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-received.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Search for &amp;ldquo;Rename&amp;rdquo; in the Library. Drag &amp;ldquo;Rename Finder Items&amp;rdquo; into the workflow.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-rename.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;If you see the following pop-up select &amp;ldquo;Don&amp;rsquo;t Add&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-popup.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Modify the workflow to match the following settings. The Find field has a single space character typed.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-rename-workflow.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Save and name your service. This service will live in &lt;code&gt;~/Library/Services/&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;To run a service simply right click on a single file or group of files and select the service. This will work on Folders as well.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/finder-service.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;my-services&#34;&gt;My Services&lt;/h2&gt;
-
-&lt;p&gt;Below are the services that I use frequently. To install these simply downloading, unzip, and double click on the &lt;code&gt;.workflow&lt;/code&gt; file. A prompt to install will be be presented.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Add_Prefix.workflow.zip&#34;&gt;Add_Prefix.workflow&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Print_Selection.workflow.zip&#34;&gt;Print_Selection.workflow&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Remove_Prefix.workflow.zip&#34;&gt;Remove_Prefix.workflow&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Remove_spaces.workflow.zip&#34;&gt;Remove_spaces.workflow&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
-
-&lt;p&gt;Services are quite powerful and can end up saving quite a bit of time. Services are not only limited to Finder and can be expanded to pretty much all applications.&lt;/p&gt;
 </description>
     </item>
     

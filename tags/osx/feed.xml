@@ -12,6 +12,54 @@
     <atom:link href="https://clburlison.com/tags/osx/feed/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>10.12.4 locationd</title>
+      <link>https://clburlison.com/10.12.4-locationd/</link>
+      <pubDate>Mon, 03 Apr 2017 09:12:44 -0500</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/10.12.4-locationd/</guid>
+      <description>&lt;p&gt;New with 10.12.4, Apple has decided to protect the locationd LaunchDaemon with System Integrity Protection (SIP).&lt;/p&gt;
+
+&lt;p&gt;If you are not aware the locationd daemon is used for Location Services. This is the process that drives: FindMyMac, &amp;ldquo;Set time zone automatically using current location&amp;rdquo;, it allows applications to locate your computer, and more.&lt;/p&gt;
+
+&lt;p&gt;Some points to take away from this change:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;this modification happened during a point release&lt;/li&gt;
+&lt;li&gt;this path is not in &lt;code&gt;/System/Library/Sandbox/rootless.conf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;this restricts the ability to load and unload the daemon in any automated fashion&lt;/li&gt;
+&lt;li&gt;this breaks many of the bash scripts floating around that are used to enable the auto time zone feature&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You can verify this change with the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ls -laO /System/Library/LaunchDaemons/com.apple.locationd.plist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice &lt;code&gt;restricted&lt;/code&gt; in the output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;-rw-r--r--  1 root  wheel  restricted,compressed 573 Aug 29  2016 /System/Library/LaunchDaemons/com.apple.locationd.plist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This means you are no longer able to unload the daemon with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo launchctl unload /System/Library/LaunchDaemons/com.apple.locationd.plist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you try you will receive the following error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;/System/Library/LaunchDaemons/com.apple.locationd.plist: Operation not permitted while System Integrity Protection is engaged
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can verify that the service is indeed running with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo launchctl list | grep locationd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Seeing as how you might want to make changes to location services you work around this restriction with a &lt;code&gt;killall -9 locationd&lt;/code&gt;. At least for now&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>python2 and tls</title>
       <link>https://clburlison.com/python2-and-tls/</link>
       <pubDate>Fri, 10 Mar 2017 00:00:00 +0000</pubDate>
