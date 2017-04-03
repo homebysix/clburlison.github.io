@@ -56,6 +56,8 @@
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Seeing as how you might want to make changes to location services you work around this restriction with a &lt;code&gt;killall -9 locationd&lt;/code&gt;. At least for now&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;Hat tap to Michael Pinto (@pintom) and Balmes Pavlov (@bp) for the ping that lead to this discovery in the MacAdmins Slack.&lt;/p&gt;
 </description>
     </item>
     
