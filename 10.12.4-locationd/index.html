@@ -55,7 +55,7 @@
     },
     "datePublished": "2017-04-03",
     "description": "",
-    "wordCount": 232
+    "wordCount": 290
   }
 </script>
 
@@ -192,7 +192,7 @@
 
   
   &middot; Read in about 2 min
-  &middot; (232 Words)
+  &middot; (290 Words)
   <br>
   
 <a class="label" href="https://clburlison.com/tags/osx">osx</a>
@@ -209,7 +209,13 @@
 
 
   <div class="container content">
-  <p>New with 10.12.4, Apple has decided to protect the locationd LaunchDaemon with System Integrity Protection (SIP).</p>
+  <div class="alert alert-info">
+  <p><strong>Update:</strong> I made an incorrect assumption regarding SIP and the change with 10.12.4. This post has been corrected. Thanks <a href="https://twitter.com/patgmac" target="_blank">Patrick Gallagher</a> and <a href="https://twitter.com/bruienne" target="_blank">Pepijn Bruienne</a> for pointing out the mistake.</p>
+
+</div>
+
+
+<p>New with 10.12.4, Apple has decided to protect the locationd LaunchDaemon with System Integrity Protection (SIP).</p>
 
 <p>If you are not aware the locationd daemon is used for Location Services. This is the process that drives: FindMyMac, &ldquo;Set time zone automatically using current location&rdquo;, it allows applications to locate your computer, and more.</p>
 
@@ -217,20 +223,11 @@
 
 <ol>
 <li>this modification happened during a point release</li>
-<li>this path is not in <code>/System/Library/Sandbox/rootless.conf</code></li>
 <li>this restricts the ability to load and unload the daemon in any automated fashion</li>
 <li>this breaks many of the bash scripts floating around that are used to enable the auto time zone feature</li>
 </ol>
 
-<p>You can verify this change with the following command:</p>
-
-<pre><code class="language-bash">ls -laO /System/Library/LaunchDaemons/com.apple.locationd.plist
-</code></pre>
-
-<p>Notice <code>restricted</code> in the output:</p>
-
-<pre><code class="language-bash">-rw-r--r--  1 root  wheel  restricted,compressed 573 Aug 29  2016 /System/Library/LaunchDaemons/com.apple.locationd.plist
-</code></pre>
+<p>With 10.12.4 Apple has removed the locationd service from the <code>RemovableServices</code> dictionary in <code>/System/Library/Sandbox/com.apple.xpc.launchd.rootless.plist</code>. You can see the <a href="https://gist.github.com/clburlison/54e2fd5c2ee42ced1c642c78c10a68e2" target="_blank">full diff here</a>. Over 400 other services have also been removed from this list. However, a handful of services have been added to this list.</p>
 
 <p>This means you are no longer able to unload the daemon with:</p>
 
@@ -242,14 +239,19 @@
 <pre><code class="language-bash">/System/Library/LaunchDaemons/com.apple.locationd.plist: Operation not permitted while System Integrity Protection is engaged
 </code></pre>
 
-<p>You can verify that the service is indeed running with:</p>
+<p>As a bonus the above unload will result in an exit 0 if you check via:</p>
+
+<pre><code class="language-bash">echo $?
+</code></pre>
+
+<p>You can also verify that the service is indeed running with:</p>
 
 <pre><code class="language-bash">sudo launchctl list | grep locationd
 </code></pre>
 
 <p>Seeing as how you might want to make changes to location services you work around this restriction with a <code>killall -9 locationd</code>. At least for now&hellip;</p>
 
-<p>Hat tap to Michael Pinto (@pintom) and Balmes Pavlov (@bp) for the ping that lead to this discovery in the MacAdmins Slack.</p>
+<p>Hat tap to Michael Pinto (@pintom) and <a href="https://babodee.wordpress.com" target="_blank">Balmes Pavlov</a> (@bp) for the ping that lead to this discovery in the MacAdmins Slack.</p>
 
 </div>
 

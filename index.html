@@ -168,10 +168,9 @@
   <p class="container content">
   
   
-    New with 10.12.4, Apple has decided to protect the locationd LaunchDaemon with System Integrity Protection (SIP).
+    Update: I made an incorrect assumption regarding SIP and the change with 10.12.4. This post has been corrected. Thanks Patrick Gallagher and Pepijn Bruienne for pointing out the mistake.
+ New with 10.12.4, Apple has decided to protect the locationd LaunchDaemon with System Integrity Protection (SIP).
 If you are not aware the locationd daemon is used for Location Services. This is the process that drives: FindMyMac, &ldquo;Set time zone automatically using current location&rdquo;, it allows applications to locate your computer, and more.
-Some points to take away from this change:
- this modification happened during a point release this path is not in /System/Library/Sandbox/rootless.
   
 
 
