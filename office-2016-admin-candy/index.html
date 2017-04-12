@@ -55,7 +55,7 @@
     },
     "datePublished": "2017-04-11",
     "description": "",
-    "wordCount": 844
+    "wordCount": 839
   }
 </script>
 
@@ -193,7 +193,7 @@
 
   
   &middot; Read in about 4 min
-  &middot; (844 Words)
+  &middot; (839 Words)
   <br>
   
 <a class="label" href="https://clburlison.com/tags/microsoft">microsoft</a>
@@ -269,9 +269,15 @@
 
 <h1 id="office-suite-delta-updates">Office Suite Delta Updates</h1>
 
+<div class="alert alert-info">
+  <p>2017-04-12: An incorrect statement regarding the suite deltas has now been corrected.</p>
+
+</div>
+
+
 <p>This one is my <strong>absolute</strong> favorite update as it means we now have anther upgrade option (not sarcasm actually super cool). I have been a big fan of using the full SKULess installer package for both initial installs and updates on my fleet since my finds in January in 2016.</p>
 
-<p>This might look like a minor quality of life but it took quite a bit of engineering to get this released. The Office team created a new delivery method for their update package. Now instead of doing just file based diffs they are able to do binary level diffs so they can apply literally just the bits of data that have changed<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>. This method allows the team to wrap all updates, PowerPoint, Word, Excel, Outlook, and OneNote<sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup>, into a single ~280 MB update package for the entire suite. This will allow users to go from something like 15.33 to 15.34 with a single package that is almost a 1 GB smaller than the SKULess installer and almost 350 MB smaller than the five individual delta updates. Please note all of this is over the wire data and on disk space is not being changed.</p>
+<p>This might look like a minor quality of life but it took quite a bit of engineering to get this released. Now instead of doing file based diffs for each of the applications individually, the team is able to do a complete diff of the entire suite. This method allows the team to wrap all updates, PowerPoint, Word, Excel, Outlook, and OneNote<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>, into a single ~280 MB update package for the entire suite. This will allow users to go from something like 15.33 to 15.34 with a single package that is almost a 1 GB smaller than the SKULess installer and almost 350 MB smaller than the five individual delta updates. Please note all of this is over the wire data and on disk space is not being changed.</p>
 
 <p>A few warnings, before you start dropping this package into your management system, it should be noted that you will need to verify that the package is &ldquo;safe&rdquo; to install yourself. If you are using MAU to deliver your updates this will be an automatic change that will happen in the future. <a href="https://github.com/pbowden-msft/MAUCacheAdmin" target="_blank">MAUCacheAdmin</a> has already been updated to support this new package so you will need to update your script if you are using a Caching Server. However Munki/Casper admins that plan on using this package will need to verify the following criteria is met:</p>
 
@@ -302,10 +308,8 @@
 <hr />
 
 <ol>
-<li id="fn:1"><a href="https://macadmins.slack.com/archives/C07UZ1X7B/p1490795471759432" target="_blank">https://macadmins.slack.com/archives/C07UZ1X7B/p1490795471759432</a>
+<li id="fn:1">OneNote is special and might not apply if you are installing from the Mac Apple Store
  <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
-<li id="fn:2">OneNote is special and might not apply if you are installing from the Mac Apple Store
- <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
 </ol>
 </div>
 
