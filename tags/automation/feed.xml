@@ -2,14 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Automation on clburlison</title>
-    <link>https://clburlison.com/tags/automation/feed/index.xml</link>
+    <link>https://clburlison.com/tags/automation/</link>
     <description>Recent content in Automation on clburlison</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-EN</language>
     <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
     <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
     <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
-    <atom:link href="https://clburlison.com/tags/automation/feed/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Jan 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://clburlison.com/tags/automation/feed.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Zendesk Automation for Mail</title>
@@ -17,153 +20,8 @@
       <pubDate>Wed, 18 Jan 2017 00:00:00 +0000</pubDate>
       <author>clburlison@gmail.com (Clayton Burlison)</author>
       <guid>https://clburlison.com/zendesk-automation-for-mail/</guid>
-      <description>
-
-&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
-
-&lt;p&gt;Before I get into the material of this post I want to refer you to an article written last week by Sal Soghoian, &lt;a href=&#34;https://www.macstories.net/stories/app-extensions-are-not-a-replacement-for-user-automation/&#34; target=&#34;_blank&#34;&gt;click here&lt;/a&gt;. The information that he provides regarding user automation is exactly what makes the process described in this post possible.&lt;/p&gt;
-
-&lt;p&gt;In case you are not aware, Zendesk is a web-based helpdesk application that is cloud hosted and quite popular. They have an email API that allows agents to create a ticket with a simple email. The power behind this API starts to show when you are an agent that happens to get many emails that could be tickets. &lt;em&gt;cough&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Now with that out of the way let&amp;rsquo;s look at some automation for Zendesk.&lt;/p&gt;
-
-&lt;!---
-# Apple Mail Stationary
-
-This was the method I attempted first however it turned out to be a big flop. Mail Stationary can only be applied to new emails.
-
-The Mail Stationary is great for creating new tickets. However what is a use has emailed you the issue directly. The simple solution is, use Zendesk&#39;s same email API commands. The only problem is stationary emails are only allowed for new emails in Apple mail.
-
-1. Download stationary
-  This step is given because no matter how you create your stationary it won&#39;t work. It&#39;s actually much easier to just start with this temporary file rather than using Apple&#39;s Mail to start the creation process.
-
-  [[ INSERT ZIP DONWLOAD HERE ]]
-
-
-1. Double click the .mailstationery file to load it into Apple Mail.
-1. Close Mail.app if you have it open
-
-Now lets modify the file.
-
-1. Open the stationary directory `~/Library/Containers/com.apple.mail/Data/Library/Application Support/Mail/Stationery/Apple/Contents/Resources/Custom/Contents/Resources`
-1. Rename your temp.mailstationery to whatever name you wish your stationery to have (don&#39;t include spaces)
-1. Right click your stationary and click &#34;Show Package Contents&#34;
-1. Go down the directory Contents &gt; Resources and open &#39;content.html&#39; in a text editor
-1. Replace the text with whatever you wish to message to say. Make sure and include the break (`&lt;br&gt;`) tag after every space. Apple&#39;s Mail.app is actually reading this file as an html file. However for Zendesk to read your meta-data these must be plain text. Also, make sure and include your email signature here if you wish to do so. Stationary emails will **NOT** include your default signature.
-1. Save the file when finished
-1. Now modify your &#39;Description.plist&#39; changing your Display Name, Folder Name, and TO address accordingly.
-1. Save your file when finished
-1. Open Apple Mail
-1. Create a new message
-1. Click on the Stationary button (VERIFY this button is enabled by default)
-1. Scroll down to &#39;Custom&#39;
-1. Select your template
-
-At this point if you wish to add the stationary to your favorites just drag it up to the favorites folder. This gives you an easy way to create ticket all from your email. Just make sure and modify any of the command tags.
----&gt;
-
-&lt;h1 id=&#34;automator&#34;&gt;Automator&lt;/h1&gt;
-
-&lt;p&gt;Zendesk has a great article on &lt;a href=&#34;https://support.zendesk.com/hc/en-us/articles/203691006-Updating-ticket-properties-from-your-inbox&#34; target=&#34;_blank&#34;&gt;Updating Ticket Properties from You Inbox&lt;/a&gt; that gives an overview of what the mail API does and how it works. This post will extend on the API to help automate the process. We are going to use an Automator service to type all of the metadata fields. It should be noted that this process will work in Outlook and Apple Mail for macOS. An example of the output can be seen below:&lt;/p&gt;
-
-
-&lt;figure &gt;
-    
-        &lt;img src=&#34;https://clburlison.com/images/2017-01-18/mail_api_example_2.png&#34; alt=&#34;Example api metadata&#34; /&gt;
-    
-    
-    &lt;figcaption&gt;
-        &lt;h4&gt;Example metadata for the email API. Image credit Zendesk.&lt;/h4&gt;
-        
-    &lt;/figcaption&gt;
-    
-&lt;/figure&gt;
-
-
-&lt;ol&gt;
-&lt;li&gt;You can download a template service from &lt;a href=&#34;https://github.com/clburlison/automator_services/archive/master.zip&#34; target=&#34;_blank&#34;&gt;github.com/clburlison/automator_services&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Unzip the archive file and double-click on the &lt;code&gt;_AssignZendeskTicket.workflow&lt;/code&gt; file.&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;When you see the following popup select &amp;ldquo;Open in Automator&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2017-01-18/automator_prompt.png&#34; alt=&#34;automator prompt&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;You will see the following AppleScript action:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;on run {input, parameters}
-tell application &amp;quot;System Events&amp;quot;
-  keystroke &amp;quot;support@example.zendesk.com&amp;quot;
-  keystroke tab
-  keystroke tab
-  keystroke tab
-  keystroke tab
-  #keystroke &amp;quot;#requester&amp;quot;
-  #keystroke space
-  #keystroke return
-  keystroke &amp;quot;#assignee jane.doe@example.com&amp;quot;
-  keystroke return
-  keystroke &amp;quot;#location Some location&amp;quot;
-  keystroke return
-  keystroke &amp;quot;#group IT Staff&amp;quot;
-  keystroke return
-  keystroke &amp;quot;#status open&amp;quot;
-  keystroke return
-  keystroke &amp;quot;#priority normal&amp;quot;
-  keystroke return
-  keystroke &amp;quot;#type incident&amp;quot;
-  keystroke return
-  keystroke &amp;quot;#public false&amp;quot;
-  keystroke return
-  #keystroke return
-  #keystroke &amp;quot;Hi ___ENTER_NAME_HERE,&amp;quot;
-  #keystroke return
-  #keystroke return
-  #keystroke &amp;quot;MESSAGE_HERE.&amp;quot;
-  #keystroke return
-  keystroke return
-end tell
-end run
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;You will want to modify many of the lines to match your location, group, default status, etc.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Notice that I have the &lt;code&gt;#requester&lt;/code&gt; metadata field commented out with a hash (&lt;code&gt;#&lt;/code&gt;), this is due to a Zendesk setting that we have enabled (you might need to uncomment this)&lt;/li&gt;
-&lt;li&gt;I also have a few additional lines at the end for comments if you want to add to the ticket on creation.&lt;/li&gt;
-&lt;li&gt;Lastly, I have four (4) &lt;code&gt;keystroke tab&lt;/code&gt; lines this is due to me enabling the &amp;ldquo;Bcc&amp;rdquo; field so delete one of the tabs if you don&amp;rsquo;t have this enabled.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Once you have made all the changes that you want you will want to save and close the file.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Now double click on the &lt;code&gt;_AssignZendeskTicket.workflow&lt;/code&gt; file once again, this time selecting &amp;ldquo;Install&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2017-01-18/automator_prompt.png&#34; alt=&#34;automator prompt&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;After the service has been installed the workflow will be copied to &lt;code&gt;~/Library/Services/&lt;/code&gt;. In case you need to locate the service to make changes in the future.&lt;/p&gt;
-
-&lt;p&gt;To use the service start a new email (or forward an existing email) in Apple Mail or Outlook. Go to the application name in the menu bar » Services » select &lt;code&gt;AssignZendeskTicket&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2017-01-18/assign_ticket.png&#34; alt=&#34;Assign ticket&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;If you wish to add a keyboard shortcut&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Open &lt;strong&gt;System Preferences&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;Go to &lt;strong&gt;Keyboard » Shortcuts » Services&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;Now assign your service a keyboard shortcut. I used Command + Option + H (⌘ + ⌥ + H)
-&lt;img src=&#34;https://clburlison.com/images/2017-01-18/services.png&#34; alt=&#34;Services&#34; /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Resources:&lt;br /&gt;
-&lt;a href=&#34;https://support.zendesk.com/hc/en-us/articles/203691006-Updating-ticket-properties-from-your-inbox&#34; target=&#34;_blank&#34;&gt;Updating Ticket Properties from You Inbox&lt;/a&gt;,&lt;br /&gt;
-&lt;a href=&#34;http://apple.stackexchange.com/a/87989&#34; target=&#34;_blank&#34;&gt;Automatically Inserting Text Globally&lt;/a&gt;,&lt;br /&gt;
-&lt;a href=&#34;http://alvinalexander.com/blog/post/mac-os-x/applescript-simulating-enter-key&#34; target=&#34;_blank&#34;&gt;applescript-simulating-enter-key&lt;/a&gt;,&lt;br /&gt;
-&lt;a href=&#34;http://eastmanreference.com/complete-list-of-applescript-key-codes/&#34; target=&#34;_blank&#34;&gt;Complete list of AppleScript key codes&lt;/a&gt;,&lt;br /&gt;
-&lt;a href=&#34;https://support.apple.com/kb/PH13916?locale=en_US&#34; target=&#34;_blank&#34;&gt;OS X Mavericks: Create keyboard shortcuts for apps&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>Intro Before I get into the material of this post I want to refer you to an article written last week by Sal Soghoian, click here. The information that he provides regarding user automation is exactly what makes the process described in this post possible.
+In case you are not aware, Zendesk is a web-based helpdesk application that is cloud hosted and quite popular. They have an email API that allows agents to create a ticket with a simple email.</description>
     </item>
     
     <item>
@@ -172,28 +30,7 @@ end run
       <pubDate>Mon, 16 Nov 2015 00:00:00 +0000</pubDate>
       <author>clburlison@gmail.com (Clayton Burlison)</author>
       <guid>https://clburlison.com/slack-rsync/</guid>
-      <description>&lt;p&gt;With a little push from &lt;a href=&#34;https://github.com/groob&#34; target=&#34;_blank&#34;&gt;@groob&lt;/a&gt;, I have created a simple python script that runs a rsync command and sends a summary of the run to &lt;a href=&#34;https://slack.com/&#34; target=&#34;_blank&#34;&gt;Slack&lt;/a&gt;. Slack was not created to be a storage vault for server logs however it does great for short sms style messages. If you are using a log collection service like &lt;a href=&#34;https://www.elastic.co/products/logstash&#34; target=&#34;_blank&#34;&gt;logstash&lt;/a&gt; you could extend on this script to include the link to your uploaded log or if an error occurs you could automatically create a helpdesk ticket for you to investigate the issue.&lt;/p&gt;
-
-&lt;p&gt;My use case is simple, every day I sync my munki repo to a separate server (I also have backups don&amp;rsquo;t worry). I only need to know that the task completed successfully. I have little desire to see a verbose output of every single line of an rsync run. With the rsync &lt;code&gt;--stats&lt;/code&gt; flag you can see a summary of the run which is then sent to Slack. The green bar will change to red if an error has occurred, which allows anyone to know if an error has occurred at a glance.&lt;/p&gt;
-
-&lt;p&gt;Sample output:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-10-16/sample.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;For this to work you will need to:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;setup &lt;a href=&#34;http://linuxconfig.org/passwordless-ssh&#34; target=&#34;_blank&#34;&gt;ssh passwordless login&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;create a Slack &amp;ldquo;Incoming Webhook&amp;rdquo;
-
-&lt;ul&gt;
-&lt;li&gt;visit &lt;a href=&#34;https://slack.com/services/new/incoming-webhook&#34; target=&#34;_blank&#34;&gt;https://slack.com/services/new/incoming-webhook&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;modify the &lt;a href=&#34;https://github.com/clburlison/scripts/blob/master/clburlison_scripts/slack/sync_slack/sync_slack.py&#34; target=&#34;_blank&#34;&gt;sync_slack.py&lt;/a&gt; as needed&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To see the project README and get the script visit: &lt;a href=&#34;https://github.com/clburlison/scripts/tree/master/clburlison_scripts/slack/sync_slack&#34; target=&#34;_blank&#34;&gt;sync_slack&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>With a little push from @groob, I have created a simple python script that runs a rsync command and sends a summary of the run to Slack. Slack was not created to be a storage vault for server logs however it does great for short sms style messages. If you are using a log collection service like logstash you could extend on this script to include the link to your uploaded log or if an error occurs you could automatically create a helpdesk ticket for you to investigate the issue.</description>
     </item>
     
     <item>
@@ -202,116 +39,8 @@ end run
       <pubDate>Wed, 27 May 2015 00:00:00 +0000</pubDate>
       <author>clburlison@gmail.com (Clayton Burlison)</author>
       <guid>https://clburlison.com/configuration-management/</guid>
-      <description>
-
-&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
-
-&lt;p&gt;This is part one in a four part series on using Puppet on OS X. However to understand my move to Puppet I wanted to share my thoughts on Configuration Management (CM) in general.&lt;/p&gt;
-
-&lt;p&gt;For the last five months, I have been seriously questioning my deployment/management process. Even with Munki&amp;rsquo;s native support for configuration profiles in &lt;a href=&#34;https://github.com/munki/munki/releases/tag/v2.2.4&#34; target=&#34;_blank&#34;&gt;v2.2.4&lt;/a&gt;, it has always seemed like I was creating extra work for myself. This extra work is mainly related to how we need to manage settings on OS X, it is quite the balancing act:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;What settings are required for me to manage?&lt;/li&gt;
-&lt;li&gt;What settings should I apply defaults?&lt;/li&gt;
-&lt;li&gt;What settings should I leave alone?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Many sysadmins have the idea of &amp;ldquo;settings&amp;rdquo; as a user level choice however in education that is not really a fair comparison to private corporations. Students and teachers should have an easy transition to using the OS X platform. If that means I add all the &amp;ldquo;Program specific&amp;rdquo; applications to the dock, then so be it I will add them all. This is were I started to run into a major road block with Munki. It was designed to manage software installs. Even though I can package specific settings to work for 18+ different classrooms it is error prone  and quite a royal pain to manage.&lt;/p&gt;
-
-&lt;p&gt;In comes Configuration Management to the rescue. Obligatory CM definition below.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Configuration management (CM) is a systems engineering process for establishing and maintaining consistency of a product&amp;rsquo;s performance, functional and physical attributes with its requirements, design and operational information throughout its life.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;en.wikipedia.org/wiki/Configuration_management&#34; target=&#34;_blank&#34;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&#34;pain-prior-to-cm&#34;&gt;Pain prior to CM&lt;/h1&gt;
-
-&lt;p&gt;Before using CM, I was required to maintain many different scripts for prod, testing, classroomA, classroomB, classroomC, etc. In conjunction add on firstboot scripts as those &lt;a href=&#34;https://github.com/rtrouton/rtrouton_scripts/tree/master/rtrouton_scripts/first_boot&#34; target=&#34;_blank&#34;&gt;rarely change&lt;/a&gt; &lt;em&gt;{sarcasm}&lt;/em&gt;. Firstboot scripts are great in getting a system setup however after initial setup everything goes the way of the Dodo bird. Configuration Management allows one to apply settings to their entire fleet, sub sections of the fleet, and effectively say &amp;ldquo;Be this way until I say otherwise.&amp;rdquo; It&amp;rsquo;s great but a huge change in the way of thinking if you are use to the &amp;ldquo;Apply this now&amp;rdquo; mentality which is effectively how many use Munki (myself included).&lt;/p&gt;
-
-&lt;p&gt;But doesn&amp;rsquo;t Munki have check a &lt;code&gt;installcheck_script&lt;/code&gt;? Yes, that feature is available but it does not replace the services that many CM products provide.&lt;/p&gt;
-
-&lt;p&gt;Tim Sutton explained this recently on the munki-dev googlegroup. A relevant quote is below however the specific thread is of value related to this idea of CM and Munki.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;More and more of these CM &amp;lsquo;tasks&amp;rsquo; are best handled using Configuration&lt;br /&gt;
-Profiles, and Munki actually has good built-in support for these. I&amp;rsquo;ve&lt;br /&gt;
-been able to get by using Munki as my &amp;ldquo;configuration management&amp;rdquo;&lt;br /&gt;
-system instead of implementing another tool, just because the things I&lt;br /&gt;
-would use Puppet for only account for about 5% of the items in my&lt;br /&gt;
-repository - the rest are installers for software, updates,&lt;br /&gt;
-configuration profiles and supporting LaunchAgents/LaunchDaemons.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://twitter.com/tvsutton&#34; target=&#34;_blank&#34;&gt;Tim Sutton&lt;/a&gt; - &lt;a href=&#34;https://groups.google.com/d/msg/munki-dev/l_T_aZM9TGU/yb-CWZAv7UQJ&#34; target=&#34;_blank&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;What Tim says above is absolutely true. However when that 5% is the most time consuming to &amp;ldquo;manage&amp;rdquo; and update you might want to look into a different solution. I have gotten away with using Munki as an all-in-one solution for over three years however when you need something custom&amp;hellip;you have to write something custom. Also, don&amp;rsquo;t forget to verify that custom something you just wrote works on all machines, with the logic in place to work with older operating systems.&lt;/p&gt;
-
-&lt;h1 id=&#34;how-to-use-cm&#34;&gt;How to use CM?&lt;/h1&gt;
-
-&lt;p&gt;I am still relatively new to using configuration management. However I have been working on a functional approach that fills the gap for me. The best advice I can give is to use CM for settings. Use a software solution, like Munki, for all packages. When you start making your CM product install software things can get complicated very quickly.&lt;/p&gt;
-
-&lt;p&gt;For a list of items I believe a CM product excels at managing:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Admin account&lt;/li&gt;
-&lt;li&gt;All profiles (Wi-fi, Safari, Finder, Office2011, Chrome, iCloud, LoginWindow, etc.)&lt;/li&gt;
-&lt;li&gt;Management scripts (dockutil, BigHonkingText, Exchange Setup, etc.)&lt;/li&gt;
-&lt;li&gt;Remote Management settings&lt;/li&gt;
-&lt;li&gt;Remote Login&lt;/li&gt;
-&lt;li&gt;Sudoers file&lt;/li&gt;
-&lt;li&gt;etc.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;puppet&#34;&gt;Puppet&lt;/h1&gt;
-
-&lt;p&gt;After looking around at the many options for CM I decided on using Puppet. But don&amp;rsquo;t let me stop you from checking out the &lt;a href=&#34;http://en.wikipedia.org/wiki/Comparison_of_open-source_configuration_management_software&#34; target=&#34;_blank&#34;&gt;competition&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;I had already used Puppet personally but had always hated the idea of yet another server to maintain for yet another service. Puppet has had the ability to use a masterless setup, via &lt;code&gt;puppet apply&lt;/code&gt;, however usage of a masterless setup always seemed even more unlikely for me. After revisiting the issues again in February of 2015 using this solution finally started to seem more feasible.&lt;/p&gt;
-
-&lt;p&gt;Puppet takes a huge change in thinking. Puppet code defines a state that you want clients to be in&amp;hellip;not how to be in that state. This will be touched on later but I wanted to plant that seed prior to getting into the full setup later. I found getting started with Puppet was relatively easy however starting to manage specific parts of the OS X client leaves tons of room for issues to arise. With the assistance mainly the &lt;a href=&#34;https://github.com/dayglojesus/managedmac&#34; target=&#34;_blank&#34;&gt;managedmac&lt;/a&gt; module from Brian Warsing it becomes much easier to work with OS X clients using puppet.&lt;/p&gt;
-
-&lt;h2 id=&#34;example-code&#34;&gt;Example code&lt;/h2&gt;
-
-&lt;p&gt;The hiera code below is used to create a local admin account and make sure that account is always present:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;managedmac::users::accounts:
-  ladmin:
-    uid: 999
-    gid: 80
-    ensure: present
-    iterations: 36630
-    password: 92d2d837084ac329006a16d67f8c87fdba141b6665c2d4910aee72e3ce777bd58cc7170fe266201ddc8bfc79ca78ab6ba85824019429e8f37072dc0cc26cf7b726d78f8d7543eb72c7be2db6483c3027d77e0eb8146d6dc03e10e5650d7c2560a97b86b287e945dbcf112edde5f3c61b07ee80615e0ada5ac11278651f9eef4b
-    salt: 2562f7a1bde6eac36352ec1a4621ee945e663a2180bb90fab0f9cdd98b202d3e
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;em&gt;Note:&lt;/em&gt; the above password is &lt;code&gt;temp&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;To allow that admin account to have ssh and remote management access:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;managedmac::remotemanagement::enable: true
-managedmac::remotemanagement::users:
-  techsupport: -1073741569
-
-managedmac::sshd::enable: true
-managedmac::sshd::users:
-   - techsupport
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The syntax is easy to read. Even without knowing anything about Puppet or how Hiera works the above lines should make sense. Unfortunately, the above code on its own does nothing. The computer needs to know how to use that code which I will detail in a later post.&lt;/p&gt;
-
-&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
-
-&lt;p&gt;Although using CM is not needed everywhere it can become quite handy. Using check scripts and creating multiple packages for closely related settings can be time consuming plus they are prone to error. In using Puppet, I am able to apply settings for multiple different groups however I only write the code once. The main advantage is when change is needed all 18+ versions look to one &amp;ldquo;master code&amp;rdquo; allowing me to make my updated change once.&lt;/p&gt;
-
-&lt;p&gt;In following posts I will describe the setup process and specifics on how to use Puppet in a masterless workflow.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Articles:
-&lt;a href=&#34;https://groups.google.com/d/msg/munki-dev/l_T_aZM9TGU/yb-CWZAv7UQJ&#34; target=&#34;_blank&#34;&gt;Tim&amp;rsquo;s comment on googlegroups/munki-dev&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>Intro This is part one in a four part series on using Puppet on OS X. However to understand my move to Puppet I wanted to share my thoughts on Configuration Management (CM) in general.
+For the last five months, I have been seriously questioning my deployment/management process. Even with Munki&amp;rsquo;s native support for configuration profiles in v2.2.4, it has always seemed like I was creating extra work for myself.</description>
     </item>
     
     <item>
@@ -320,67 +49,8 @@ managedmac::sshd::users:
       <pubDate>Sat, 16 May 2015 00:00:00 +0000</pubDate>
       <author>clburlison@gmail.com (Clayton Burlison)</author>
       <guid>https://clburlison.com/automator-is-not-dead-yet/</guid>
-      <description>
-
-&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
-
-&lt;p&gt;Automator is unique in its ability of creating &amp;ldquo;automation&amp;rdquo; via the usage of a graphical tasked based workflow. Most other tools that I use for automation are command line driven. So what can you do that&amp;rsquo;s so amazing?&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Create applications. No really Automator has the ability to create a &lt;code&gt;.app&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Create services. The ability to directly apply changes inside of applications.&lt;/li&gt;
-&lt;li&gt;It is easy! No advanced computer skills are needed, however scripting languages are a great addition.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;services&#34;&gt;Services&lt;/h1&gt;
-
-&lt;p&gt;Creating a service is relatively simple. Below is the process of creating a service that removes spaces from files. When working with web servers the space character is encoded as &amp;ldquo;%20&amp;rdquo;. This annoys me and looks ugly. As such, I remove all spaces and replace them with underscores prior to uploading to a web site.&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Open Automator.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Create a new Service.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-new.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Change the &amp;ldquo;Service receives selected&amp;rdquo; to &amp;ldquo;files or folders&amp;rdquo; and leave &amp;ldquo;any application&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-received.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Search for &amp;ldquo;Rename&amp;rdquo; in the Library. Drag &amp;ldquo;Rename Finder Items&amp;rdquo; into the workflow.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-rename.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;If you see the following pop-up select &amp;ldquo;Don&amp;rsquo;t Add&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-popup.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Modify the workflow to match the following settings. The Find field has a single space character typed.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/service-rename-workflow.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Save and name your service. This service will live in &lt;code&gt;~/Library/Services/&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;To run a service simply right click on a single file or group of files and select the service. This will work on Folders as well.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-05-16/finder-service.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;my-services&#34;&gt;My Services&lt;/h2&gt;
-
-&lt;p&gt;Below are the services that I use frequently. To install these simply downloading, unzip, and double click on the &lt;code&gt;.workflow&lt;/code&gt; file. A prompt to install will be be presented.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Add_Prefix.workflow.zip&#34;&gt;Add_Prefix.workflow&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Print_Selection.workflow.zip&#34;&gt;Print_Selection.workflow&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Remove_Prefix.workflow.zip&#34;&gt;Remove_Prefix.workflow&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://clburlison.com/images/2015-05-16/Remove_spaces.workflow.zip&#34;&gt;Remove_spaces.workflow&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
-
-&lt;p&gt;Services are quite powerful and can end up saving quite a bit of time. Services are not only limited to Finder and can be expanded to pretty much all applications.&lt;/p&gt;
-</description>
+      <description>Intro Automator is unique in its ability of creating &amp;ldquo;automation&amp;rdquo; via the usage of a graphical tasked based workflow. Most other tools that I use for automation are command line driven. So what can you do that&amp;rsquo;s so amazing?
+ Create applications. No really Automator has the ability to create a .app. Create services. The ability to directly apply changes inside of applications. It is easy! No advanced computer skills are needed, however scripting languages are a great addition.</description>
     </item>
     
     <item>
@@ -389,33 +59,8 @@ managedmac::sshd::users:
       <pubDate>Tue, 10 Feb 2015 00:00:00 +0000</pubDate>
       <author>clburlison@gmail.com (Clayton Burlison)</author>
       <guid>https://clburlison.com/puppet-module-desktoppicture/</guid>
-      <description>
-
-&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
-
-&lt;p&gt;I have been using puppet in one way or another since April of 2014. My first introduction to puppet was &lt;a href=&#34;https://boxen.github.com/&#34; target=&#34;_blank&#34;&gt;boxen&lt;/a&gt; but up until recently I have only focused on how puppet can apply to me personally. With this module and a few ideas I have for the future this is going to change the way clients are configured at &lt;code&gt;$work_place&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Now this technically is not my first module it is the first module that I have created the logic and wrote entirely myself. The predecessor to this module &lt;a href=&#34;https://github.com/clburlison/puppet-outset&#34; target=&#34;_blank&#34;&gt;puppet-outset&lt;/a&gt; was basically a few line changes from a module that Graham Gilbert &lt;a href=&#34;https://github.com/grahamgilbert/puppet-scriptrunner&#34; target=&#34;_blank&#34;&gt;made&lt;/a&gt;. With this project my eyes have been really opened into how powerful puppet is.&lt;/p&gt;
-
-&lt;h2 id=&#34;what-does-it-do&#34;&gt;What does it do?&lt;/h2&gt;
-
-&lt;p&gt;This module handles dynamically creating scripts that will change the wallpaper on Mac OS X. It has been testing with 10.7 through 10.10. Works great with hiera and validates your data if you input bad entries. This module is in a way an add-on to my &lt;a href=&#34;https://github.com/clburlison/puppet-outset&#34; target=&#34;_blank&#34;&gt;puppet-outset&lt;/a&gt; module.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2015-02-10/puppet-module.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/puppet-desktoppicture&#34; target=&#34;_blank&#34;&gt;Check it out&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;If you are familiar with puppet code and the standard practices the documentation I have included within the classes should make this module self-explanatory. Also, if you have any issues please let me know on &lt;a href=&#34;https://github.com/clburlison/puppet-desktoppicture/issues&#34; target=&#34;_blank&#34;&gt;Github&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h1 id=&#34;more&#34;&gt;More&lt;/h1&gt;
-
-&lt;p&gt;In the next few months expect a few more posts on puppet from the OS X Administration perspective.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Articles:&lt;br /&gt;
-&lt;a href=&#34;https://github.com/clburlison/puppet-desktoppicture&#34; target=&#34;_blank&#34;&gt;desktoppicture on GitHub&lt;/a&gt;,&lt;/p&gt;
-</description>
+      <description>Intro I have been using puppet in one way or another since April of 2014. My first introduction to puppet was boxen but up until recently I have only focused on how puppet can apply to me personally. With this module and a few ideas I have for the future this is going to change the way clients are configured at $work_place.
+Now this technically is not my first module it is the first module that I have created the logic and wrote entirely myself.</description>
     </item>
     
   </channel>

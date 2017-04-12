@@ -2,14 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Macbrained on clburlison</title>
-    <link>https://clburlison.com/tags/macbrained/feed/index.xml</link>
+    <link>https://clburlison.com/tags/macbrained/</link>
     <description>Recent content in Macbrained on clburlison</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-EN</language>
     <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
     <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
     <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
-    <atom:link href="https://clburlison.com/tags/macbrained/feed/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Nov 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://clburlison.com/tags/macbrained/feed.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Hack The Mac 2015</title>
@@ -17,106 +20,8 @@
       <pubDate>Thu, 19 Nov 2015 00:00:00 +0000</pubDate>
       <author>clburlison@gmail.com (Clayton Burlison)</author>
       <guid>https://clburlison.com/hack-the-mac-2015/</guid>
-      <description>
-
-&lt;p&gt;I almost missed Hack the Mac this year but luckily Twitter let me know once it had already started. Since I showed up late, I missed the first project overview and needed to go back to the video on demand to review what was said. While I was watching I thought it might be useful for others if I compiled a short overview with video links.&lt;/p&gt;
-
-&lt;p&gt;All three projects were already brought to my attention before the event but here is my take away after watching the event:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;NBICreator can queue build jobs (I&amp;rsquo;ve already build multiple NBIs).&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;I managed to use Recipe Robot to create a new recipe with little to no effort, output recipe was &lt;a href=&#34;https://github.com/autopkg/clburlison-recipes/tree/master/AutoImagrNBI&#34; target=&#34;_blank&#34;&gt;AutoImagrNBI&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Zentral has also been on my radar for a few weeks but I&amp;rsquo;ve yet to do anything besides read through the docs. Hoping to spin up a docker instance soon™ (eventually). It. Looks. Awesome!&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;vod-links&#34;&gt;VOD Links&lt;/h1&gt;
-
-&lt;h3 id=&#34;nbicreator&#34;&gt;NBICreator&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:09:25&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/2015-10-19/nbi.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;NBICreator is a NetInstall image creation tool for OS X written in Objective-C.&lt;/p&gt;
-
-&lt;p&gt;The following NetInstall images are currently supported:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;NetInstall&lt;/li&gt;
-&lt;li&gt;DeployStudio&lt;/li&gt;
-&lt;li&gt;Imagr&lt;/li&gt;
-&lt;li&gt;Casper (Alpha)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The design and idea of the application is to be able to create different types of NetInstall images in one single application, and to save the configuration in a template to be reused when the NetInstall image need to be updated for newer versions of the OS.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Project Link: &lt;a href=&#34;https://github.com/NBICreator/NBICreator&#34; target=&#34;_blank&#34;&gt;github.com/NBICreator/NBICreator&lt;/a&gt;&lt;br /&gt;
-VOD Link: &lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:09:25&#34; target=&#34;_blank&#34;&gt;click here&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;recipe-robot&#34;&gt;Recipe Robot&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:24:12&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/2015-10-19/robot.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Recipe Robot is the easiest way to create new AutoPkg recipes for simple Mac apps. It consists of two components:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;A &lt;a href=&#34;https://github.com/homebysix/recipe-robot#python-script-usage&#34; target=&#34;_blank&#34;&gt;Python script&lt;/a&gt; that takes various types of input and automatically outputs AutoPkg recipes.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;A &lt;a href=&#34;https://github.com/homebysix/recipe-robot#mac-app-usage&#34; target=&#34;_blank&#34;&gt;native Mac app&lt;/a&gt; that puts a friendly face on the Python script and makes it as simple as dragging and dropping. You can &lt;a href=&#34;https://github.com/homebysix/recipe-robot/releases/latest&#34; target=&#34;_blank&#34;&gt;download the latest version of the app here&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;This two-pronged approach allows AutoPkg novices to easily create recipes that follow community-accepted guidelines, and still provides a command-line tool for more advanced AutoPkg users. Also, using Python for program logic fosters community contribution to this project.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Project Link: &lt;a href=&#34;https://github.com/homebysix/recipe-robot&#34; target=&#34;_blank&#34;&gt;github.com/homebysix/recipe-robot&lt;/a&gt;&lt;br /&gt;
-VOD Link: &lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:24:12&#34; target=&#34;_blank&#34;&gt;click here&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;zentral&#34;&gt;Zentral&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:32:45&#34;&gt;&lt;img src=&#34;https://clburlison.com/images/2015-10-19/zentral.png&#34; alt=&#34;&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/zentralopensource/zentral&#34; target=&#34;_blank&#34;&gt;Zentral&lt;/a&gt; is a new open-source project initiated by Apfelwerk in Summer/Fall 2015. Zentral combines &lt;a href=&#34;https://osquery.io/&#34; target=&#34;_blank&#34;&gt;osquery&lt;/a&gt;&amp;rsquo;s powerful endpoint inventory features with a flexible notification and action framework. This enables one to identify and react to changes on OS X and Linux clients. Zentral consolidates the osquery information with inventory data from client management suites, e.g. JAMF Casper Suite and Sal. All details and events stored in a full text search engine.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Project Link: &lt;a href=&#34;https://github.com/zentralopensource/zentral&#34; target=&#34;_blank&#34;&gt;github.com/zentralopensource/zentral&lt;/a&gt;&lt;br /&gt;
-VOD Link: &lt;a href=&#34;http://www.ustream.tv/recorded/77932147#to00:32:45&#34; target=&#34;_blank&#34;&gt;click here&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;For the full event link &lt;a href=&#34;http://www.ustream.tv/recorded/77932147&#34; target=&#34;_blank&#34;&gt;click here&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;winners&#34;&gt;Winners&lt;/h1&gt;
-
-&lt;p&gt;As for the winners, if you feel like seeing what the judges picked you&amp;rsquo;ll need to click the discloser arrows. I didn&amp;rsquo;t want to ruin the experience for anyone.&lt;/p&gt;
-
-&lt;article&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;In 3rd place...&lt;/summary&gt;
-  &lt;p&gt;Zentral&lt;/p&gt;
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;In 2nd place...&lt;/summary&gt;
-  &lt;p&gt;NBICreator&lt;/p&gt;
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;In 1st place...&lt;/summary&gt;
-  &lt;p&gt;Recipe Robot&lt;/p&gt;
-&lt;/details&gt;
-
-
-&lt;/article&gt;
-
-&lt;p&gt;In reality we are all winners. Thanks to Macbrained for hosting the event, the sponsors, and special thanks to the developers for all your hard work.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Links:&lt;br /&gt;
-&lt;a href=&#34;http://macbrained.org/&#34; target=&#34;_blank&#34;&gt;Macbrained.org&lt;/a&gt;,&lt;br /&gt;
-&lt;a href=&#34;http://macbrained.org/event/hack-the-mac-finale-year-end-wrap-up/&#34; target=&#34;_blank&#34;&gt;Hack the Mac Finale &amp;amp; Year End Wrap Up&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>I almost missed Hack the Mac this year but luckily Twitter let me know once it had already started. Since I showed up late, I missed the first project overview and needed to go back to the video on demand to review what was said. While I was watching I thought it might be useful for others if I compiled a short overview with video links.
+All three projects were already brought to my attention before the event but here is my take away after watching the event:</description>
     </item>
     
   </channel>

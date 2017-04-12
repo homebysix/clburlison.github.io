@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Macos on clburlison</title>
+    <link>https://clburlison.com/tags/macos/</link>
+    <description>Recent content in Macos on clburlison</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-EN</language>
+    <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
+    <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
+    <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
+    <lastBuildDate>Mon, 03 Apr 2017 09:12:44 -0500</lastBuildDate>
+    
+	<atom:link href="https://clburlison.com/tags/macos/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>10.12.4 locationd</title>
+      <link>https://clburlison.com/10.12.4-locationd/</link>
+      <pubDate>Mon, 03 Apr 2017 09:12:44 -0500</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/10.12.4-locationd/</guid>
+      <description>Update: I made an incorrect assumption regarding SIP and the change with 10.12.4. This post has been corrected. Thanks Patrick Gallagher and Pepijn Bruienne for pointing out the mistake.
+ New with 10.12.4, Apple has decided to protect the locationd LaunchDaemon with System Integrity Protection (SIP).
+If you are not aware the locationd daemon is used for Location Services. This is the process that drives: FindMyMac, &amp;ldquo;Set time zone automatically using current location&amp;rdquo;, it allows applications to locate your computer, and more.</description>
+    </item>
+    
+    <item>
+      <title>python2 and tls</title>
+      <link>https://clburlison.com/python2-and-tls/</link>
+      <pubDate>Fri, 10 Mar 2017 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/python2-and-tls/</guid>
+      <description>For your Friday viewing pleasure I present the following cartoon.
+ Credit: https://xkcd.com/356/   Background In case you do not know Apple deprecated the usage of OpenSSL in favor of Common Crypto, back with the release of OS X Lion (10.7) in 2011. On Apple&amp;rsquo;s latest operating system macOS Sierra (10.12) OpenSSL is currently at version &amp;ldquo;0.9.8zh&amp;rdquo; with very little indication that it will get updated. Now this is a specific build that Apple created and it does have a few back-ported fixes however this version doesn&amp;rsquo;t support TLSv1.</description>
+    </item>
+    
+    <item>
+      <title>Zendesk Automation for Mail</title>
+      <link>https://clburlison.com/zendesk-automation-for-mail/</link>
+      <pubDate>Wed, 18 Jan 2017 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/zendesk-automation-for-mail/</guid>
+      <description>Intro Before I get into the material of this post I want to refer you to an article written last week by Sal Soghoian, click here. The information that he provides regarding user automation is exactly what makes the process described in this post possible.
+In case you are not aware, Zendesk is a web-based helpdesk application that is cloud hosted and quite popular. They have an email API that allows agents to create a ticket with a simple email.</description>
+    </item>
+    
+    <item>
+      <title>AutoWake</title>
+      <link>https://clburlison.com/autowake/</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/autowake/</guid>
+      <description>Apple has some pretty nice energy savings options built into macOS. Most of these options are tucked nicely inside of the Energy Saver pane of System Preferences.
+The above settings get written to the com.apple.AutoWake preference and looks like:
+defaults read /Library/Preferences/SystemConfiguration/com.apple.AutoWake { RepeatingPowerOff = { eventtype = shutdown; time = 1020; weekdays = 127; }; RepeatingPowerOn = { eventtype = wakepoweron; time = 420; weekdays = 31; }; }  Weekdays Some of these values are a bit opaque once they are written to the preferences domain.</description>
+    </item>
+    
+    <item>
+      <title>Demystify Office 2016 for Mac</title>
+      <link>https://clburlison.com/demystify-office2016/</link>
+      <pubDate>Thu, 14 Jan 2016 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/demystify-office2016/</guid>
+      <description>Intro Microsoft Office 2016 for Mac had a rough start for sure. With that being said things have gotten better and quite rapidly. This post will focus on where Office 2016 for Mac currently stands, commonly asked questions, best practices, and solutions for updates.
+This post should serve as a overview of the changes to Office 2016 (O2016) for Mac from about November 2015 to Present (January 14th).
+Before we can get too far into this post it needs to be noted that none of this would be possible without the hard work and support of the following individuals.</description>
+    </item>
+    
+    <item>
+      <title>Sign Packages with Luggage</title>
+      <link>https://clburlison.com/sign-packages-with-luggage/</link>
+      <pubDate>Thu, 13 Nov 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/sign-packages-with-luggage/</guid>
+      <description>Intro Are you an Apple Developer? Most of the Apple Admin Community have developer accounts for the simple reason of gaining access to beta releases earlier than the public. This extra times allows us to test for changes that might affect the environments we support before it ends up in the hands of our users. Up until this point that is the only reason I could justify having a Dev account.</description>
+    </item>
+    
+    <item>
+      <title>Preview files from terminal</title>
+      <link>https://clburlison.com/preview-files-from-terminal/</link>
+      <pubDate>Mon, 10 Nov 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/preview-files-from-terminal/</guid>
+      <description>QuickLook scans file contents before you open those files. Usually this just lets you view a file quickly. But you can also use this same technology from the command line to bring about a change to the Finder without actually opening a file. To access QuickLook from the command line, use qlmanage.
+qlmanage -p ~/Desktop/MyTowel42.pdf
+&amp;mdash;Charles Edge
+ I highly recommend adding an alias to your either your .bashrc or .</description>
+    </item>
+    
+    <item>
+      <title>Bash if then cheat sheet</title>
+      <link>https://clburlison.com/bash-if-then-cheat-sheet/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/bash-if-then-cheat-sheet/</guid>
+      <description>I always find myself looking for a good resource when writing if/then statements in bash scripts. It&amp;rsquo;s hard to remember all the combinations when you simply do not use most of them frequently. Below is my personal cheat sheet&amp;hellip;copied here because I was tired of having to look for a good resource.
+Examples on usage can be found in the original article.
+integer comparison # The following are for number values only.</description>
+    </item>
+    
+    <item>
+      <title>Show Help Desk Information</title>
+      <link>https://clburlison.com/show-helpdesk-info/</link>
+      <pubDate>Mon, 14 Jul 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/show-helpdesk-info/</guid>
+      <description>Display useful information on your Desktop using Geektool. Make troubleshooting network issues for your end users easier. Find your hostname faster. The amount of useful information is limitless. If you can script it&amp;hellip;you can display it.
+ My geektools results.   Introduction Firstly, I take no credit for this valuable resource. All credit should go to Erik Gomez from the munki-dev mailing list. All I have done is modified the script to work in my environment.</description>
+    </item>
+    
+    <item>
+      <title>Bender</title>
+      <link>https://clburlison.com/bender/</link>
+      <pubDate>Fri, 11 Jul 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/bender/</guid>
+      <description>Many administrators use OS X Server. In my opinion the server OS has always lacked choices when it comes to backing up the server services data. Until I found Bender&amp;hellip;
+ Bender is a utility written by Forget Computers to automate the backup of OS X Server settings to provide easy restoration of services should they become corrupt, and for importing server settings after a migration or server upgrade.
+Bender Home Page</description>
+    </item>
+    
+    <item>
+      <title>Encrypted DMGs</title>
+      <link>https://clburlison.com/encrypted-dmgs/</link>
+      <pubDate>Tue, 17 Jun 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/encrypted-dmgs/</guid>
+      <description>We all know about file security but how many of our users take the time to properly protect their data? Sure you can make policy but unless someone documents the expectations, reasons, and how to do it, many users will simply ignore policy. How about personal files, we all store data on our computers that we know should be protect but how? Well luckily Apple has a very simple solution to the problem explained above.</description>
+    </item>
+    
+    <item>
+      <title>Find My Mac</title>
+      <link>https://clburlison.com/find-my-mac/</link>
+      <pubDate>Mon, 19 May 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/find-my-mac/</guid>
+      <description>Under the hood of Find My Mac there are some security details that are not widely published. These details should not concern most consumers however I found them quite interesting.
+When a user enables Find My Mac (FMM) on their computer this is a system level change. This means if a user wishes to enable FMM they must be an administrator of the computer. A result of this is that in most environments where students are standard users this feature should never be enabled by accident.</description>
+    </item>
+    
+    <item>
+      <title>Enable AirDrop on Ethernet</title>
+      <link>https://clburlison.com/enable-airdrop-on-ethernet/</link>
+      <pubDate>Fri, 18 Apr 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/enable-airdrop-on-ethernet/</guid>
+      <description>A quick post over enabling AirDrop to use an ethernet connection along with the default wireless connection.
+ AirDrop helps you share items with others nearby&amp;hellip;a quick way to share files wirelessly between two Macs, without having to connect to an existing network.
+&amp;ndash; Apple KB Article
+ AirDrop provides a great file-sharing experience and numerous departments at my workplace have grown to love it. The service is good for simple file exchanges without needing to use a files-share.</description>
+    </item>
+    
+    <item>
+      <title>Setting up a puppetmaster on Mavericks</title>
+      <link>https://clburlison.com/setting-up-a-puppetmaster-on-mavericks/</link>
+      <pubDate>Fri, 04 Apr 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/setting-up-a-puppetmaster-on-mavericks/</guid>
+      <description>For various reasons I decided to set up my puppetmaster on an OS X install of Mavericks instead of what I would consider the norm, being a linux distro. Here are the results. This documentation is strongly based on the article by Nate Walck on afp548.com.
+Notice: I do not use these instructions any longer. The setup of a puppetmaster on OS X Server was just for testing purposes.</description>
+    </item>
+    
+    <item>
+      <title>Shrinking the disk image of an OS X VM</title>
+      <link>https://clburlison.com/shrinking-the-disk-image-of-an-os-x-vm/</link>
+      <pubDate>Tue, 01 Apr 2014 00:00:00 +0000</pubDate>
+      <author>clburlison@gmail.com (Clayton Burlison)</author>
+      <guid>https://clburlison.com/shrinking-the-disk-image-of-an-os-x-vm/</guid>
+      <description>Reducing the size of a guest OS X Virtual Machines&amp;rsquo;s vmdk file requires a few steps. For a Windows VM&amp;rsquo;s, there is a tool from VMWare with a GUI. Unfortunately, there is not an equivalent tool for the Mac guest VM.
+This technique has tested and confirmed on OS X 10.9.2 using VMware Fusion 6.02 though it should work from 10.7 and up. This assumes your guest vm’s disk is not pre-allocated, and the virtual machine does not have any snapshots.</description>
+    </item>
+    
+  </channel>
+</rss>

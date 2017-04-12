@@ -2,14 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Luggage on clburlison</title>
-    <link>https://clburlison.com/tags/luggage/feed/index.xml</link>
+    <link>https://clburlison.com/tags/luggage/</link>
     <description>Recent content in Luggage on clburlison</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-EN</language>
     <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
     <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
     <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
-    <atom:link href="https://clburlison.com/tags/luggage/feed/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Nov 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://clburlison.com/tags/luggage/feed.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Sign Packages with Luggage</title>
@@ -17,170 +20,7 @@
       <pubDate>Thu, 13 Nov 2014 00:00:00 +0000</pubDate>
       <author>clburlison@gmail.com (Clayton Burlison)</author>
       <guid>https://clburlison.com/sign-packages-with-luggage/</guid>
-      <description>
-
-&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
-
-&lt;p&gt;Are you an Apple Developer? Most of the Apple Admin Community have developer accounts for the simple reason of gaining access to beta releases earlier than the public. This extra times allows us to test for changes that might affect the environments we support before it ends up in the hands of our users. Up until this point that is the only reason I could justify having a Dev account. Recently I found out that being a developer gives you the access to sign packages using a secure certificate from Apple, which I will document below.&lt;/p&gt;
-
-&lt;p&gt;As of October 24th, commit &lt;a href=&#34;https://github.com/unixorn/luggage/commit/4d270a0dbc5f31bebbf9672d4a2970ad6316c8b4&#34; target=&#34;_blank&#34;&gt;4d270a0&lt;/a&gt; of the Luggage project, packagemaker is no longer a requirement!! A pretty big deal since packagemaker has not seen an update since the late days of Snow Leopard. This update to Luggage, makes use of Apple&amp;rsquo;s built-in pkgutil command to build native OS X packages. For quite some time you could force Luggage to use pkgutil but this required adding &lt;code&gt;PKGBUILD=1&lt;/code&gt; to the top of every Makefile.&lt;/p&gt;
-
-&lt;p&gt;Luggage allows us to create packages that meet the following requirements:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;repeatability&lt;/li&gt;
-&lt;li&gt;mobile&lt;/li&gt;
-&lt;li&gt;sharable&lt;/li&gt;
-&lt;li&gt;easy incremental versioning&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;the-setup&#34;&gt;The Setup&lt;/h1&gt;
-
-&lt;p&gt;The above is fantastic news and it lays the groundwork for Luggage to sign packages. Honestly, pkgutil is doing all of the hardwork behind the scene but I found documentation on using Luggage to sign packages spread all over. The goal below is to document the process of signing a package from start to finish.&lt;/p&gt;
-
-&lt;div class=&#34;alert alert-info&#34;&gt;
-  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Apple recommends requesting a certificate via Xcode and while it is quite possible, and much easier, I found that the certificate generated via Xcode is only valid for 365 days. Doing it the manual method below creates a certificate valid for five (5) years.&lt;/p&gt;
-
-&lt;/div&gt;
-
-
-&lt;h2 id=&#34;obtaining-the-certificate&#34;&gt;Obtaining the certificate&lt;/h2&gt;
-
-&lt;p&gt;Visit the &lt;a href=&#34;https://developer.apple.com&#34; target=&#34;_blank&#34;&gt;Apple Developer page&lt;/a&gt; and login via the Member Center link (top right).&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Click the on the certificates section.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/0-certiicates.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Click on the Mac certificate section.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/0-mac-certs.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Create a new certificate from the plus (+) button.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/0-new-cert.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Create a new Developer ID.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/1-create-dev-id.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Create an &amp;ldquo;installer&amp;rdquo; certificate to use with Luggage.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/2-dev-installer.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;The steps on this page explain how to create a certificate signing request (csr). I will detail the steps in following images. For now just open &amp;ldquo;Keychain Access&amp;rdquo;.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/3-create-csr.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Keychain Access &amp;gt; Certificate Assistant &amp;gt; Request a Certificate from a Certificate Authority&amp;hellip;
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/4-keychain-csr.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Fill in the Email address and Common Name.&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&#34;alert alert-danger&#34;&gt;
-  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Do not fill in the CA Email per Apple&amp;rsquo;s instructions.&lt;/p&gt;
-
-&lt;/div&gt;
-
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2014-11-13/5-creating-the-csr.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;After the CSR is created upload to Apple&amp;rsquo;s website.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/6-upload-csr.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Generate the certificate.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/7-generate-cert.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Download your newly created certificate.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/8-dl-cert.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Double click your cert to install into your keychain. (I choice to install to my login keychain)&lt;br /&gt;
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/9-install-cert.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;For reference my certificate looks like the below.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/10-sample-cert.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;create-a-signed-package&#34;&gt;Create a signed package&lt;/h2&gt;
-
-&lt;p&gt;Great we have a newly created certificate ready for us to use. Now we need to sign a package and what better package to sign then luggage itself.&lt;/p&gt;
-
-&lt;p&gt;If you already have the Luggage downloaded simply change directory into the project directory. Else download it with git using the following.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone https://github.com/unixorn/luggage.git /your/luggage/path
-cd /your/luggage/path
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If by some chance you have made it this far without actually installing luggage run the following&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;make bootstrap_files
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now lets make a non-signed package with luggage, that installs luggage (meta enough for ya), run the following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;make pkg
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Rename the package to &lt;code&gt;luggage-no-sign.pkg&lt;/code&gt;. We are doing this for comparisons later.&lt;/p&gt;
-
-&lt;p&gt;To tell luggage to sign the package you need to add the following line of code inside of the Makefile at the beginning. Make sure to change the information in the double quotes with the name of your certificate (review image 11 above).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;PB_EXTRA_ARGS+= --sign &amp;quot;Developer ID Installer: Clayton Burlison&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you are lost on where to add the code in the Makefile see the sample below:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;&amp;lt;----------------
-#
-# Sample package that packages luggage.make and prototype.plist
-
-include luggage.make
-PB_EXTRA_ARGS+= --sign &amp;quot;Developer ID Installer: Clayton Burlison&amp;quot;
-
-TITLE=luggage
-REVERSE_DOMAIN=net.apesseekingknowledge
-PAYLOAD=pack-luggage.make pack-prototype.plist \
-	pack-usr-local-bin-app2luggage.rb
-
-help::
-	@-echo
-	@-echo &amp;quot;Installation&amp;quot;
-	@-echo
-	@-echo &amp;quot;To copy luggage&#39;s files to /usr/local/share/luggage: make bootstrap_files&amp;quot;
-----------------&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Lastly, lets create the signed package.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;make pkg
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If your login.keychain is locked or you decided to put your cert keys in a separate keychain you will see the following pop-up below. Simply type the password associated with that keychain to allow pkgutil to sign the package.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://clburlison.com/images/2014-11-13/12-access-to-keychain.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Notice below the visual lock on the signed package. This package will be trusted with Gatekeeper using the default settings.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/13-sign-vs-nonsign.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;If you click on the lock while in the installer window you can get details about the certificate used to sign a package.
-&lt;img src=&#34;https://clburlison.com/images/2014-11-13/14-verify-sign-package-cert.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;pkgbuild-vs-packagemaker&#34;&gt;Pkgbuild vs PackageMaker&lt;/h2&gt;
-
-&lt;p&gt;If you have any Makefiles using &lt;code&gt;postflight&lt;/code&gt; scripts they will need to change the script type to &lt;code&gt;postinstall&lt;/code&gt;. This is a requirement from using pkgutil.&lt;/p&gt;
-
-&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
-
-&lt;p&gt;Signing packages might seem like a great idea. Lets sign all the packages&amp;hellip;.but wait. Think of the reasons you are doing it first. It might make sense to &lt;strong&gt;not&lt;/strong&gt; sign packages. For example, if you are creating packages that are only ever going to be ran in Munki, it is not a requirement for that package to be signed. If your certificate expires, you will need to recreate a new package. If however you want to distribute packages to you end-users via the internet it might be company policy or best practice to sign packages. Just wanted to give warnings.&lt;/p&gt;
-
-&lt;h3 id=&#34;random-note&#34;&gt;Random Note&lt;/h3&gt;
-
-&lt;p&gt;In the update to 10.9.5 - Gatekeeper was re-enabled. Seems Apple is really wanting to beef up their security game.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Articles:&lt;br /&gt;
-&lt;a href=&#34;https://groups.google.com/forum/?fromgroups#!topic/the-luggage/9WeNMBcvKjA&#34; target=&#34;_blank&#34;&gt;Productsign&lt;/a&gt;,&lt;br /&gt;
-&lt;a href=&#34;https://github.com/unixorn/luggage&#34; target=&#34;_blank&#34;&gt;Luggage&lt;/a&gt;,&lt;br /&gt;
-&lt;a href=&#34;https://groups.google.com/forum/?fromgroups#!topic/the-luggage/aCU9nNsMUaE&#34; target=&#34;_blank&#34;&gt;Pkgbuild vs PackageMaker&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>Intro Are you an Apple Developer? Most of the Apple Admin Community have developer accounts for the simple reason of gaining access to beta releases earlier than the public. This extra times allows us to test for changes that might affect the environments we support before it ends up in the hands of our users. Up until this point that is the only reason I could justify having a Dev account.</description>
     </item>
     
   </channel>

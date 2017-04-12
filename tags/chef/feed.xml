@@ -2,14 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Chef on clburlison</title>
-    <link>https://clburlison.com/tags/chef/feed/index.xml</link>
+    <link>https://clburlison.com/tags/chef/</link>
     <description>Recent content in Chef on clburlison</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-EN</language>
     <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
     <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
     <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
-    <atom:link href="https://clburlison.com/tags/chef/feed/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Mar 2017 10:21:13 -0500</lastBuildDate>
+    
+	<atom:link href="https://clburlison.com/tags/chef/feed.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Chef Grocery Delivery Setup</title>
@@ -17,214 +20,7 @@
       <pubDate>Tue, 21 Mar 2017 10:21:13 -0500</pubDate>
       <author>clburlison@gmail.com (Clayton Burlison)</author>
       <guid>https://clburlison.com/chef-grocery-delivery-setup/</guid>
-      <description>
-
-&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/facebook/grocery-delivery&#34; target=&#34;_blank&#34;&gt;Grocery Delivery&lt;/a&gt; (GD) is a ruby gem that helps keep cookbooks, roles, and data bags in sync between a source control repo and your chef server. This allows administrators to keep their entire chef code in source control with continuous integration, peer reviews, and any other checks they can think of. Once the code has been checked and merged into the &lt;code&gt;master&lt;/code&gt; branch the &lt;code&gt;grocery-delivery&lt;/code&gt; binary takes the place of &lt;code&gt;knife upload&lt;/code&gt;. This can be ran on a cron job, or event based using web-hooks to verify that the latest code is on your chef server. This also means your server is safer from someone accidentally pushing breaking code to production.&lt;/p&gt;
-
-&lt;p&gt;So lets get started on setting up GD using a ubuntu 16.04 host that already has the chef server configured. You could technically run this on a separate box but keeping it on the chef server is easier to troubleshoot/maintain in my opinion.&lt;/p&gt;
-
-&lt;h1 id=&#34;requirements&#34;&gt;Requirements&lt;/h1&gt;
-
-&lt;p&gt;In case it wasn&amp;rsquo;t clear your chef server needs to already be setup, if not go to chef docs on &lt;a href=&#34;https://docs.chef.io/install_server.html&#34; target=&#34;_blank&#34;&gt;installing the server&lt;/a&gt;. Plus:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;access to a user key&lt;/li&gt;
-&lt;li&gt;access to a validator key&lt;/li&gt;
-&lt;li&gt;ssh access to the chef server&lt;/li&gt;
-&lt;li&gt;your chef repo in source control&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;setup&#34;&gt;Setup&lt;/h1&gt;
-
-&lt;p&gt;If you want a sample chef repo to fork I recommend forking my example repo:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/clburlison/example-chef-repo&#34; target=&#34;_blank&#34;&gt;https://github.com/clburlison/example-chef-repo&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Run the following commands as root:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo su
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Install the following packages so we can build dependencies for GD:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;apt-get update
-apt-get upgrade
-apt-get install cmake pkg-config
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Install the GD gem into the chef server ruby path. The path is not a strict requirement but it is nice to have locked version of ruby:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/opt/opscode/embedded/bin/gem install grocery_delivery
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Create the config file for GD using the default path.&lt;/p&gt;
-
-&lt;div class=&#34;alert alert-info&#34;&gt;
-  &lt;p&gt;NOTE: you will need to change the git &lt;code&gt;repo_url&lt;/code&gt; and potentially the &lt;code&gt;cookbook_paths&lt;/code&gt;, &lt;code&gt;role_path&lt;/code&gt;, and &lt;code&gt;databag_path&lt;/code&gt;.&lt;/p&gt;
-
-&lt;/div&gt;
-
-
-&lt;pre&gt;&lt;code&gt;vi /etc/gd-config.rb
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Paste the following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;stdout          true
-repo_url        &#39;git@github.com:clburlison/chef-repo.git&#39;
-reponame        &#39;cpe&#39;
-cookbook_paths  [&#39;cookbooks&#39;]
-role_path       &#39;roles&#39;
-databag_path    &#39;data_bags&#39;
-rev_checkpoint  &#39;gd_revision&#39;
-knife_config    &#39;/root/.chef/knife.rb&#39;
-knife_bin       &#39;/opt/opscode/bin/knife&#39;
-vcs_type        &#39;git&#39;
-berks           false
-berks_bin       &#39;/opt/opscode/embedded/bin/berks&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Create a hidden chef folder for the root user:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mkdir /root/.chef
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Create the knife config:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;vi /root/.chef/knife.rb
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Paste the following:&lt;/p&gt;
-
-&lt;div class=&#34;alert alert-info&#34;&gt;
-  &lt;p&gt;NOTE: make sure and update the &lt;code&gt;node_name&lt;/code&gt;, &lt;code&gt;client_key&lt;/code&gt;, &lt;code&gt;validation_client_name&lt;/code&gt;, and &lt;code&gt;chef_server_url&lt;/code&gt; keys&lt;/p&gt;
-
-&lt;/div&gt;
-
-
-&lt;pre&gt;&lt;code&gt;log_level               :info
-log_location            STDOUT
-node_name               &#39;gd&#39;
-client_key              &#39;gd.pem&#39;
-validation_client_name  &#39;clburlison-validator&#39;
-validation_key          &#39;clburlison-validator.pem&#39;
-chef_server_url         &#39;https://chef.example.com/organizations/clburlison&#39;
-cookbook_path [
-  &#39;/var/chef/grocery_delivery_work/cpe/cookbooks/&#39;,
-]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Copy the copy the two pem files (&lt;code&gt;gd.pem&lt;/code&gt; and &lt;code&gt;clburlison-validator.pem&lt;/code&gt; from my example) from your admin workstation to the chef server under &lt;code&gt;/root/.chef&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h1 id=&#34;ssh-deploy-key&#34;&gt;SSH deploy key&lt;/h1&gt;
-
-&lt;p&gt;The following can be ran on your workstation or chef server.&lt;/p&gt;
-
-&lt;p&gt;Create a ssh deploy key so the Chef server can access your chef git repo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ssh-keygen -t rsa -b 4096 -C &amp;quot;gd-deploy@example.com&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Change the save location if you wish. Full output below:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/clburlison/.ssh/id_rsa): /Users/clburlison/.ssh/gd_deploy
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /Users/clburlison/.ssh/gd_deploy.
-Your public key has been saved in /Users/clburlison/.ssh/gd_deploy.pub.
-The key fingerprint is:
-SHA256:4OIJ40Lncc7cwfAGY1UoBtutBDpKLoYwlOQDL8o9GkE chef-admin@clburlison.com
-The key&#39;s randomart image is:
-+---[RSA 4096]----+
-|oE.o.  .o.       |
-|=o. +oo.         |
-|+B...Bo.         |
-|Oo= o.B.         |
-|=*o=.o.=S        |
-|+.=+Boo .        |
-|....o+ .         |
-| .               |
-|                 |
-+----[SHA256]-----+
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Create the .ssh directory for the root user if it doesn&amp;rsquo;t exist:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mkdir -p /root/.ssh/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Copy the &lt;code&gt;gd_deploy&lt;/code&gt; private key to your chef server under &lt;code&gt;/root/.ssh/id_rsa&lt;/code&gt;. Make sure the file permissions are correct:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;chmod 0600 /root/.ssh/id_rsa
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Then add the key to your ssh agent:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;eval &amp;quot;$(ssh-agent -s)&amp;quot;
-ssh-add /root/.ssh/id_rsa
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now copy the &lt;code&gt;gd_deploy.pub&lt;/code&gt; public key to your chef repo deploy key section. For Github the url will be:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/USERNAME/example-chef-repo/settings/keys&#34; target=&#34;_blank&#34;&gt;https://github.com/USERNAME/example-chef-repo/settings/keys&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&#34;alert alert-info&#34;&gt;
-  &lt;p&gt;NOTE: that this key should &lt;em&gt;not&lt;/em&gt; have write access to the git repo.&lt;/p&gt;
-
-&lt;/div&gt;
-
-
-&lt;p&gt;Make a test connection to github to add the RSA fingerprint.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ssh -T git@github.com
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You should get the following as output:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;root@chef:~$ ssh -T git@github.com
-The authenticity of host &#39;github.com (192.30.253.113)&#39; can&#39;t be established.
-RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added &#39;github.com,192.30.253.113&#39; (RSA) to the list of known hosts.
-Hi clburlison/example-chef-repo! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;run-gd&#34;&gt;Run GD&lt;/h1&gt;
-
-&lt;p&gt;Great now if we did everything correctly the following command should add our code to the chef server:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/opt/opscode/embedded/bin/grocery-delivery -vv
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If all works you&amp;rsquo;ll likely want to run this script on a cron job without the verbose flag:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;vi /etc/cron.d/gd
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Paste the following to run every 5 minutes. Obviously modify to taste:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;SHELL=/bin/bash
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-*/5 * * * * root /opt/opscode/embedded/bin/grocery-delivery
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Cron hates me so lets be safe and force a reload.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/etc/init.d/cron reload
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you are having cron issues add &lt;code&gt;&amp;amp;&amp;gt;&amp;gt; /tmp/gd.log&lt;/code&gt; to the end of your command and reload to write debug info to a log file.&lt;/p&gt;
-
-&lt;h1 id=&#34;bonus&#34;&gt;Bonus&lt;/h1&gt;
-
-&lt;p&gt;If you wish to delete all cookbooks run:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;knife cookbook bulk delete &amp;quot;/*&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+      <description>Introduction Grocery Delivery (GD) is a ruby gem that helps keep cookbooks, roles, and data bags in sync between a source control repo and your chef server. This allows administrators to keep their entire chef code in source control with continuous integration, peer reviews, and any other checks they can think of. Once the code has been checked and merged into the master branch the grocery-delivery binary takes the place of knife upload.</description>
     </item>
     
   </channel>

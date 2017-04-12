@@ -2,14 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Google on clburlison</title>
-    <link>https://clburlison.com/tags/google/feed/index.xml</link>
+    <link>https://clburlison.com/tags/google/</link>
     <description>Recent content in Google on clburlison</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-EN</language>
     <managingEditor>clburlison@gmail.com (Clayton Burlison)</managingEditor>
     <webMaster>clburlison@gmail.com (Clayton Burlison)</webMaster>
     <copyright>(c) 2014 - 2017 Clayton Burlison</copyright>
-    <atom:link href="https://clburlison.com/tags/google/feed/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Aug 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://clburlison.com/tags/google/feed.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Vimium</title>
@@ -17,34 +20,8 @@
       <pubDate>Thu, 14 Aug 2014 00:00:00 +0000</pubDate>
       <author>clburlison@gmail.com (Clayton Burlison)</author>
       <guid>https://clburlison.com/vimium/</guid>
-      <description>
-
-&lt;h1 id=&#34;the-hacker-s-s-browser-s-plugin&#34;&gt;The Hacker&amp;rsquo;s &lt;s&gt;Browser&lt;/s&gt; Plugin&lt;/h1&gt;
-
-&lt;p&gt;A plugin that increases speed and efficiency while browsing the internet? Yes please! I only recently found out about Vimium and wanted to share my thoughts on this plugin.&lt;/p&gt;
-
-&lt;p&gt;We all spend too much time on the internet. Reading forums, blogs, facebook, twitter, news, youtube,&amp;hellip;the list goes on and on. Phil Crosby and Ilya Sukhar created Vimium to speed up the navigation of websites. No longer must you use your mouse to click that link, or trackpad to scroll down. Check out the keyboard shortcuts in the picture above. The shortcuts mimic the vim text based editor, so if you have any prior knowledge of vim remembering the shortcuts is quite easy.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://vimium.github.io/&#34; target=&#34;_blank&#34;&gt;Vimium - Project Website&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;demo-video&#34;&gt;Demo Video&lt;/h2&gt;
-
-
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
-  &lt;iframe src=&#34;//www.youtube.com/embed/t67Sn0RGK54&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
- &lt;/div&gt;
-
-
-&lt;h2 id=&#34;thoughts&#34;&gt;Thoughts&lt;/h2&gt;
-
-&lt;p&gt;Vimium is amazing! Even if you only use 3-4 of the features selecting links and scrolling become much faster. I would recomend anyone who uses Chrome to at least give the plugin a try. Once it is installed if you ever forget the shortcuts just type a &lt;code&gt;?&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h1 id=&#34;other-browsers&#34;&gt;Other browsers&lt;/h1&gt;
-
-&lt;p&gt;When I original wrote this article my main browser at the time was Google Chrome. Since then I have had to use Safari due to some compatibility issues. Guy Thompson created a port of vimium for Safari that works quite well. &lt;a href=&#34;https://github.com/guyht/vimari&#34; target=&#34;_blank&#34;&gt;Check it out&lt;/a&gt;.&lt;/p&gt;
-
-&lt;hr /&gt;
-</description>
+      <description>The Hacker&amp;rsquo;s Browser Plugin A plugin that increases speed and efficiency while browsing the internet? Yes please! I only recently found out about Vimium and wanted to share my thoughts on this plugin.
+We all spend too much time on the internet. Reading forums, blogs, facebook, twitter, news, youtube,&amp;hellip;the list goes on and on. Phil Crosby and Ilya Sukhar created Vimium to speed up the navigation of websites. No longer must you use your mouse to click that link, or trackpad to scroll down.</description>
     </item>
     
     <item>
@@ -53,14 +30,9 @@
       <pubDate>Tue, 12 Aug 2014 00:00:00 +0000</pubDate>
       <author>clburlison@gmail.com (Clayton Burlison)</author>
       <guid>https://clburlison.com/google-classroom/</guid>
-      <description>&lt;p&gt;Chromebooks are pretty popular in Education right now due to their low learning curve, low price, and high usability. They are quite good at simple projects and give more students access to the internet. Now Google wants to remove paper&amp;hellip;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Hopefully Classroom will help you spend a little less time at the photocopier and a little more time doing what you love—teaching.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Read more: &lt;a href=&#34;http://googleenterprise.blogspot.com/2014/08/more-teaching-less-tech-ing-google.html&#34; target=&#34;_blank&#34;&gt;More Teaching Less Tech-ing&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>Chromebooks are pretty popular in Education right now due to their low learning curve, low price, and high usability. They are quite good at simple projects and give more students access to the internet. Now Google wants to remove paper&amp;hellip;
+ Hopefully Classroom will help you spend a little less time at the photocopier and a little more time doing what you love—teaching.
+ Read more: More Teaching Less Tech-ing</description>
     </item>
     
   </channel>
